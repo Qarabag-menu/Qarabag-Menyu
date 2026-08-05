@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qarabağ Restoranı - QR Menyu</title>
+  <style>
+    :root {
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --primary-color: #8b0000; /* Dərin qırmızı / Bordo */
+      --accent-color: #d4af37;  /* Qızılı accent */
+      --text-main: #2b2b2b;
+      --text-muted: #6c757d;
+      --border-radius: 14px;
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding-bottom: 40px;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+      color: #fff;
+      text-align: center;
+      padding: 30px 20px 25px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      color: var(--accent-color);
+      margin-bottom: 5px;
+    }
+
+    header p {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Controls (Search & Filter) */
+    .controls {
+      position: sticky;
+      top: 0;
+      background-color: var(--bg-color);
+      padding: 15px 0;
+      z-index: 100;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #e0e0e0;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      outline: none;
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+      transition: border-color 0.2s;
+    }
+
+    .search-box:focus {
+      border-color: var(--primary-color);
+    }
+
+    .categories {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .categories::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+
+    .cat-btn {
+      background: var(--card-bg);
+      border: 1px solid #e0e0e0;
+      padding: 8px 16px;
+      border-radius: 20px;
+      white-space: nowrap;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cat-btn.active {
+      background-color: var(--primary-color);
+      color: #fff;
+      border-color: var(--primary-color);
+    }
+
+    /* Menu Grid */
+    .menu-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .menu-item {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+
+    .menu-item:active {
+      transform: scale(0.98);
+    }
+
+    .item-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .item-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .item-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .item-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .item-img {
+      width: 90px;
+      height: 90px;
+      border-radius: 10px;
+      object-fit: cover;
+      background-color: #eee;
+    }
+
+    /* Empty state */
+    .no-result {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>QARABAĞ</h1>
+    <p>Restoran & Milli Mətbəx</p>
+  </header>
+
+  <div class="container">
+    <div class="controls">
+      <input type="text" id="searchInput" class="search-box" placeholder="Yemək və ya içki axtar...">
+      <div class="categories" id="categoryList">
+        <button class="cat-btn active" onclick="filterCategory('all', this)">Bütün menyu</button>
+        <button class="cat-btn" onclick="filterCategory('kabab', this)">Kabablar</button>
+        <button class="cat-btn" onclick="filterCategory('esas', this)">Əsas Yeməklər</button>
+        <button class="cat-btn" onclick="filterCategory('salat', this)">Salatlar</button>
+        <button class="cat-btn" onclick="filterCategory('icki', this)">İçkilər</button>
+      </div>
+    </div>
+
+    <div class="menu-grid" id="menuGrid">
+      <!-- Menyular JS vasitəsilə bura yüklənir -->
+    </div>
+
+    <div class="no-result" id="noResult">
+      Axtarışa uyğun heç nə tapılmadı.
+    </div>
+  </div>
+
+  <script>
+    // Menyu məlumatları (İstədiyiniz kimi artıra və ya dəyişə bilərsiniz)
+    const menuData = [
+      {
+        id: 1,
+        title: "Təzə Xamalı Tikə Kabab",
+        category: "kabab",
+        price: "12.00 ₼",
+        desc: "Xüsusi sousda marinad olunmuş quzu əti, manqalda köz üzərində bişirilir.",
+        img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300"
+      },
+      {
+        id: 2,
+        title: "Lülə Kabab",
+        category: "kabab",
+        price: "10.00 ₼",
+        desc: "Çəkilmiş quzu əti, göyərti və ədviyyatlar.",
+        img: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=300"
+      },
+      {
+        id: 3,
+        title: "Şah Plov (1 nəfərlik)",
+        category: "esas",
+        price: "15.00 ₼",
+        desc: "Qazmaq içərisində dəmlənmiş zəfəranlı düyü, quzu əti, albuxara və şabalıd.",
+        img: "https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?w=300"
+      },
+      {
+        id: 4,
+        title: "Çoban Salatı",
+        category: "salat",
+        price: "4.50 ₼",
+        desc: "Xiyar, pomidor, göyərti, zeytun yağı və ağ pendir.",
+        img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300"
+      },
+      {
+        id: 5,
+        title: "Ev Sayağı Kompot (1L)",
+        category: "icki",
+        price: "4.00 ₼",
+        desc: "Mövsüm meyvələrindən hazırlanmış təbii kompot.",
+        img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=300"
+      }
+    ];
+
+    const menuGrid = document.getElementById('menuGrid');
+    const searchInput = document.getElementById('searchInput');
+    const noResult = document.getElementById('noResult');
+    let currentCategory = 'all';
+
+    // Menyu elementlərini ekrana çıxaran funksiya
+    function renderMenu(items) {
+      menuGrid.innerHTML = '';
+      if (items.length === 0) {
+        noResult.style.display = 'block';
+      } else {
+        noResult.style.display = 'none';
+        items.forEach(item => {
+          const itemHTML = `
+            <div class="menu-item">
+              <div class="item-info">
+                <div>
+                  <div class="item-title">${item.title}</div>
+                  <div class="item-desc">${item.desc}</div>
+                </div>
+                <div class="item-price">${item.price}</div>
+              </div>
+              <img src="${item.img}" alt="${item.title}" class="item-img" loading="lazy">
+            </div>
+          `;
+          menuGrid.insertAdjacentHTML('beforeend', itemHTML);
+        });
+      }
+    }
+
+    // Kateqoriya süzgəci
+    function filterCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilters();
+    }
+
+    // Axtarış və süzgəcləri tətbiq etmək
+    function applyFilters() {
+      const query = searchInput.value.toLowerCase().trim();
+      const filtered = menuData.filter(item => {
+        const matchesCat = currentCategory === 'all' || item.category === currentCategory;
+        const matchesSearch = item.title.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
+        return matchesCat && matchesSearch;
+      });
+      renderMenu(filtered);
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+
+    // İlk yüklənmə
+    renderMenu(menuData);
+  </script>
+</body>
+</html>
