@@ -3,591 +3,1339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qarabağ Kafe - Menyu İdarəetmə Sistemi</title>
-    <style>
-        :root {
-            --primary-color: #d4af37;
-            --bg-dark: #121212;
-            --bg-card: #1e1e1e;
-            --text-main: #f5f5f5;
-            --text-muted: #aaaaaa;
+<meta name="theme-color" content="#07130f">
+<title>Qarabağ Kafe — Menyu</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+    :root {
+        --gold: #d6b35a;
+        --gold-light: #f0d88b;
+        --gold-dark: #9e7b2f;
+        --green: #0b241b;
+        --green-2: #102f24;
+        --green-3: #173c2d;
+        --bg: #07110d;
+        --card: #0d1b15;
+        --card-2: #11251c;
+        --text: #f7f2e7;
+        --muted: #9fa9a3;
+        --line: rgba(214,179,90,.18);
+        --shadow: 0 20px 55px rgba(0,0,0,.35);
+    }
+    * {
+        box-sizing: border-box;
+    }
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: 'Inter', sans-serif;
+        color: var(--text);
+        background:
+            radial-gradient(circle at 15% 5%, rgba(214,179,90,.10), transparent 28%),
+            radial-gradient(circle at 90% 15%, rgba(20,90,62,.18), transparent 30%),
+            linear-gradient(135deg, #06100c 0%, #091811 50%, #07110d 100%);
+        overflow-x: hidden;
+    }
+    /* ------------------------------
+       DECORATIVE BACKGROUND
+    ------------------------------ */
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: .025;
+        background-image:
+            radial-gradient(circle at 20% 20%, #fff 1px, transparent 1px),
+            radial-gradient(circle at 80% 70%, #fff 1px, transparent 1px);
+        background-size: 90px 90px;
+        z-index: -1;
+    }
+    /* ------------------------------
+       HERO
+    ------------------------------ */
+    .hero {
+        position: relative;
+        width: 100%;
+        min-height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 55px 20px 45px;
+        background:
+            linear-gradient(
+                180deg,
+                rgba(5,18,13,.65),
+                rgba(5,18,13,.92)
+            ),
+            radial-gradient(
+                circle at center,
+                rgba(214,179,90,.13),
+                transparent 55%
+            );
+        border-bottom: 1px solid rgba(214,179,90,.12);
+    }
+    .hero::before,
+    .hero::after {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border: 1px solid rgba(214,179,90,.12);
+        border-radius: 50%;
+    }
+    .hero::before {
+        left: -80px;
+        top: -60px;
+    }
+    .hero::after {
+        right: -80px;
+        bottom: -80px;
+    }
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+    }
+    .ornament {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin-bottom: 15px;
+        color: var(--gold);
+        font-size: 15px;
+        letter-spacing: 5px;
+    }
+    .ornament::before,
+    .ornament::after {
+        content: "";
+        width: 75px;
+        height: 1px;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--gold)
+        );
+    }
+    .ornament::after {
+        background: linear-gradient(
+            90deg,
+            var(--gold),
+            transparent
+        );
+    }
+    .hero h1 {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(3.4rem, 8vw, 6.5rem);
+        line-height: .85;
+        font-weight: 700;
+        letter-spacing: 2px;
+        background: linear-gradient(
+            135deg,
+            #fff4c7,
+            var(--gold),
+            #b88b32
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 15px 40px rgba(0,0,0,.4);
+    }
+    .hero-subtitle {
+        margin: 20px 0 0;
+        color: #d8ddd9;
+        font-size: 13px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+    }
+    .hero-description {
+        margin: 18px auto 0;
+        max-width: 520px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+    }
+    .gold-line {
+        width: 90px;
+        height: 2px;
+        margin: 25px auto 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--gold),
+            transparent
+        );
+    }
+    /* ------------------------------
+       MENU NAVIGATION
+    ------------------------------ */
+    .menu-navigation {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 13px 15px;
+        background: rgba(7,17,13,.88);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(214,179,90,.13);
+    }
+    .tabs {
+        width: 100%;
+        max-width: 1250px;
+        margin: auto;
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        padding: 2px;
+    }
+    .tabs::-webkit-scrollbar {
+        display: none;
+    }
+    .tab-btn {
+        flex: 0 0 auto;
+        border: 1px solid rgba(214,179,90,.23);
+        background: rgba(255,255,255,.025);
+        color: #c9cfca;
+        padding: 11px 17px;
+        border-radius: 50px;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+            transform .25s ease,
+            background .25s ease,
+            color .25s ease,
+            border-color .25s ease,
+            box-shadow .25s ease;
+    }
+    .tab-btn:hover {
+        transform: translateY(-2px);
+        color: #fff;
+        border-color: rgba(214,179,90,.55);
+        background: rgba(214,179,90,.08);
+    }
+    .tab-btn.active {
+        color: #111;
+        background: linear-gradient(
+            135deg,
+            var(--gold-light),
+            var(--gold)
+        );
+        border-color: var(--gold);
+        box-shadow:
+            0 7px 25px rgba(214,179,90,.18);
+    }
+    /* ------------------------------
+       MAIN
+    ------------------------------ */
+    .main {
+        width: 100%;
+        max-width: 1250px;
+        margin: 0 auto;
+        padding: 42px 20px 70px;
+    }
+    .section-intro {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+    .section-intro h2 {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 34px;
+        color: var(--gold-light);
+    }
+    .section-intro p {
+        margin: 7px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+    }
+    /* ------------------------------
+       MENU GRID
+    ------------------------------ */
+    .menu-container {
+        width: 100%;
+        display: none;
+        grid-template-columns:
+            repeat(auto-fit, minmax(360px, 1fr));
+        gap: 22px;
+    }
+    .menu-container.active {
+        display: grid;
+        animation: menuFade .4s ease both;
+    }
+    @keyframes menuFade {
+        from {
+            opacity: 0;
+            transform: translateY(12px);
         }
-
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
+    }
+    /* ------------------------------
+       CARDS
+    ------------------------------ */
+    .card {
+        position: relative;
+        overflow: hidden;
+        background:
+            linear-gradient(
+                145deg,
+                rgba(255,255,255,.035),
+                rgba(255,255,255,.012)
+            ),
+            var(--card);
+        border: 1px solid rgba(214,179,90,.12);
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+        transition:
+            transform .3s ease,
+            border-color .3s ease,
+            box-shadow .3s ease;
+    }
+    .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--gold),
+            transparent
+        );
+    }
+    .card::after {
+        content: "";
+        position: absolute;
+        width: 130px;
+        height: 130px;
+        right: -65px;
+        top: -65px;
+        border-radius: 50%;
+        background: rgba(214,179,90,.04);
+        pointer-events: none;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(214,179,90,.32);
+        box-shadow:
+            0 25px 60px rgba(0,0,0,.43),
+            0 0 0 1px rgba(214,179,90,.04);
+    }
+    /* ------------------------------
+       CARD HEADER
+    ------------------------------ */
+    .card-header {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        padding-bottom: 17px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid var(--line);
+    }
+    .card-title {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 26px;
+        line-height: 1.05;
+        color: var(--gold-light);
+        font-weight: 700;
+    }
+    .card-price {
+        text-align: right;
+        white-space: nowrap;
+    }
+    .price-main {
+        color: #fff;
+        font-size: 19px;
+        font-weight: 700;
+    }
+    .price-sub {
+        margin-top: 3px;
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 600;
+    }
+    /* ------------------------------
+       PİVƏ TABLE
+    ------------------------------ */
+    .table-container {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .table-container th {
+        padding: 9px 0;
+        color: #7f8c85;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .table-container td {
+        padding: 11px 0;
+        border-bottom: 1px solid rgba(255,255,255,.055);
+        color: #dce1dd;
+        font-size: 13px;
+    }
+    .table-container tr:last-child td {
+        border-bottom: none;
+    }
+    .table-container td.val {
+        width: 58px;
+        text-align: right;
+        color: var(--gold-light);
+        font-weight: 600;
+    }
+    /* ------------------------------
+       ITEM LIST
+    ------------------------------ */
+    .item-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .item-list li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        min-height: 43px;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(255,255,255,.055);
+        color: #dce1dd;
+        font-size: 13px;
+        transition:
+            padding .2s ease,
+            color .2s ease;
+    }
+    .item-list li:last-child {
+        border-bottom: none;
+    }
+    .item-list li:hover {
+        padding-left: 5px;
+        color: #fff;
+    }
+    .item-list li span:first-child {
+        line-height: 1.45;
+    }
+    .item-list .price {
+        flex: 0 0 auto;
+        color: var(--gold-light);
+        font-size: 13px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+    /* ------------------------------
+       FOOTER
+    ------------------------------ */
+    footer {
+        text-align: center;
+        padding: 35px 20px 45px;
+        border-top: 1px solid rgba(214,179,90,.10);
+        background: rgba(0,0,0,.12);
+    }
+    .footer-logo {
+        font-family: 'Cormorant Garamond', serif;
+        color: var(--gold);
+        font-size: 27px;
+        font-weight: 700;
+    }
+    .footer-text {
+        margin-top: 8px;
+        color: #707b75;
+        font-size: 11px;
+        letter-spacing: 1px;
+    }
+    /* ------------------------------
+       MOBILE
+    ------------------------------ */
+    @media (max-width: 700px) {
+        .hero {
+            min-height: 300px;
+            padding:
+                48px
+                18px
+                38px;
         }
-
-        h1 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 5px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .hero h1 {
+            font-size: 4rem;
         }
-
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
+        .hero-subtitle {
+            font-size: 10px;
+            letter-spacing: 2.5px;
         }
-
+        .hero-description {
+            font-size: 12px;
+        }
+        .ornament::before,
+        .ornament::after {
+            width: 45px;
+        }
+        .menu-navigation {
+            padding: 10px;
+        }
         .tab-btn {
-            background-color: transparent;
-            color: var(--text-main);
-            border: 2px solid var(--primary-color);
-            padding: 8px 16px;
-            font-size: 0.9rem;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 10px 14px;
+            font-size: 11px;
         }
-
-        .tab-btn.active, .tab-btn:hover {
-            background-color: var(--primary-color);
-            color: var(--bg-dark);
-            font-weight: bold;
+        .main {
+            padding:
+                28px
+                12px
+                55px;
         }
-
+        .section-intro {
+            margin-bottom: 22px;
+        }
+        .section-intro h2 {
+            font-size: 29px;
+        }
         .menu-container {
-            width: 100%;
-            max-width: 1200px;
-            display: none;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr;
+            gap: 15px;
         }
-
-        .menu-container.active {
-            display: grid;
-        }
-
         .card {
-            background-color: var(--bg-card);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            border-top: 4px solid var(--primary-color);
+            padding: 18px;
+            border-radius: 17px;
         }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #333;
-            padding-bottom: 15px;
-            margin-bottom: 15px;
-        }
-
         .card-title {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin: 0;
+            font-size: 24px;
         }
-
         .card-price {
-            text-align: right;
+            font-size: 12px;
         }
-
         .price-main {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #fff;
+            font-size: 17px;
         }
-
-        .price-sub {
-            font-size: 0.9rem;
-            color: var(--primary-color);
-        }
-
-        .table-container {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .table-container th, .table-container td {
-            padding: 8px 0;
-            text-align: left;
-            border-bottom: 1px solid #2a2a2a;
-            font-size: 0.95rem;
-        }
-        
-        .table-container th {
-            color: var(--text-muted);
-            font-weight: normal;
-            font-size: 0.9rem;
-        }
-
-        .table-container td.val {
-            text-align: right;
-            color: #ddd;
-        }
-
-        .item-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        .table-container td {
+            font-size: 12px;
         }
         .item-list li {
-            padding: 8px 0;
-            border-bottom: 1px dashed #333;
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.95rem;
+            font-size: 12px;
         }
-        .item-list li span.price {
-            color: var(--primary-color);
-            font-weight: bold;
+    }
+    @media (max-width: 390px) {
+        .hero h1 {
+            font-size: 3.4rem;
         }
-    </style>
+        .hero-subtitle {
+            font-size: 9px;
+        }
+        .card-header {
+            gap: 10px;
+        }
+        .card-title {
+            font-size: 21px;
+        }
+        .main {
+            padding-left: 9px;
+            padding-right: 9px;
+        }
+    }
+    /* ------------------------------
+       SELECTION
+    ------------------------------ */
+    ::selection {
+        background: var(--gold);
+        color: #111;
+    }
+    /* ------------------------------
+       SCROLLBAR
+    ------------------------------ */
+    ::-webkit-scrollbar {
+        width: 7px;
+        height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #07110d;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #304a3c;
+        border-radius: 20px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--gold-dark);
+    }
+</style>
 </head>
 <body>
-
-    <header>
+<!-- =========================
+     HERO
+========================== -->
+<header class="hero">
+    <div class="hero-content">
+        <div class="ornament">
+            ✦
+        </div>
         <h1>Qarabağ Kafe</h1>
-        <p>Sistem İdarəetmə Paneli</p>
-    </header>
-
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('piva')">Pivə Setləri</button>
-        <button class="tab-btn" onclick="switchTab('qelyanalti')">Qəlyanaltılar və Yeməklər</button>
-        <button class="tab-btn" onclick="switchTab('isti')">İsti İçkilər</button>
-        <button class="tab-btn" onclick="switchTab('murebbe')">Mürəbbələr</button>
-        <button class="tab-btn" onclick="switchTab('sirniyyat')">Şirniyyat və Tort</button>
-        <button class="tab-btn" onclick="switchTab('cerez')">Çərəzlər</button>
-        <button class="tab-btn" onclick="switchTab('soyuq')">Soyuq İçkilər</button>
-        <button class="tab-btn" onclick="switchTab('siqaret')">Siqaretlər</button>
+        <div class="hero-subtitle">
+            Dad • Səmimiyyət • Ab-hava
+        </div>
+        <p class="hero-description">
+            Xoş gəlmisiniz. Menyumuza nəzər salın və
+            zövqünüzə uyğun seçim edin.
+        </p>
+        <div class="gold-line"></div>
     </div>
-
+</header>
+<!-- =========================
+     CATEGORY NAVIGATION
+========================== -->
+<nav class="menu-navigation">
+    <div class="tabs">
+        <button
+            class="tab-btn active"
+            data-tab="piva"
+            onclick="switchTab('piva', this)">
+            🍺 Pivə Setləri
+        </button>
+        <button
+            class="tab-btn"
+            data-tab="qelyanalti"
+            onclick="switchTab('qelyanalti', this)">
+            🍽️ Qəlyanaltılar
+        </button>
+        <button
+            class="tab-btn"
+            data-tab="isti"
+            onclick="switchTab('isti', this)">
+            ☕ İsti İçkilər
+        </button>
+        <button
+            class="tab-btn"
+            data-tab="murebbe"
+            onclick="switchTab('murebbe', this)">
+            🍓 Mürəbbələr
+        </button>
+        <button
+            class="tab-btn"
+            data-tab="sirniyyat"
+            onclick="switchTab('sirniyyat', this)">
+            🍫 Şirniyyat
+        </button>
+        <button
+            class="tab-btn"
+            data-tab="cerez"
+            onclick="switchTab('cerez', this)">
+            🥜 Çərəzlər
+        </button>
+        <button
+            class="tab-btn"
+            data-tab="soyuq"
+            onclick="switchTab('soyuq', this)">
+            🥤 Soyuq İçkilər
+        </button>
+        <button
+            class="tab-btn"
+            data-tab="siqaret"
+            onclick="switchTab('siqaret', this)">
+            🚬 Siqaretlər
+        </button>
+    </div>
+</nav>
+<!-- =========================
+     MAIN MENU
+========================== -->
+<main class="main">
+    <div class="section-intro">
+        <h2 id="sectionTitle">
+            Pivə Setləri
+        </h2>
+        <p id="sectionSubtitle">
+            Sizin üçün hazırlanmış xüsusi setlər
+        </p>
+    </div>
     <!-- Pivə Setləri -->
-    <div id="piva" class="menu-container active"></div>
-
-    <!-- Qəlyanaltılar və Yeməklər -->
-    <div id="qelyanalti" class="menu-container"></div>
-
+    <div
+        id="piva"
+        class="menu-container active">
+    </div>
+    <!-- Qəlyanaltılar -->
+    <div
+        id="qelyanalti"
+        class="menu-container">
+    </div>
     <!-- İsti İçkilər -->
-    <div id="isti" class="menu-container"></div>
-
+    <div
+        id="isti"
+        class="menu-container">
+    </div>
     <!-- Mürəbbələr -->
-    <div id="murebbe" class="menu-container"></div>
-
-    <!-- Şirniyyat və Tort -->
-    <div id="sirniyyat" class="menu-container"></div>
-
+    <div
+        id="murebbe"
+        class="menu-container">
+    </div>
+    <!-- Şirniyyat -->
+    <div
+        id="sirniyyat"
+        class="menu-container">
+    </div>
     <!-- Çərəzlər -->
-    <div id="cerez" class="menu-container"></div>
-
+    <div
+        id="cerez"
+        class="menu-container">
+    </div>
     <!-- Soyuq İçkilər -->
-    <div id="soyuq" class="menu-container"></div>
-
+    <div
+        id="soyuq"
+        class="menu-container">
+    </div>
     <!-- Siqaretlər -->
-    <div id="siqaret" class="menu-container"></div>
-
-    <script>
-        const db = {
-            pivaSetleri: [
-                {
-                    ad: "Set №-1",
-                    qiymet: "17 AZN",
-                    setQiymeti: "12.60 AZN",
-                    mehsullar: [
-                        { ad: "Pivə NZS (5 əd)", p1: "7.5", p2: "7.0" },
-                        { ad: "Saçaqlı pendir (1 pors)", p1: "2", p2: "1.8" },
-                        { ad: "Şallaq (1 pors)", p1: "3", p2: "2.5" },
-                        { ad: "Limon (Para)", p1: "0.5", p2: "0" },
-                        { ad: "Noxud (4 pors)", p1: "2", p2: "0" },
-                        { ad: "Boğaz", p1: "2", p2: "" },
-                        { ad: "Simiçka (1 pors)", p1: "2", p2: "1.8" },
-                        { ad: "Pətənə", p1: "3", p2: "" }
-                    ]
-                },
-                {
-                    ad: "1 Nəfərlik Set (Orta) / Set №-2",
-                    qiymet: "26 AZN",
-                    setQiymeti: "21 AZN",
-                    mehsullar: [
-                        { ad: "Pivə Elenberq (10 əd)", p1: "15", p2: "11.0" },
-                        { ad: "Saçaqlı pendir (1 pors)", p1: "2", p2: "1.8" },
-                        { ad: "Limon (Para)", p1: "1", p2: "0" },
-                        { ad: "Noxud (4 pors)", p1: "2", p2: "0" },
-                        { ad: "Kilkə (1 pors)", p1: "3", p2: "2.5" },
-                        { ad: "Simiçka (1 pors)", p1: "2", p2: "1.7" },
-                        { ad: "Cipsi (1 pors)", p1: "3", p2: "3" },
-                        { ad: "Suxarik (1 pors)", p1: "1", p2: "1" }
-                    ]
-                },
-                {
-                    ad: "Set №-3",
-                    qiymet: "32 AZN",
-                    setQiymeti: "25 AZN",
-                    mehsullar: [
-                        { ad: "Pivə Elenberq (8 əd)", p1: "12", p2: "11" },
-                        { ad: "Saçaqlı pendir (1 pors)", p1: "2", p2: "1.6" },
-                        { ad: "Limon (para)", p1: "1", p2: "0" },
-                        { ad: "Noxud (4 pors)", p1: "2", p2: "0" },
-                        { ad: "Kilkə (1 pors)", p1: "3", p2: "2.0" },
-                        { ad: "Simiçka (1 pors)", p1: "2", p2: "1.6" },
-                        { ad: "Cipsi (1 pors)", p1: "3", p2: "2.8" },
-                        { ad: "Suxarik (1 pors)", p1: "1", p2: "1" },
-                        { ad: "Araxis (1 pors)", p1: "3", p2: "2" },
-                        { ad: "Pətənə (1 pors)", p1: "3", p2: "3" }
-                    ]
-                },
-                {
-                    ad: "Set №-4",
-                    qiymet: "52 AZN",
-                    setQiymeti: "48 AZN",
-                    mehsullar: [
-                        { ad: "Pivə Elenberq (12 əd)", p1: "18", p2: "16" },
-                        { ad: "Saçaqlı pendir (1 pors)", p1: "2", p2: "1.7" },
-                        { ad: "Qızartma pendir (1 pors)", p1: "3", p2: "2" },
-                        { ad: "Blinçik (10 əd)", p1: "0.8", p2: "0.7" },
-                        { ad: "Acika (1 pors)", p1: "1", p2: "0" },
-                        { ad: "Smetan (1 pors)", p1: "1", p2: "1" },
-                        { ad: "Limon (1 əd)", p1: "1", p2: "0" },
-                        { ad: "Noxud (6 pors)", p1: "3", p2: "0" },
-                        { ad: "Kilkə (1 pors)", p1: "3", p2: "2.5" },
-                        { ad: "Simiçka (1 pors)", p1: "2", p2: "1.6" },
-                        { ad: "Cipsi (1 pors)", p1: "3", p2: "2.7" },
-                        { ad: "Suxarik (1 pors)", p1: "1", p2: "1" },
-                        { ad: "Araxis (1 pors)", p1: "3", p2: "2.5" },
-                        { ad: "Pətənə (1 pors)", p1: "3", p2: "3" }
-                    ]
-                },
-                {
-                    ad: "Set №-5",
-                    qiymet: "48 AZN",
-                    setQiymeti: "40 AZN",
-                    mehsullar: [
-                        { ad: "Pivə Elenberq (12 əd)", p1: "15", p2: "" },
-                        { ad: "Boğaz (4 əd)", p1: "", p2: "" },
-                        { ad: "Bildirçin (4 əd)", p1: "", p2: "" },
-                        { ad: "Fri (2 pors)", p1: "", p2: "" },
-                        { ad: "Saçaqlı pendir (2 pors)", p1: "2", p2: "" },
-                        { ad: "Qızartma pendir (2 pors)", p1: "3", p2: "" },
-                        { ad: "Blinçik (12 əd)", p1: "8", p2: "" },
-                        { ad: "Acika (1 pors)", p1: "0", p2: "" },
-                        { ad: "Smetan (1 pors)", p1: "1", p2: "" },
-                        { ad: "Limon (1 əd)", p1: "1", p2: "" },
-                        { ad: "Noxud (8 pors)", p1: "3", p2: "" },
-                        { ad: "Kilkə (1 pors)", p1: "3", p2: "" },
-                        { ad: "Simiçka (1 pors)", p1: "2", p2: "" },
-                        { ad: "Pətənə (1 pors)", p1: "3", p2: "" }
-                    ]
-                }
-            ],
-            qelyanaltilar: [
-                {
-                    kateqoriya: "Əsas Qəlyanaltılar",
-                    mehsullar: [
-                        { ad: "Saçaqlı pendir (1 pors)", qiymet: "2.00 AZN" },
-                        { ad: "Qızartma pendir (1 pors)", qiymet: "3.00 AZN" },
-                        { ad: "Şallaq (1 pors)", qiymet: "3.00 AZN" },
-                        { ad: "Noxud (1 pors)", qiymet: "2.00 AZN" },
-                        { ad: "Kilkə (1 pors)", qiymet: "3.00 AZN" },
-                        { ad: "Simiçka (1 pors)", qiymet: "2.00 AZN" },
-                        { ad: "Cipsi (1 pors)", qiymet: "3.00 AZN" },
-                        { ad: "Suxarik (1 pors)", qiymet: "1.00 AZN" },
-                        { ad: "Araxis (1 pors)", qiymet: "3.00 AZN" },
-                        { ad: "Pətənə (1 pors)", qiymet: "3.00 AZN" },
-                        { ad: "Fri (1 pors)", qiymet: "" },
-                        { ad: "Bildirçin", qiymet: "" },
-                        { ad: "Boğaz", qiymet: "" }
-                    ]
-                },
-                {
-                    kateqoriya: "Əlavələr və Souslar",
-                    mehsullar: [
-                        { ad: "Limon", qiymet: "1.00 AZN" },
-                        { ad: "Acika", qiymet: "0-1.00 AZN" },
-                        { ad: "Smetan", qiymet: "1.00 AZN" },
-                        { ad: "Blinçik", qiymet: "" }
-                    ]
-                }
-            ],
-            istiIckiler: [
-                {
-                    kateqoriya: "Çay",
-                    mehsullar: [
-                        { ad: "Çay Limon Konfet", qiymet: "2.00 AZN" },
-                        { ad: "Çay Limon Konfet (kəkotu, mıxək, darçın, nanə)", qiymet: "3.00 AZN" },
-                        { ad: "Gül çayı", qiymet: "3.00 AZN" },
-                        { ad: "Yaşıl çay", qiymet: "3.00 AZN" }
-                    ]
-                },
-                {
-                    kateqoriya: "Kofe",
-                    mehsullar: [
-                        { ad: "MacCoffee CLASSIC (fincan)", qiymet: "1.00 AZN" },
-                        { ad: "MacCoffee CLASSIC (çaynik)", qiymet: "4.00 AZN" },
-                        { ad: "NESCAFE MILD / CLASSIK (fincan)", qiymet: "1.00 AZN" },
-                        { ad: "NESCAFE MILD / CLASSIK (çaynik)", qiymet: "4.50 AZN" },
-                        { ad: "MacCoffee cappuccino DITORINO (fincan)", qiymet: "2.00 AZN" },
-                        { ad: "MacCoffee cappuccino DITORINO (çaynik)", qiymet: "5.00 AZN" },
-                        { ad: "Maccoffee Macchocolate isti şokolad (fincan)", qiymet: "2.00 AZN" },
-                        { ad: "Maccoffee Macchocolate isti şokolad (çaynik)", qiymet: "5.00 AZN" },
-                        { ad: "JARDIN cappuccino/mocaccino/latte (fincan)", qiymet: "2.00 AZN" },
-                        { ad: "JARDIN cappuccino/mocaccino/latte (çaynik)", qiymet: "5.00 AZN" },
-                        { ad: "NESCAFE nejnaya penka cappuccino/latte/plombir (fincan)", qiymet: "3.00 AZN" },
-                        { ad: "NESCAFE nejnaya penka cappuccino/latte/plombir (çaynik)", qiymet: "7.00 AZN" }
-                    ]
-                }
-            ],
-            murebbeler: [
-                {
-                    kateqoriya: "Mürəbbə Çeşitləri",
-                    mehsullar: [
-                        { ad: "Çiyələk", qiymet: "5.00 AZN" },
-                        { ad: "Moruq", qiymet: "5.00 AZN" },
-                        { ad: "Böyürtkən", qiymet: "6.00 AZN" },
-                        { ad: "Əncir", qiymet: "5.00 AZN" },
-                        { ad: "Heyva", qiymet: "5.00 AZN" },
-                        { ad: "Gilas qozlu", qiymet: "5.00 AZN" },
-                        { ad: "Zoğal", qiymet: "6.00 AZN" },
-                        { ad: "Armud", qiymet: "5.00 AZN" },
-                        { ad: "Ağ ərik", qiymet: "5.00 AZN" },
-                        { ad: "Kivi", qiymet: "6.00 AZN" },
-                        { ad: "Qızılgül", qiymet: "5.00 AZN" },
-                        { ad: "Nar", qiymet: "5.00 AZN" }
-                    ]
-                }
-            ],
-            sirniyyatlar: [
-                {
-                    kateqoriya: "Pecenye, Keks və Vafli",
-                    mehsullar: [
-                        { ad: "Pecənik ALBENİ 144 qr", qiymet: "5.00 AZN" },
-                        { ad: "Pecənik TUTKU 180 qr", qiymet: "4.00 AZN" },
-                        { ad: "Pecənik Biskrem 180 qr", qiymet: "4.00 AZN" },
-                        { ad: "Keks ADICTO BROWNİ Intense 144 qr", qiymet: "6.00 AZN" },
-                        { ad: "Keks Pop Kek 144 qr", qiymet: "4.50 AZN" },
-                        { ad: "Keks DANKEK lokmalık keks 180 qr", qiymet: "4.00 AZN" },
-                        { ad: "Keks OLALA sufle mini 162 qr", qiymet: "5.00 AZN" },
-                        { ad: "Vafli Yaşkino 200 qr", qiymet: "4.00 AZN" },
-                        { ad: "Vafli Hoşbeş 142 qr", qiymet: "4.00 AZN" },
-                        { ad: "Pryanık Yaşkino", qiymet: "4.50 AZN" },
-                        { ad: "Rulet 180 qr", qiymet: "3.00 AZN" },
-                        { ad: "Rulet Bifcake 180 qr", qiymet: "3.50 AZN" }
-                    ]
-                },
-                {
-                    kateqoriya: "Tort və Şokoladlar",
-                    mehsullar: [
-                        { ad: "SNİCKERS (araxis) 50 qr", qiymet: "3.00 AZN" },
-                        { ad: "SNİCKERS (araxis) 80 qr", qiymet: "4.00 AZN" },
-                        { ad: "SNİCKERS (funduqla) 81 qr", qiymet: "5.00 AZN" },
-                        { ad: "SNİCKERS (ağ araxisli) 81 qr", qiymet: "5.00 AZN" },
-                        { ad: "MARS 51 qr", qiymet: "3.00 AZN" },
-                        { ad: "TWIX 50 qr", qiymet: "3.00 AZN" },
-                        { ad: "NUTS 50 qr", qiymet: "3.00 AZN" },
-                        { ad: "BAUNTY 57 qr", qiymet: "3.00 AZN" },
-                        { ad: "BAUNTY TRİO 82.5 qr", qiymet: "4.00 AZN" },
-                        { ad: "QUNMİLK Vkus nastroenie 80 qr", qiymet: "3.00 AZN" },
-                        { ad: "ALPENGOLD çeşitləri 80 qr", qiymet: "5.00 AZN" },
-                        { ad: "NESTLE südlü,fındıqlı, tünd classik badamlı 90 qr", qiymet: "4.00 AZN" },
-                        { ad: "CHOCO ART çeşitləri 90 qr", qiymet: "4.00 AZN" },
-                        { ad: "BABAYEVSKİY çeşitləri", qiymet: "5.00 AZN" },
-                        { ad: "Milka südlü tablet 80 qr", qiymet: "8.00 AZN" },
-                        { ad: "MİLKA şokolad südlü fındıqlı 110 qr", qiymet: "11.00 AZN" },
-                        { ad: "MİLKA oreo şokolad 300 qr", qiymet: "18.00 AZN" },
-                        { ad: "MİLKA şokolad funduqlu 300 qr", qiymet: "18.00 AZN" },
-                        { ad: "MİLKA THANK südlü/südlü fındıqlı 110 qr", qiymet: "14.00 AZN" },
-                        { ad: "KONFİRELLA DARENKA 80 qr", qiymet: "4.00 AZN" },
-                        { ad: "ALBENİ 85 qr", qiymet: "10.00 AZN" },
-                        { ad: "MERCİ çeşitləri 100 qr", qiymet: "10.00 AZN" }
-                    ]
-                }
-            ],
-            cerezler: [
-                {
-                    kateqoriya: "Əsas Çərəzlər",
-                    mehsullar: [
-                        { ad: "QOZ 90 qr", qiymet: "4.00 AZN" },
-                        { ad: "FINDIQ 90 qr", qiymet: "4.00 AZN" },
-                        { ad: "BADAM 90 qr", qiymet: "4.00 AZN" },
-                        { ad: "ARAXİS 90 qr", qiymet: "3.00 AZN" },
-                        { ad: "PÜSTƏ 90 qr", qiymet: "8.00 AZN" },
-                        { ad: "KAJU (KİKO) 90 qr", qiymet: "5.00 AZN" },
-                        { ad: "HİND QOZU 90 qr", qiymet: "5.00 AZN" },
-                        { ad: "Qarışıq ÇƏRƏZ (qoz, fındıq, badam, araxis, kaju, hind qozu, kişmiş sarı-qara 180 qr)", qiymet: "" },
-                        { ad: "QABİQLİ YER FISTIQ", qiymet: "3.50 AZN" },
-                        { ad: "QABİQLİ FISTIQ 150", qiymet: "" },
-                        { ad: "ŞABALID qovrulmuş 200 qr", qiymet: "4.00 AZN" },
-                        { ad: "ŞABALID qovrulmuş soymuş 200 qr", qiymet: "5.00 AZN" }
-                    ]
-                }
-            ],
-            soyuqIckiler: [
-                {
-                    kateqoriya: "Su və Sərinləşdirici İçkilər",
-                    mehsullar: [
-                        { ad: "SİRAB 05 ml şüşə (qazlı-qazsız)", qiymet: "2.00 AZN" },
-                        { ad: "MOR-MOR 05 ml şüşə", qiymet: "2.00 AZN" },
-                        { ad: "NABEQLAVİ 05 ml şüşə", qiymet: "2.50 AZN" },
-                        { ad: "İSTİSU 05 ml şüşə", qiymet: "2.50 AZN" },
-                        { ad: "KOBİ 05 ml pet (GÜRCÜ)", qiymet: "2.00 AZN" },
-                        { ad: "KOBİ 05 ml şüşə (GÜRCÜ)", qiymet: "3.00 AZN" },
-                        { ad: "RİCAL 05 ml şüşə", qiymet: "3.00 AZN" },
-                        { ad: "BARJOMİ 05 ml şüşə", qiymet: "3.00 AZN" },
-                        { ad: "SLAVYANKA 750 ml şüşə", qiymet: "3.50 AZN" },
-                        { ad: "Coca-Cola, Pepsi, Fanta, Sprite 330 ml (banka)", qiymet: "2.50 AZN" },
-                        { ad: "Coca-Cola, Pepsi, Fanta, Sprite 1 LT", qiymet: "3.00 AZN" },
-                        { ad: "Coca-Cola, Pepsi, Fanta, Sprite 2 LT", qiymet: "4.00 AZN" },
-                        { ad: "FUSE ICE TEA ŞAFTALI, MANQO-ANANAS 1 LT", qiymet: "3.00 AZN" },
-                        { ad: "CAPPY MULTİMEYVƏ 1 Lt", qiymet: "3.00 AZN" },
-                        { ad: "BİZON QIRMIZI GÖY 250 ml", qiymet: "1.50 AZN" },
-                        { ad: "BİZON QIRMIZI GÖY 450 ml", qiymet: "2.00 AZN" },
-                        { ad: "HELL 250 ml", qiymet: "1.50 AZN" }
-                    ]
-                }
-            ],
-            siqaretler: [
-                { marka: "Ciqaronne", novler: [{ad: "Nano Ultra Slims", qiymet: "10.00"}] },
-                { marka: "Davidoff", novler: [{ad: "Gold Slims", qiymet: ""}, {ad: "Klassik Slim", qiymet: ""}] },
-                { marka: "Dunhill", novler: [{ad: "Nano Premium Blue", qiymet: "5.50"}, {ad: "Kompakt Golden Aroma", qiymet: ""}, {ad: "Nano Premium White", qiymet: ""}] },
-                { marka: "X-7", novler: [{ad: "Nano Qara", qiymet: ""}, {ad: "Nano Aroma Ballı", qiymet: ""}, {ad: "Kompakt Silver", qiymet: ""}] },
-                { marka: "Keno", novler: [{ad: "Nano Platinium", qiymet: "3.50"}, {ad: "Kompakt Blue", qiymet: "3.50"}, {ad: "Nano Blue", qiymet: "3.50"}] },
-                { marka: "Kent", novler: [{ad: "1 Nano İnfina", qiymet: "5.50"}, {ad: "4 Nanotek Neo", qiymet: "5.50"}, {ad: "Feel Mentol Kapsullu", qiymet: "5.50"}, {ad: "8 HD Futura Qalın", qiymet: "5.50"}] },
-                { marka: "LD", novler: [{ad: "Club Nano Qara Platinium LSS", qiymet: "4.70"}, {ad: "Kompakt Extra Wait", qiymet: "4.50"}] },
-                { marka: "Magna", novler: [{ad: "Nano Karbon Silver", qiymet: "3.50"}, {ad: "Nano Karbon Black", qiymet: "3.50"}] },
-                { marka: "Pall Mall", novler: [{ad: "Nano Ağ", qiymet: "4.00"}, {ad: "Nano American Nights Mentol", qiymet: "4.00"}] },
-                { marka: "Prima", novler: [{ad: "Kompakt Deluxe Gold", qiymet: "3.50"}, {ad: "Kompakt Deluxe Blue", qiymet: "3.50"}] },
-                { marka: "Rothmans", novler: [{ad: "Kompakt Demi Blue", qiymet: "4.00"}, {ad: "Kompakt Click Amber", qiymet: "4.00"}] },
-                { marka: "Sobranie", novler: [{ad: "Nano Blue", qiymet: "5.50"}, {ad: "Kompakt Blue", qiymet: "5.50"}, {ad: "Nano Midnight Gold", qiymet: "6.00"}, {ad: "Black Gold Kompakt", qiymet: "6.00"}] },
-                { marka: "Viceroy", novler: [{ad: "Nano Silver", qiymet: "3.50"}] },
-                { marka: "Winchester", novler: [{ad: "Nano Silver", qiymet: "4.00"}, {ad: "Kompakt Blue", qiymet: "4.00"}] },
-                { marka: "Winston", novler: [{ad: "Nano XS Silver", qiymet: "5.00"}, {ad: "Kompakt XStyle Aroma Blend", qiymet: "5.00"}, {ad: "Kom XStyle Dual Mentol", qiymet: "5.00"}] }
-            ]
+    <div
+        id="siqaret"
+        class="menu-container">
+    </div>
+</main>
+<!-- =========================
+     FOOTER
+========================== -->
+<footer>
+    <div class="footer-logo">
+        Qarabağ Kafe
+    </div>
+    <div class="footer-text">
+        MENYU • 2026
+    </div>
+</footer>
+<script>
+    /* ==========================================================
+       MENU DATABASE
+    ========================================================== */
+    const db = {
+        pivaSetleri: [
+            {
+                ad: "Set №-1",
+                qiymet: "17 AZN",
+                setQiymeti: "12.60 AZN",
+                mehsullar: [
+                    { ad: "Pivə NZS (5 əd)", p1: "7.5", p2: "7.0" },
+                    { ad: "Saçaqlı pendir (1 pors)", p1: "2", p2: "1.8" },
+                    { ad: "Şallaq (1 pors)", p1: "3", p2: "2.5" },
+                    { ad: "Limon (Para)", p1: "0.5", p2: "0" },
+                    { ad: "Noxud (4 pors)", p1: "2", p2: "0" },
+                    { ad: "Boğaz", p1: "2", p2: "" },
+                    { ad: "Simiçka (1 pors)", p1: "2", p2: "1.8" },
+                    { ad: "Pətənə", p1: "3", p2: "" }
+                ]
+            },
+            {
+                ad: "1 Nəfərlik Set (Orta) / Set №-2",
+                qiymet: "26 AZN",
+                setQiymeti: "21 AZN",
+                mehsullar: [
+                    { ad: "Pivə Elenberq (10 əd)", p1: "15", p2: "11.0" },
+                    { ad: "Saçaqlı pendir (1 pors)", p1: "2", p2: "1.8" },
+                    { ad: "Limon (Para)", p1: "1", p2: "0" },
+                    { ad: "Noxud (4 pors)", p1: "2", p2: "0" },
+                    { ad: "Kilkə (1 pors)", p1: "3", p2: "2.5" },
+                    { ad: "Simiçka (1 pors)", p1: "2", p2: "1.7" },
+                    { ad: "Cipsi (1 pors)", p1: "3", p2: "3" },
+                    { ad: "Suxarik (1 pors)", p1: "1", p2: "1" }
+                ]
+            },
+            {
+                ad: "Set №-3",
+                qiymet: "32 AZN",
+                setQiymeti: "25 AZN",
+                mehsullar: [
+                    { ad: "Pivə Elenberq (8 əd)", p1: "12", p2: "11" },
+                    { ad: "Saçaqlı pendir (1 pors)", p1: "2", p2: "1.6" },
+                    { ad: "Limon (para)", p1: "1", p2: "0" },
+                    { ad: "Noxud (4 pors)", p1: "2", p2: "0" },
+                    { ad: "Kilkə (1 pors)", p1: "3", p2: "2.0" },
+                    { ad: "Simiçka (1 pors)", p1: "2", p2: "1.6" },
+                    { ad: "Cipsi (1 pors)", p1: "3", p2: "2.8" },
+                    { ad: "Suxarik (1 pors)", p1: "1", p2: "1" },
+                    { ad: "Araxis (1 pors)", p1: "3", p2: "2" },
+                    { ad: "Pətənə (1 pors)", p1: "3", p2: "3" }
+                ]
+            },
+            {
+                ad: "Set №-4",
+                qiymet: "52 AZN",
+                setQiymeti: "48 AZN",
+                mehsullar: [
+                    { ad: "Pivə Elenberq (12 əd)", p1: "18", p2: "16" },
+                    { ad: "Saçaqlı pendir (1 pors)", p1: "2", p2: "1.7" },
+                    { ad: "Qızartma pendir (1 pors)", p1: "3", p2: "2" },
+                    { ad: "Blinçik (10 əd)", p1: "0.8", p2: "0.7" },
+                    { ad: "Acika (1 pors)", p1: "1", p2: "0" },
+                    { ad: "Smetan (1 pors)", p1: "1", p2: "1" },
+                    { ad: "Limon (1 əd)", p1: "1", p2: "0" },
+                    { ad: "Noxud (6 pors)", p1: "3", p2: "0" },
+                    { ad: "Kilkə (1 pors)", p1: "3", p2: "2.5" },
+                    { ad: "Simiçka (1 pors)", p1: "2", p2: "1.6" },
+                    { ad: "Cipsi (1 pors)", p1: "3", p2: "2.7" },
+                    { ad: "Suxarik (1 pors)", p1: "1", p2: "1" },
+                    { ad: "Araxis (1 pors)", p1: "3", p2: "2.5" },
+                    { ad: "Pətənə (1 pors)", p1: "3", p2: "3" }
+                ]
+            },
+            {
+                ad: "Set №-5",
+                qiymet: "48 AZN",
+                setQiymeti: "40 AZN",
+                mehsullar: [
+                    { ad: "Pivə Elenberq (12 əd)", p1: "15", p2: "" },
+                    { ad: "Boğaz (4 əd)", p1: "", p2: "" },
+                    { ad: "Bildirçin (4 əd)", p1: "", p2: "" },
+                    { ad: "Fri (2 pors)", p1: "", p2: "" },
+                    { ad: "Saçaqlı pendir (2 pors)", p1: "2", p2: "" },
+                    { ad: "Qızartma pendir (2 pors)", p1: "3", p2: "" },
+                    { ad: "Blinçik (12 əd)", p1: "8", p2: "" },
+                    { ad: "Acika (1 pors)", p1: "0", p2: "" },
+                    { ad: "Smetan (1 pors)", p1: "1", p2: "" },
+                    { ad: "Limon (1 əd)", p1: "1", p2: "" },
+                    { ad: "Noxud (8 pors)", p1: "3", p2: "" },
+                    { ad: "Kilkə (1 pors)", p1: "3", p2: "" },
+                    { ad: "Simiçka (1 pors)", p1: "2", p2: "" },
+                    { ad: "Pətənə (1 pors)", p1: "3", p2: "" }
+                ]
+            }
+        ],
+        qelyanaltilar: [
+            {
+                kateqoriya: "Əsas Qəlyanaltılar",
+                mehsullar: [
+                    { ad: "Saçaqlı pendir (1 pors)", qiymet: "2.00 AZN" },
+                    { ad: "Qızartma pendir (1 pors)", qiymet: "3.00 AZN" },
+                    { ad: "Şallaq (1 pors)", qiymet: "3.00 AZN" },
+                    { ad: "Noxud (1 pors)", qiymet: "2.00 AZN" },
+                    { ad: "Kilkə (1 pors)", qiymet: "3.00 AZN" },
+                    { ad: "Simiçka (1 pors)", qiymet: "2.00 AZN" },
+                    { ad: "Cipsi (1 pors)", qiymet: "3.00 AZN" },
+                    { ad: "Suxarik (1 pors)", qiymet: "1.00 AZN" },
+                    { ad: "Araxis (1 pors)", qiymet: "3.00 AZN" },
+                    { ad: "Pətənə (1 pors)", qiymet: "3.00 AZN" },
+                    { ad: "Fri (1 pors)", qiymet: "" },
+                    { ad: "Bildirçin", qiymet: "" },
+                    { ad: "Boğaz", qiymet: "" }
+                ]
+            },
+            {
+                kateqoriya: "Əlavələr və Souslar",
+                mehsullar: [
+                    { ad: "Limon", qiymet: "1.00 AZN" },
+                    { ad: "Acika", qiymet: "0-1.00 AZN" },
+                    { ad: "Smetan", qiymet: "1.00 AZN" },
+                    { ad: "Blinçik", qiymet: "" }
+                ]
+            }
+        ],
+        istiIckiler: [
+            {
+                kateqoriya: "Çay",
+                mehsullar: [
+                    { ad: "Çay Limon Konfet", qiymet: "2.00 AZN" },
+                    { ad: "Çay Limon Konfet (kəkotu, mıxək, darçın, nanə)", qiymet: "3.00 AZN" },
+                    { ad: "Gül çayı", qiymet: "3.00 AZN" },
+                    { ad: "Yaşıl çay", qiymet: "3.00 AZN" }
+                ]
+            },
+            {
+                kateqoriya: "Kofe",
+                mehsullar: [
+                    { ad: "MacCoffee CLASSIC (fincan)", qiymet: "1.00 AZN" },
+                    { ad: "MacCoffee CLASSIC (çaynik)", qiymet: "4.00 AZN" },
+                    { ad: "NESCAFE MILD / CLASSIK (fincan)", qiymet: "1.00 AZN" },
+                    { ad: "NESCAFE MILD / CLASSIK (çaynik)", qiymet: "4.50 AZN" },
+                    { ad: "MacCoffee cappuccino DITORINO (fincan)", qiymet: "2.00 AZN" },
+                    { ad: "MacCoffee cappuccino DITORINO (çaynik)", qiymet: "5.00 AZN" },
+                    { ad: "Maccoffee Macchocolate isti şokolad (fincan)", qiymet: "2.00 AZN" },
+                    { ad: "Maccoffee Macchocolate isti şokolad (çaynik)", qiymet: "5.00 AZN" },
+                    { ad: "JARDIN cappuccino/mocaccino/latte (fincan)", qiymet: "2.00 AZN" },
+                    { ad: "JARDIN cappuccino/mocaccino/latte (çaynik)", qiymet: "5.00 AZN" },
+                    { ad: "NESCAFE nejnaya penka cappuccino/latte/plombir (fincan)", qiymet: "3.00 AZN" },
+                    { ad: "NESCAFE nejnaya penka cappuccino/latte/plombir (çaynik)", qiymet: "7.00 AZN" }
+                ]
+            }
+        ],
+        murebbeler: [
+            {
+                kateqoriya: "Mürəbbə Çeşitləri",
+                mehsullar: [
+                    { ad: "Çiyələk", qiymet: "5.00 AZN" },
+                    { ad: "Moruq", qiymet: "5.00 AZN" },
+                    { ad: "Böyürtkən", qiymet: "6.00 AZN" },
+                    { ad: "Əncir", qiymet: "5.00 AZN" },
+                    { ad: "Heyva", qiymet: "5.00 AZN" },
+                    { ad: "Gilas qozlu", qiymet: "5.00 AZN" },
+                    { ad: "Zoğal", qiymet: "6.00 AZN" },
+                    { ad: "Armud", qiymet: "5.00 AZN" },
+                    { ad: "Ağ ərik", qiymet: "5.00 AZN" },
+                    { ad: "Kivi", qiymet: "6.00 AZN" },
+                    { ad: "Qızılgül", qiymet: "5.00 AZN" },
+                    { ad: "Nar", qiymet: "5.00 AZN" }
+                ]
+            }
+        ],
+        sirniyyatlar: [
+            {
+                kateqoriya: "Pecenye, Keks və Vafli",
+                mehsullar: [
+                    { ad: "Pecənik ALBENİ 144 qr", qiymet: "5.00 AZN" },
+                    { ad: "Pecənik TUTKU 180 qr", qiymet: "4.00 AZN" },
+                    { ad: "Pecənik Biskrem 180 qr", qiymet: "4.00 AZN" },
+                    { ad: "Keks ADICTO BROWNİ Intense 144 qr", qiymet: "6.00 AZN" },
+                    { ad: "Keks Pop Kek 144 qr", qiymet: "4.50 AZN" },
+                    { ad: "Keks DANKEK lokmalık keks 180 qr", qiymet: "4.00 AZN" },
+                    { ad: "Keks OLALA sufle mini 162 qr", qiymet: "5.00 AZN" },
+                    { ad: "Vafli Yaşkino 200 qr", qiymet: "4.00 AZN" },
+                    { ad: "Vafli Hoşbeş 142 qr", qiymet: "4.00 AZN" },
+                    { ad: "Pryanık Yaşkino", qiymet: "4.50 AZN" },
+                    { ad: "Rulet 180 qr", qiymet: "3.00 AZN" },
+                    { ad: "Rulet Bifcake 180 qr", qiymet: "3.50 AZN" }
+                ]
+            },
+            {
+                kateqoriya: "Tort və Şokoladlar",
+                mehsullar: [
+                    { ad: "SNİCKERS (araxis) 50 qr", qiymet: "3.00 AZN" },
+                    { ad: "SNİCKERS (araxis) 80 qr", qiymet: "4.00 AZN" },
+                    { ad: "SNİCKERS (funduqla) 81 qr", qiymet: "5.00 AZN" },
+                    { ad: "SNİCKERS (ağ araxisli) 81 qr", qiymet: "5.00 AZN" },
+                    { ad: "MARS 51 qr", qiymet: "3.00 AZN" },
+                    { ad: "TWIX 50 qr", qiymet: "3.00 AZN" },
+                    { ad: "NUTS 50 qr", qiymet: "3.00 AZN" },
+                    { ad: "BAUNTY 57 qr", qiymet: "3.00 AZN" },
+                    { ad: "BAUNTY TRİO 82.5 qr", qiymet: "4.00 AZN" },
+                    { ad: "QUNMİLK Vkus nastroenie 80 qr", qiymet: "3.00 AZN" },
+                    { ad: "ALPENGOLD çeşitləri 80 qr", qiymet: "5.00 AZN" },
+                    { ad: "NESTLE südlü,fındıqlı, tünd classik badamlı 90 qr", qiymet: "4.00 AZN" },
+                    { ad: "CHOCO ART çeşitləri 90 qr", qiymet: "4.00 AZN" },
+                    { ad: "BABAYEVSKİY çeşitləri", qiymet: "5.00 AZN" },
+                    { ad: "Milka südlü tablet 80 qr", qiymet: "8.00 AZN" },
+                    { ad: "MİLKA şokolad südlü fındıqlı 110 qr", qiymet: "11.00 AZN" },
+                    { ad: "MİLKA oreo şokolad 300 qr", qiymet: "18.00 AZN" },
+                    { ad: "MİLKA şokolad funduqlu 300 qr", qiymet: "18.00 AZN" },
+                    { ad: "MİLKA THANK südlü/südlü fındıqlı 110 qr", qiymet: "14.00 AZN" },
+                    { ad: "KONFİRELLA DARENKA 80 qr", qiymet: "4.00 AZN" },
+                    { ad: "ALBENİ 85 qr", qiymet: "10.00 AZN" },
+                    { ad: "MERCİ çeşitləri 100 qr", qiymet: "10.00 AZN" }
+                ]
+            }
+        ],
+        cerezler: [
+            {
+                kateqoriya: "Əsas Çərəzlər",
+                mehsullar: [
+                    { ad: "QOZ 90 qr", qiymet: "4.00 AZN" },
+                    { ad: "FINDIQ 90 qr", qiymet: "4.00 AZN" },
+                    { ad: "BADAM 90 qr", qiymet: "4.00 AZN" },
+                    { ad: "ARAXİS 90 qr", qiymet: "3.00 AZN" },
+                    { ad: "PÜSTƏ 90 qr", qiymet: "8.00 AZN" },
+                    { ad: "KAJU (KİKO) 90 qr", qiymet: "5.00 AZN" },
+                    { ad: "HİND QOZU 90 qr", qiymet: "5.00 AZN" },
+                    { ad: "Qarışıq ÇƏRƏZ (qoz, fındıq, badam, araxis, kaju, hind qozu, kişmiş sarı-qara 180 qr)", qiymet: "" },
+                    { ad: "QABİQLİ YER FISTIQ", qiymet: "3.50 AZN" },
+                    { ad: "QABİQLİ FISTIQ 150", qiymet: "" },
+                    { ad: "ŞABALID qovrulmuş 200 qr", qiymet: "4.00 AZN" },
+                    { ad: "ŞABALID qovrulmuş soymuş 200 qr", qiymet: "5.00 AZN" }
+                ]
+            }
+        ],
+        soyuqIckiler: [
+            {
+                kateqoriya: "Su və Sərinləşdirici İçkilər",
+                mehsullar: [
+                    { ad: "SİRAB 05 ml şüşə (qazlı-qazsız)", qiymet: "2.00 AZN" },
+                    { ad: "MOR-MOR 05 ml şüşə", qiymet: "2.00 AZN" },
+                    { ad: "NABEQLAVİ 05 ml şüşə", qiymet: "2.50 AZN" },
+                    { ad: "İSTİSU 05 ml şüşə", qiymet: "2.50 AZN" },
+                    { ad: "KOBİ 05 ml pet (GÜRCÜ)", qiymet: "2.00 AZN" },
+                    { ad: "KOBİ 05 ml şüşə (GÜRCÜ)", qiymet: "3.00 AZN" },
+                    { ad: "RİCAL 05 ml şüşə", qiymet: "3.00 AZN" },
+                    { ad: "BARJOMİ 05 ml şüşə", qiymet: "3.00 AZN" },
+                    { ad: "SLAVYANKA 750 ml şüşə", qiymet: "3.50 AZN" },
+                    { ad: "Coca-Cola, Pepsi, Fanta, Sprite 330 ml (banka)", qiymet: "2.50 AZN" },
+                    { ad: "Coca-Cola, Pepsi, Fanta, Sprite 1 LT", qiymet: "3.00 AZN" },
+                    { ad: "Coca-Cola, Pepsi, Fanta, Sprite 2 LT", qiymet: "4.00 AZN" },
+                    { ad: "FUSE ICE TEA ŞAFTALI, MANQO-ANANAS 1 LT", qiymet: "3.00 AZN" },
+                    { ad: "CAPPY MULTİMEYVƏ 1 Lt", qiymet: "3.00 AZN" },
+                    { ad: "BİZON QIRMIZI GÖY 250 ml", qiymet: "1.50 AZN" },
+                    { ad: "BİZON QIRMIZI GÖY 450 ml", qiymet: "2.00 AZN" },
+                    { ad: "HELL 250 ml", qiymet: "1.50 AZN" }
+                ]
+            }
+        ],
+        siqaretler: [
+            {
+                marka: "Ciqaronne",
+                novler: [
+                    { ad: "Nano Ultra Slims", qiymet: "10.00" }
+                ]
+            },
+            {
+                marka: "Davidoff",
+                novler: [
+                    { ad: "Gold Slims", qiymet: "" },
+                    { ad: "Klassik Slim", qiymet: "" }
+                ]
+            },
+            {
+                marka: "Dunhill",
+                novler: [
+                    { ad: "Nano Premium Blue", qiymet: "5.50" },
+                    { ad: "Kompakt Golden Aroma", qiymet: "" },
+                    { ad: "Nano Premium White", qiymet: "" }
+                ]
+            },
+            {
+                marka: "X-7",
+                novler: [
+                    { ad: "Nano Qara", qiymet: "" },
+                    { ad: "Nano Aroma Ballı", qiymet: "" },
+                    { ad: "Kompakt Silver", qiymet: "" }
+                ]
+            },
+            {
+                marka: "Keno",
+                novler: [
+                    { ad: "Nano Platinium", qiymet: "3.50" },
+                    { ad: "Kompakt Blue", qiymet: "3.50" },
+                    { ad: "Nano Blue", qiymet: "3.50" }
+                ]
+            },
+            {
+                marka: "Kent",
+                novler: [
+                    { ad: "1 Nano İnfina", qiymet: "5.50" },
+                    { ad: "4 Nanotek Neo", qiymet: "5.50" },
+                    { ad: "Feel Mentol Kapsullu", qiymet: "5.50" },
+                    { ad: "8 HD Futura Qalın", qiymet: "5.50" }
+                ]
+            },
+            {
+                marka: "LD",
+                novler: [
+                    { ad: "Club Nano Qara Platinium LSS", qiymet: "4.70" },
+                    { ad: "Kompakt Extra Wait", qiymet: "4.50" }
+                ]
+            },
+            {
+                marka: "Magna",
+                novler: [
+                    { ad: "Nano Karbon Silver", qiymet: "3.50" },
+                    { ad: "Nano Karbon Black", qiymet: "3.50" }
+                ]
+            },
+            {
+                marka: "Pall Mall",
+                novler: [
+                    { ad: "Nano Ağ", qiymet: "4.00" },
+                    { ad: "Nano American Nights Mentol", qiymet: "4.00" }
+                ]
+            },
+            {
+                marka: "Prima",
+                novler: [
+                    { ad: "Kompakt Deluxe Gold", qiymet: "3.50" },
+                    { ad: "Kompakt Deluxe Blue", qiymet: "3.50" }
+                ]
+            },
+            {
+                marka: "Rothmans",
+                novler: [
+                    { ad: "Kompakt Demi Blue", qiymet: "4.00" },
+                    { ad: "Kompakt Click Amber", qiymet: "4.00" }
+                ]
+            },
+            {
+                marka: "Sobranie",
+                novler: [
+                    { ad: "Nano Blue", qiymet: "5.50" },
+                    { ad: "Kompakt Blue", qiymet: "5.50" },
+                    { ad: "Nano Midnight Gold", qiymet: "6.00" },
+                    { ad: "Black Gold Kompakt", qiymet: "6.00" }
+                ]
+            },
+            {
+                marka: "Viceroy",
+                novler: [
+                    { ad: "Nano Silver", qiymet: "3.50" }
+                ]
+            },
+            {
+                marka: "Winchester",
+                novler: [
+                    { ad: "Nano Silver", qiymet: "4.00" },
+                    { ad: "Kompakt Blue", qiymet: "4.00" }
+                ]
+            },
+            {
+                marka: "Winston",
+                novler: [
+                    { ad: "Nano XS Silver", qiymet: "5.00" },
+                    { ad: "Kompakt XStyle Aroma Blend", qiymet: "5.00" },
+                    { ad: "Kom XStyle Dual Mentol", qiymet: "5.00" }
+                ]
+            }
+        ]
+    };
+    /* ==========================================================
+       CATEGORY TITLES
+    ========================================================== */
+    const categoryInfo = {
+        piva: {
+            title: "Pivə Setləri",
+            subtitle: "Sizin üçün hazırlanmış xüsusi setlər"
+        },
+        qelyanalti: {
+            title: "Qəlyanaltılar",
+            subtitle: "Pivə və süfrə üçün dadlı seçimlər"
+        },
+        isti: {
+            title: "İsti İçkilər",
+            subtitle: "Çay, kofe və isti içkilər"
+        },
+        murebbe: {
+            title: "Mürəbbələr",
+            subtitle: "Ənənəvi və ləzzətli mürəbbə çeşidləri"
+        },
+        sirniyyat: {
+            title: "Şirniyyat və Tort",
+            subtitle: "Şokolad, keks, vafli və digər şirniyyatlar"
+        },
+        cerez: {
+            title: "Çərəzlər",
+            subtitle: "Təzə və seçilmiş çərəzlər"
+        },
+        soyuq: {
+            title: "Soyuq İçkilər",
+            subtitle: "Sərinləşdirici içkilər və su"
+        },
+        siqaret: {
+            title: "Siqaretlər",
+            subtitle: "Mövcud marka və çeşidlər"
+        }
+    };
+    /* ==========================================================
+       RENDER MENU
+    ========================================================== */
+    function renderMenu() {
+        const containers = {
+            piva: document.getElementById('piva'),
+            qelyanalti: document.getElementById('qelyanalti'),
+            isti: document.getElementById('isti'),
+            murebbe: document.getElementById('murebbe'),
+            sirniyyat: document.getElementById('sirniyyat'),
+            cerez: document.getElementById('cerez'),
+            soyuq: document.getElementById('soyuq'),
+            siqaret: document.getElementById('siqaret')
         };
-
-        function renderMenu() {
-            const containers = {
-                'piva': document.getElementById('piva'),
-                'qelyanalti': document.getElementById('qelyanalti'),
-                'isti': document.getElementById('isti'),
-                'murebbe': document.getElementById('murebbe'),
-                'sirniyyat': document.getElementById('sirniyyat'),
-                'cerez': document.getElementById('cerez'),
-                'soyuq': document.getElementById('soyuq'),
-                'siqaret': document.getElementById('siqaret')
-            };
-
-            // Pivə Setləri
-            db.pivaSetleri.forEach(set => {
-                let rows = '';
-                set.mehsullar.forEach((item, index) => {
-                    rows += `
-                        <tr>
-                            <td>${index + 1}. ${item.ad}</td>
-                            <td class="val">${item.p1}</td>
-                            <td class="val">${item.p2}</td>
-                        </tr>
-                    `;
-                });
-
-                containers['piva'].innerHTML += `
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="card-title">${set.ad}</h2>
-                            <div class="card-price">
-                                <div class="price-main">${set.qiymet}</div>
-                                <div class="price-sub">Set: ${set.setQiymeti}</div>
-                            </div>
-                        </div>
-                        <table class="table-container">
-                            <thead>
-                                <tr>
-                                    <th>Məhsul</th>
-                                    <th style="text-align: right">Q-1</th>
-                                    <th style="text-align: right">Q-2</th>
-                                </tr>
-                            </thead>
-                            <tbody>${rows}</tbody>
-                        </table>
-                    </div>
+        /* =========================
+           PİVƏ SETLƏRİ
+        ========================== */
+        db.pivaSetleri.forEach(set => {
+            let rows = '';
+            set.mehsullar.forEach((item, index) => {
+                rows += `
+                    <tr>
+                        <td>
+                            ${index + 1}. ${item.ad}
+                        </td>
+                        <td class="val">
+                            ${item.p1 || '—'}
+                        </td>
+                        <td class="val">
+                            ${item.p2 || '—'}
+                        </td>
+                    </tr>
                 `;
             });
-
-            // Qəlyanaltılar, İsti, Mürəbbə, Şirniyyat, Çərəz, Soyuq (Siyahı tiplilər)
-            const listCategories = [
-                { key: 'qelyanaltilar', target: 'qelyanalti' },
-                { key: 'istiIckiler', target: 'isti' },
-                { key: 'murebbeler', target: 'murebbe' },
-                { key: 'sirniyyatlar', target: 'sirniyyat' },
-                { key: 'cerezler', target: 'cerez' },
-                { key: 'soyuqIckiler', target: 'soyuq' }
-            ];
-
-            listCategories.forEach(catInfo => {
-                db[catInfo.key].forEach(kat => {
-                    let listItems = '';
-                    kat.mehsullar.forEach(item => {
-                        let qText = item.qiymet ? `${item.qiymet}` : '- AZN';
-                        listItems += `
-                            <li>
-                                <span>${item.ad}</span>
-                                <span class="price">${qText}</span>
-                            </li>
-                        `;
-                    });
-
-                    containers[catInfo.target].innerHTML += `
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title">${kat.kateqoriya}</h2>
+            containers.piva.innerHTML += `
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            ${set.ad}
+                        </h2>
+                        <div class="card-price">
+                            <div class="price-main">
+                                ${set.qiymet}
                             </div>
-                            <ul class="item-list">${listItems}</ul>
+                            <div class="price-sub">
+                                Set: ${set.setQiymeti}
+                            </div>
                         </div>
-                    `;
-                });
-            });
-
-            // Siqaretlər
-            db.siqaretler.forEach(marka => {
+                    </div>
+                    <table class="table-container">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Məhsul
+                                </th>
+                                <th style="text-align:right">
+                                    Q-1
+                                </th>
+                                <th style="text-align:right">
+                                    Q-2
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        });
+        /* =========================
+           LIST CATEGORIES
+        ========================== */
+        const listCategories = [
+            {
+                key: 'qelyanaltilar',
+                target: 'qelyanalti'
+            },
+            {
+                key: 'istiIckiler',
+                target: 'isti'
+            },
+            {
+                key: 'murebbeler',
+                target: 'murebbe'
+            },
+            {
+                key: 'sirniyyatlar',
+                target: 'sirniyyat'
+            },
+            {
+                key: 'cerezler',
+                target: 'cerez'
+            },
+            {
+                key: 'soyuqIckiler',
+                target: 'soyuq'
+            }
+        ];
+        listCategories.forEach(catInfo => {
+            db[catInfo.key].forEach(kat => {
                 let listItems = '';
-                marka.novler.forEach(nov => {
-                    let qiymetText = nov.qiymet ? `${nov.qiymet} AZN` : '- AZN';
+                kat.mehsullar.forEach(item => {
+                    const qText =
+                        item.qiymet
+                            ? item.qiymet
+                            : '—';
                     listItems += `
                         <li>
-                            <span>${nov.ad}</span>
-                            <span class="price">${qiymetText}</span>
+                            <span>
+                                ${item.ad}
+                            </span>
+                            <span class="price">
+                                ${qText}
+                            </span>
                         </li>
                     `;
                 });
-
-                containers['siqaret'].innerHTML += `
+                containers[catInfo.target].innerHTML += `
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="card-title">${marka.marka}</h2>
+                            <h2 class="card-title">
+                                ${kat.kateqoriya}
+                            </h2>
                         </div>
-                        <ul class="item-list">${listItems}</ul>
+                        <ul class="item-list">
+                            ${listItems}
+                        </ul>
                     </div>
                 `;
             });
+        });
+        /* =========================
+           SİQARETLƏR
+        ========================== */
+        db.siqaretler.forEach(marka => {
+            let listItems = '';
+            marka.novler.forEach(nov => {
+                const qiymetText =
+                    nov.qiymet
+                        ? `${nov.qiymet} AZN`
+                        : '—';
+                listItems += `
+                    <li>
+                        <span>
+                            ${nov.ad}
+                        </span>
+                        <span class="price">
+                            ${qiymetText}
+                        </span>
+                    </li>
+                `;
+            });
+            containers.siqaret.innerHTML += `
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            ${marka.marka}
+                        </h2>
+                    </div>
+                    <ul class="item-list">
+                        ${listItems}
+                    </ul>
+                </div>
+            `;
+        });
+    }
+    /* ==========================================================
+       TAB SWITCH
+    ========================================================== */
+    function switchTab(tabId, button) {
+        document
+            .querySelectorAll('.menu-container')
+            .forEach(el => {
+                el.classList.remove('active');
+            });
+        document
+            .querySelectorAll('.tab-btn')
+            .forEach(el => {
+                el.classList.remove('active');
+            });
+        const selectedMenu =
+            document.getElementById(tabId);
+        selectedMenu.classList.add('active');
+        button.classList.add('active');
+        /* Section title */
+        const info =
+            categoryInfo[tabId];
+        document.getElementById('sectionTitle')
+            .textContent = info.title;
+        document.getElementById('sectionSubtitle')
+            .textContent = info.subtitle;
+        /* Mobile-də kateqoriyaya keçəndə
+           başlığı bir az yuxarı gətir */
+        if (window.innerWidth < 700) {
+            setTimeout(() => {
+                document
+                    .querySelector('.section-intro')
+                    .scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+            }, 50);
         }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.menu-container').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        window.onload = renderMenu;
-    </script>
+    }
+    /* ==========================================================
+       START
+    ========================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+        renderMenu();
+    });
+</script>
 </body>
 </html>
