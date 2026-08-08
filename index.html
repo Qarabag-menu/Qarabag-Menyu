@@ -39,7 +39,7 @@
 
         .tabs {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             margin-bottom: 30px;
             flex-wrap: wrap;
             justify-content: center;
@@ -49,8 +49,8 @@
             background-color: transparent;
             color: var(--text-main);
             border: 2px solid var(--primary-color);
-            padding: 10px 20px;
-            font-size: 1rem;
+            padding: 8px 16px;
+            font-size: 0.9rem;
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -164,6 +164,11 @@
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('piva')">Pivə Setləri</button>
         <button class="tab-btn" onclick="switchTab('qelyanalti')">Qəlyanaltılar və Yeməklər</button>
+        <button class="tab-btn" onclick="switchTab('isti')">İsti İçkilər</button>
+        <button class="tab-btn" onclick="switchTab('murebbe')">Mürəbbələr</button>
+        <button class="tab-btn" onclick="switchTab('sirniyyat')">Şirniyyat və Tort</button>
+        <button class="tab-btn" onclick="switchTab('cerez')">Çərəzlər</button>
+        <button class="tab-btn" onclick="switchTab('soyuq')">Soyuq İçkilər</button>
         <button class="tab-btn" onclick="switchTab('siqaret')">Siqaretlər</button>
     </div>
 
@@ -172,6 +177,21 @@
 
     <!-- Qəlyanaltılar və Yeməklər -->
     <div id="qelyanalti" class="menu-container"></div>
+
+    <!-- İsti İçkilər -->
+    <div id="isti" class="menu-container"></div>
+
+    <!-- Mürəbbələr -->
+    <div id="murebbe" class="menu-container"></div>
+
+    <!-- Şirniyyat və Tort -->
+    <div id="sirniyyat" class="menu-container"></div>
+
+    <!-- Çərəzlər -->
+    <div id="cerez" class="menu-container"></div>
+
+    <!-- Soyuq İçkilər -->
+    <div id="soyuq" class="menu-container"></div>
 
     <!-- Siqaretlər -->
     <div id="siqaret" class="menu-container"></div>
@@ -298,6 +318,142 @@
                     ]
                 }
             ],
+            istiIckiler: [
+                {
+                    kateqoriya: "Çay",
+                    mehsullar: [
+                        { ad: "Çay Limon Konfet", qiymet: "2.00 AZN" },
+                        { ad: "Çay Limon Konfet (kəkotu, mıxək, darçın, nanə)", qiymet: "3.00 AZN" },
+                        { ad: "Gül çayı", qiymet: "3.00 AZN" },
+                        { ad: "Yaşıl çay", qiymet: "3.00 AZN" }
+                    ]
+                },
+                {
+                    kateqoriya: "Kofe",
+                    mehsullar: [
+                        { ad: "MacCoffee CLASSIC (fincan)", qiymet: "1.00 AZN" },
+                        { ad: "MacCoffee CLASSIC (çaynik)", qiymet: "4.00 AZN" },
+                        { ad: "NESCAFE MILD / CLASSIK (fincan)", qiymet: "1.00 AZN" },
+                        { ad: "NESCAFE MILD / CLASSIK (çaynik)", qiymet: "4.50 AZN" },
+                        { ad: "MacCoffee cappuccino DITORINO (fincan)", qiymet: "2.00 AZN" },
+                        { ad: "MacCoffee cappuccino DITORINO (çaynik)", qiymet: "5.00 AZN" },
+                        { ad: "Maccoffee Macchocolate isti şokolad (fincan)", qiymet: "2.00 AZN" },
+                        { ad: "Maccoffee Macchocolate isti şokolad (çaynik)", qiymet: "5.00 AZN" },
+                        { ad: "JARDIN cappuccino/mocaccino/latte (fincan)", qiymet: "2.00 AZN" },
+                        { ad: "JARDIN cappuccino/mocaccino/latte (çaynik)", qiymet: "5.00 AZN" },
+                        { ad: "NESCAFE nejnaya penka cappuccino/latte/plombir (fincan)", qiymet: "3.00 AZN" },
+                        { ad: "NESCAFE nejnaya penka cappuccino/latte/plombir (çaynik)", qiymet: "7.00 AZN" }
+                    ]
+                }
+            ],
+            murebbeler: [
+                {
+                    kateqoriya: "Mürəbbə Çeşitləri",
+                    mehsullar: [
+                        { ad: "Çiyələk", qiymet: "5.00 AZN" },
+                        { ad: "Moruq", qiymet: "5.00 AZN" },
+                        { ad: "Böyürtkən", qiymet: "6.00 AZN" },
+                        { ad: "Əncir", qiymet: "5.00 AZN" },
+                        { ad: "Heyva", qiymet: "5.00 AZN" },
+                        { ad: "Gilas qozlu", qiymet: "5.00 AZN" },
+                        { ad: "Zoğal", qiymet: "6.00 AZN" },
+                        { ad: "Armud", qiymet: "5.00 AZN" },
+                        { ad: "Ağ ərik", qiymet: "5.00 AZN" },
+                        { ad: "Kivi", qiymet: "6.00 AZN" },
+                        { ad: "Qızılgül", qiymet: "5.00 AZN" },
+                        { ad: "Nar", qiymet: "5.00 AZN" }
+                    ]
+                }
+            ],
+            sirniyyatlar: [
+                {
+                    kateqoriya: "Pecenye, Keks və Vafli",
+                    mehsullar: [
+                        { ad: "Pecənik ALBENİ 144 qr", qiymet: "5.00 AZN" },
+                        { ad: "Pecənik TUTKU 180 qr", qiymet: "4.00 AZN" },
+                        { ad: "Pecənik Biskrem 180 qr", qiymet: "4.00 AZN" },
+                        { ad: "Keks ADICTO BROWNİ Intense 144 qr", qiymet: "6.00 AZN" },
+                        { ad: "Keks Pop Kek 144 qr", qiymet: "4.50 AZN" },
+                        { ad: "Keks DANKEK lokmalık keks 180 qr", qiymet: "4.00 AZN" },
+                        { ad: "Keks OLALA sufle mini 162 qr", qiymet: "5.00 AZN" },
+                        { ad: "Vafli Yaşkino 200 qr", qiymet: "4.00 AZN" },
+                        { ad: "Vafli Hoşbeş 142 qr", qiymet: "4.00 AZN" },
+                        { ad: "Pryanık Yaşkino", qiymet: "4.50 AZN" },
+                        { ad: "Rulet 180 qr", qiymet: "3.00 AZN" },
+                        { ad: "Rulet Bifcake 180 qr", qiymet: "3.50 AZN" }
+                    ]
+                },
+                {
+                    kateqoriya: "Tort və Şokoladlar",
+                    mehsullar: [
+                        { ad: "SNİCKERS (araxis) 50 qr", qiymet: "3.00 AZN" },
+                        { ad: "SNİCKERS (araxis) 80 qr", qiymet: "4.00 AZN" },
+                        { ad: "SNİCKERS (funduqla) 81 qr", qiymet: "5.00 AZN" },
+                        { ad: "SNİCKERS (ağ araxisli) 81 qr", qiymet: "5.00 AZN" },
+                        { ad: "MARS 51 qr", qiymet: "3.00 AZN" },
+                        { ad: "TWIX 50 qr", qiymet: "3.00 AZN" },
+                        { ad: "NUTS 50 qr", qiymet: "3.00 AZN" },
+                        { ad: "BAUNTY 57 qr", qiymet: "3.00 AZN" },
+                        { ad: "BAUNTY TRİO 82.5 qr", qiymet: "4.00 AZN" },
+                        { ad: "QUNMİLK Vkus nastroenie 80 qr", qiymet: "3.00 AZN" },
+                        { ad: "ALPENGOLD çeşitləri 80 qr", qiymet: "5.00 AZN" },
+                        { ad: "NESTLE südlü,fındıqlı, tünd classik badamlı 90 qr", qiymet: "4.00 AZN" },
+                        { ad: "CHOCO ART çeşitləri 90 qr", qiymet: "4.00 AZN" },
+                        { ad: "BABAYEVSKİY çeşitləri", qiymet: "5.00 AZN" },
+                        { ad: "Milka südlü tablet 80 qr", qiymet: "8.00 AZN" },
+                        { ad: "MİLKA şokolad südlü fındıqlı 110 qr", qiymet: "11.00 AZN" },
+                        { ad: "MİLKA oreo şokolad 300 qr", qiymet: "18.00 AZN" },
+                        { ad: "MİLKA şokolad funduqlu 300 qr", qiymet: "18.00 AZN" },
+                        { ad: "MİLKA THANK südlü/südlü fındıqlı 110 qr", qiymet: "14.00 AZN" },
+                        { ad: "KONFİRELLA DARENKA 80 qr", qiymet: "4.00 AZN" },
+                        { ad: "ALBENİ 85 qr", qiymet: "10.00 AZN" },
+                        { ad: "MERCİ çeşitləri 100 qr", qiymet: "10.00 AZN" }
+                    ]
+                }
+            ],
+            cerezler: [
+                {
+                    kateqoriya: "Əsas Çərəzlər",
+                    mehsullar: [
+                        { ad: "QOZ 90 qr", qiymet: "4.00 AZN" },
+                        { ad: "FINDIQ 90 qr", qiymet: "4.00 AZN" },
+                        { ad: "BADAM 90 qr", qiymet: "4.00 AZN" },
+                        { ad: "ARAXİS 90 qr", qiymet: "3.00 AZN" },
+                        { ad: "PÜSTƏ 90 qr", qiymet: "8.00 AZN" },
+                        { ad: "KAJU (KİKO) 90 qr", qiymet: "5.00 AZN" },
+                        { ad: "HİND QOZU 90 qr", qiymet: "5.00 AZN" },
+                        { ad: "Qarışıq ÇƏRƏZ (qoz, fındıq, badam, araxis, kaju, hind qozu, kişmiş sarı-qara 180 qr)", qiymet: "" },
+                        { ad: "QABİQLİ YER FISTIQ", qiymet: "3.50 AZN" },
+                        { ad: "QABİQLİ FISTIQ 150", qiymet: "" },
+                        { ad: "ŞABALID qovrulmuş 200 qr", qiymet: "4.00 AZN" },
+                        { ad: "ŞABALID qovrulmuş soymuş 200 qr", qiymet: "5.00 AZN" }
+                    ]
+                }
+            ],
+            soyuqIckiler: [
+                {
+                    kateqoriya: "Su və Sərinləşdirici İçkilər",
+                    mehsullar: [
+                        { ad: "SİRAB 05 ml şüşə (qazlı-qazsız)", qiymet: "2.00 AZN" },
+                        { ad: "MOR-MOR 05 ml şüşə", qiymet: "2.00 AZN" },
+                        { ad: "NABEQLAVİ 05 ml şüşə", qiymet: "2.50 AZN" },
+                        { ad: "İSTİSU 05 ml şüşə", qiymet: "2.50 AZN" },
+                        { ad: "KOBİ 05 ml pet (GÜRCÜ)", qiymet: "2.00 AZN" },
+                        { ad: "KOBİ 05 ml şüşə (GÜRCÜ)", qiymet: "3.00 AZN" },
+                        { ad: "RİCAL 05 ml şüşə", qiymet: "3.00 AZN" },
+                        { ad: "BARJOMİ 05 ml şüşə", qiymet: "3.00 AZN" },
+                        { ad: "SLAVYANKA 750 ml şüşə", qiymet: "3.50 AZN" },
+                        { ad: "Coca-Cola, Pepsi, Fanta, Sprite 330 ml (banka)", qiymet: "2.50 AZN" },
+                        { ad: "Coca-Cola, Pepsi, Fanta, Sprite 1 LT", qiymet: "3.00 AZN" },
+                        { ad: "Coca-Cola, Pepsi, Fanta, Sprite 2 LT", qiymet: "4.00 AZN" },
+                        { ad: "FUSE ICE TEA ŞAFTALI, MANQO-ANANAS 1 LT", qiymet: "3.00 AZN" },
+                        { ad: "CAPPY MULTİMEYVƏ 1 Lt", qiymet: "3.00 AZN" },
+                        { ad: "BİZON QIRMIZI GÖY 250 ml", qiymet: "1.50 AZN" },
+                        { ad: "BİZON QIRMIZI GÖY 450 ml", qiymet: "2.00 AZN" },
+                        { ad: "HELL 250 ml", qiymet: "1.50 AZN" }
+                    ]
+                }
+            ],
             siqaretler: [
                 { marka: "Ciqaronne", novler: [{ad: "Nano Ultra Slims", qiymet: "10.00"}] },
                 { marka: "Davidoff", novler: [{ad: "Gold Slims", qiymet: ""}, {ad: "Klassik Slim", qiymet: ""}] },
@@ -318,9 +474,16 @@
         };
 
         function renderMenu() {
-            const pivaContainer = document.getElementById('piva');
-            const qelyanaltiContainer = document.getElementById('qelyanalti');
-            const siqaretContainer = document.getElementById('siqaret');
+            const containers = {
+                'piva': document.getElementById('piva'),
+                'qelyanalti': document.getElementById('qelyanalti'),
+                'isti': document.getElementById('isti'),
+                'murebbe': document.getElementById('murebbe'),
+                'sirniyyat': document.getElementById('sirniyyat'),
+                'cerez': document.getElementById('cerez'),
+                'soyuq': document.getElementById('soyuq'),
+                'siqaret': document.getElementById('siqaret')
+            };
 
             // Pivə Setləri
             db.pivaSetleri.forEach(set => {
@@ -335,7 +498,7 @@
                     `;
                 });
 
-                pivaContainer.innerHTML += `
+                containers['piva'].innerHTML += `
                     <div class="card">
                         <div class="card-header">
                             <h2 class="card-title">${set.ad}</h2>
@@ -358,27 +521,38 @@
                 `;
             });
 
-            // Qəlyanaltılar və Yeməklər
-            db.qelyanaltilar.forEach(kat => {
-                let listItems = '';
-                kat.mehsullar.forEach(item => {
-                    let qText = item.qiymet ? `${item.qiymet}` : '- AZN';
-                    listItems += `
-                        <li>
-                            <span>${item.ad}</span>
-                            <span class="price">${qText}</span>
-                        </li>
+            // Qəlyanaltılar, İsti, Mürəbbə, Şirniyyat, Çərəz, Soyuq (Siyahı tiplilər)
+            const listCategories = [
+                { key: 'qelyanaltilar', target: 'qelyanalti' },
+                { key: 'istiIckiler', target: 'isti' },
+                { key: 'murebbeler', target: 'murebbe' },
+                { key: 'sirniyyatlar', target: 'sirniyyat' },
+                { key: 'cerezler', target: 'cerez' },
+                { key: 'soyuqIckiler', target: 'soyuq' }
+            ];
+
+            listCategories.forEach(catInfo => {
+                db[catInfo.key].forEach(kat => {
+                    let listItems = '';
+                    kat.mehsullar.forEach(item => {
+                        let qText = item.qiymet ? `${item.qiymet}` : '- AZN';
+                        listItems += `
+                            <li>
+                                <span>${item.ad}</span>
+                                <span class="price">${qText}</span>
+                            </li>
+                        `;
+                    });
+
+                    containers[catInfo.target].innerHTML += `
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">${kat.kateqoriya}</h2>
+                            </div>
+                            <ul class="item-list">${listItems}</ul>
+                        </div>
                     `;
                 });
-
-                qelyanaltiContainer.innerHTML += `
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="card-title">${kat.kateqoriya}</h2>
-                        </div>
-                        <ul class="item-list">${listItems}</ul>
-                    </div>
-                `;
             });
 
             // Siqaretlər
@@ -394,7 +568,7 @@
                     `;
                 });
 
-                siqaretContainer.innerHTML += `
+                containers['siqaret'].innerHTML += `
                     <div class="card">
                         <div class="card-header">
                             <h2 class="card-title">${marka.marka}</h2>
