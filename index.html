@@ -6,7 +6,7 @@
     <title>Qarabağ Kafe - Menyu İdarəetmə Sistemi</title>
     <style>
         :root {
-            --primary-color: #d4af37; /* Qızılı/Kəhrəba rəng (Kafe və pivə teması üçün) */
+            --primary-color: #d4af37;
             --bg-dark: #121212;
             --bg-card: #1e1e1e;
             --text-main: #f5f5f5;
@@ -41,14 +41,16 @@
             display: flex;
             gap: 15px;
             margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .tab-btn {
             background-color: transparent;
             color: var(--text-main);
             border: 2px solid var(--primary-color);
-            padding: 10px 25px;
-            font-size: 1.1rem;
+            padding: 10px 20px;
+            font-size: 1rem;
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -90,7 +92,7 @@
         }
 
         .card-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: bold;
             color: var(--primary-color);
             margin: 0;
@@ -120,6 +122,7 @@
             padding: 8px 0;
             text-align: left;
             border-bottom: 1px solid #2a2a2a;
+            font-size: 0.95rem;
         }
         
         .table-container th {
@@ -133,19 +136,19 @@
             color: #ddd;
         }
 
-        /* Siqaretlər üçün xüsusi sadə siyahı */
-        .cig-list {
+        .item-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-        .cig-list li {
+        .item-list li {
             padding: 8px 0;
             border-bottom: 1px dashed #333;
             display: flex;
             justify-content: space-between;
+            font-size: 0.95rem;
         }
-        .cig-list li span.price {
+        .item-list li span.price {
             color: var(--primary-color);
             font-weight: bold;
         }
@@ -160,17 +163,20 @@
 
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('piva')">Pivə Setləri</button>
+        <button class="tab-btn" onclick="switchTab('qelyanalti')">Qəlyanaltılar və Yeməklər</button>
         <button class="tab-btn" onclick="switchTab('siqaret')">Siqaretlər</button>
     </div>
 
     <!-- Pivə Setləri -->
     <div id="piva" class="menu-container active"></div>
 
+    <!-- Qəlyanaltılar və Yeməklər -->
+    <div id="qelyanalti" class="menu-container"></div>
+
     <!-- Siqaretlər -->
     <div id="siqaret" class="menu-container"></div>
 
     <script>
-        // Məlumat Bazası (GitHub-dan asanlıqla redaktə edə biləcəyiniz JSON strukturu)
         const db = {
             pivaSetleri: [
                 {
@@ -263,23 +269,60 @@
                     ]
                 }
             ],
+            qelyanaltilar: [
+                {
+                    kateqoriya: "Əsas Qəlyanaltılar",
+                    mehsullar: [
+                        { ad: "Saçaqlı pendir (1 pors)", qiymet: "2.00 AZN" },
+                        { ad: "Qızartma pendir (1 pors)", qiymet: "3.00 AZN" },
+                        { ad: "Şallaq (1 pors)", qiymet: "3.00 AZN" },
+                        { ad: "Noxud (1 pors)", qiymet: "2.00 AZN" },
+                        { ad: "Kilkə (1 pors)", qiymet: "3.00 AZN" },
+                        { ad: "Simiçka (1 pors)", qiymet: "2.00 AZN" },
+                        { ad: "Cipsi (1 pors)", qiymet: "3.00 AZN" },
+                        { ad: "Suxarik (1 pors)", qiymet: "1.00 AZN" },
+                        { ad: "Araxis (1 pors)", qiymet: "3.00 AZN" },
+                        { ad: "Pətənə (1 pors)", qiymet: "3.00 AZN" },
+                        { ad: "Fri (1 pors)", qiymet: "" },
+                        { ad: "Bildirçin", qiymet: "" },
+                        { ad: "Boğaz", qiymet: "" }
+                    ]
+                },
+                {
+                    kateqoriya: "Əlavələr və Souslar",
+                    mehsullar: [
+                        { ad: "Limon", qiymet: "1.00 AZN" },
+                        { ad: "Acika", qiymet: "0-1.00 AZN" },
+                        { ad: "Smetan", qiymet: "1.00 AZN" },
+                        { ad: "Blinçik", qiymet: "" }
+                    ]
+                }
+            ],
             siqaretler: [
                 { marka: "Ciqaronne", novler: [{ad: "Nano Ultra Slims", qiymet: "10.00"}] },
                 { marka: "Davidoff", novler: [{ad: "Gold Slims", qiymet: ""}, {ad: "Klassik Slim", qiymet: ""}] },
                 { marka: "Dunhill", novler: [{ad: "Nano Premium Blue", qiymet: "5.50"}, {ad: "Kompakt Golden Aroma", qiymet: ""}, {ad: "Nano Premium White", qiymet: ""}] },
-                { marka: "Kent", novler: [{ad: "1 Nano İnfina", qiymet: "5.50"}, {ad: "4 Nanotek Neo", qiymet: "5.50"}, {ad: "Feel Mentol Kapsullu", qiymet: "5.50"}] },
-                { marka: "Sobranie", novler: [{ad: "Nano Blue / Göy", qiymet: "5.50"}, {ad: "Kompakt Blue / Göy", qiymet: "5.50"}, {ad: "Nano Midnight Gold", qiymet: "6.00"}] },
-                { marka: "Winston", novler: [{ad: "Nano XS Silver / Qara", qiymet: "5.00"}, {ad: "Kompakt XStyle Aroma Blend", qiymet: "5.00"}] },
-                { marka: "Keno", novler: [{ad: "Nano Platinium", qiymet: "3.50"}, {ad: "Kompakt Blue", qiymet: "3.50"}] }
+                { marka: "X-7", novler: [{ad: "Nano Qara", qiymet: ""}, {ad: "Nano Aroma Ballı", qiymet: ""}, {ad: "Kompakt Silver", qiymet: ""}] },
+                { marka: "Keno", novler: [{ad: "Nano Platinium", qiymet: "3.50"}, {ad: "Kompakt Blue", qiymet: "3.50"}, {ad: "Nano Blue", qiymet: "3.50"}] },
+                { marka: "Kent", novler: [{ad: "1 Nano İnfina", qiymet: "5.50"}, {ad: "4 Nanotek Neo", qiymet: "5.50"}, {ad: "Feel Mentol Kapsullu", qiymet: "5.50"}, {ad: "8 HD Futura Qalın", qiymet: "5.50"}] },
+                { marka: "LD", novler: [{ad: "Club Nano Qara Platinium LSS", qiymet: "4.70"}, {ad: "Kompakt Extra Wait", qiymet: "4.50"}] },
+                { marka: "Magna", novler: [{ad: "Nano Karbon Silver", qiymet: "3.50"}, {ad: "Nano Karbon Black", qiymet: "3.50"}] },
+                { marka: "Pall Mall", novler: [{ad: "Nano Ağ", qiymet: "4.00"}, {ad: "Nano American Nights Mentol", qiymet: "4.00"}] },
+                { marka: "Prima", novler: [{ad: "Kompakt Deluxe Gold", qiymet: "3.50"}, {ad: "Kompakt Deluxe Blue", qiymet: "3.50"}] },
+                { marka: "Rothmans", novler: [{ad: "Kompakt Demi Blue", qiymet: "4.00"}, {ad: "Kompakt Click Amber", qiymet: "4.00"}] },
+                { marka: "Sobranie", novler: [{ad: "Nano Blue", qiymet: "5.50"}, {ad: "Kompakt Blue", qiymet: "5.50"}, {ad: "Nano Midnight Gold", qiymet: "6.00"}, {ad: "Black Gold Kompakt", qiymet: "6.00"}] },
+                { marka: "Viceroy", novler: [{ad: "Nano Silver", qiymet: "3.50"}] },
+                { marka: "Winchester", novler: [{ad: "Nano Silver", qiymet: "4.00"}, {ad: "Kompakt Blue", qiymet: "4.00"}] },
+                { marka: "Winston", novler: [{ad: "Nano XS Silver", qiymet: "5.00"}, {ad: "Kompakt XStyle Aroma Blend", qiymet: "5.00"}, {ad: "Kom XStyle Dual Mentol", qiymet: "5.00"}] }
             ]
         };
 
-        // DOM Elementlərini Doldurmaq
         function renderMenu() {
             const pivaContainer = document.getElementById('piva');
+            const qelyanaltiContainer = document.getElementById('qelyanalti');
             const siqaretContainer = document.getElementById('siqaret');
 
-            // Pivə Setlərinin render edilməsi
+            // Pivə Setləri
             db.pivaSetleri.forEach(set => {
                 let rows = '';
                 set.mehsullar.forEach((item, index) => {
@@ -292,7 +335,7 @@
                     `;
                 });
 
-                const cardHTML = `
+                pivaContainer.innerHTML += `
                     <div class="card">
                         <div class="card-header">
                             <h2 class="card-title">${set.ad}</h2>
@@ -309,16 +352,36 @@
                                     <th style="text-align: right">Q-2</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                ${rows}
-                            </tbody>
+                            <tbody>${rows}</tbody>
                         </table>
                     </div>
                 `;
-                pivaContainer.innerHTML += cardHTML;
             });
 
-            // Siqaretlərin render edilməsi
+            // Qəlyanaltılar və Yeməklər
+            db.qelyanaltilar.forEach(kat => {
+                let listItems = '';
+                kat.mehsullar.forEach(item => {
+                    let qText = item.qiymet ? `${item.qiymet}` : '- AZN';
+                    listItems += `
+                        <li>
+                            <span>${item.ad}</span>
+                            <span class="price">${qText}</span>
+                        </li>
+                    `;
+                });
+
+                qelyanaltiContainer.innerHTML += `
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">${kat.kateqoriya}</h2>
+                        </div>
+                        <ul class="item-list">${listItems}</ul>
+                    </div>
+                `;
+            });
+
+            // Siqaretlər
             db.siqaretler.forEach(marka => {
                 let listItems = '';
                 marka.novler.forEach(nov => {
@@ -331,21 +394,17 @@
                     `;
                 });
 
-                const cardHTML = `
+                siqaretContainer.innerHTML += `
                     <div class="card">
                         <div class="card-header">
                             <h2 class="card-title">${marka.marka}</h2>
                         </div>
-                        <ul class="cig-list">
-                            ${listItems}
-                        </ul>
+                        <ul class="item-list">${listItems}</ul>
                     </div>
                 `;
-                siqaretContainer.innerHTML += cardHTML;
             });
         }
 
-        // Tablar arası keçid
         function switchTab(tabId) {
             document.querySelectorAll('.menu-container').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -354,7 +413,6 @@
             event.target.classList.add('active');
         }
 
-        // Səhifə yükləndikdə renderi başlat
         window.onload = renderMenu;
     </script>
 </body>
