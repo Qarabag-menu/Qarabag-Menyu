@@ -3,122 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qarabağ Kafe - Çay Evi</title>
+    <title>Qarabağ Çay Evi - Menyu</title>
     <style>
-        /* Minimalist, təmiz və sadə dizayn */
+        :root {
+            --bg: #fbfaf7;
+            --card: #ffffff;
+            --text: #2b2622;
+            --muted: #8a8279;
+            --line: #ece7df;
+            --accent: #8c3b2a;      /* mürəbbə / çay rəngi */
+            --accent-soft: #f3e6e1;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
             margin: 0;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #ffffff; /* Təmiz ağ fon */
-            color: #333333; /* Tünd boz/qara mətn */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 10px 50px 10px;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-text-size-adjust: 100%;
         }
 
         header {
             text-align: center;
-            margin: 30px 0 40px 0;
+            padding: 36px 16px 20px;
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 300;
-            letter-spacing: 5px;
+            letter-spacing: 6px;
             text-transform: uppercase;
-            margin: 0 0 5px 0;
-            color: #111;
+            margin: 0 0 6px;
         }
 
         .subtitle {
-            font-size: 0.9rem;
-            letter-spacing: 3px;
-            color: #777;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            color: var(--muted);
             text-transform: uppercase;
+        }
+
+        /* Yapışan və yana sürüşən kateqoriya paneli */
+        .tabs-wrap {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: var(--bg);
+            border-bottom: 1px solid var(--line);
         }
 
         .tabs {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 40px;
-            max-width: 800px;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 12px 16px;
+            max-width: 760px;
+            margin: 0 auto;
+            scrollbar-width: none;
         }
+        .tabs::-webkit-scrollbar { display: none; }
 
         .tab-btn {
-            background-color: transparent;
-            color: #555;
-            border: 1px solid #ddd;
-            padding: 8px 18px;
+            flex: 0 0 auto;
+            background: transparent;
+            color: #5b534b;
+            border: 1px solid var(--line);
+            padding: 8px 16px;
             font-size: 0.9rem;
-            border-radius: 4px; /* Sadə dördbucaq kənarlar */
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            font-family: inherit;
+            transition: background .15s, color .15s, border-color .15s;
         }
-
-        .tab-btn.active, .tab-btn:hover {
-            background-color: #222;
+        .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .tab-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
             color: #fff;
-            border-color: #222;
+        }
+        .tab-btn:focus-visible, .search input:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
         }
 
-        .menu-container {
+        main {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 20px 16px 60px;
+        }
+
+        .search { margin-bottom: 18px; }
+        .search input {
             width: 100%;
-            max-width: 700px;
-            display: none;
+            padding: 11px 14px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--card);
+            color: var(--text);
         }
 
-        .menu-container.active {
-            display: block;
-        }
+        .menu-container { display: none; }
+        .menu-container.active { display: block; }
 
         .category-title {
-            font-size: 1.2rem;
+            font-size: 1.05rem;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-            margin: 0 0 15px 0;
-            color: #222;
-            text-align: center;
+            margin: 26px 0 4px;
+            color: var(--text);
         }
+        .category-title:first-child { margin-top: 4px; }
 
-        .item-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+        .item-list { list-style: none; padding: 0; margin: 0; }
 
         .item-list li {
             display: flex;
-            justify-content: space-between;
-            padding: 12px 5px;
-            border-bottom: 1px dashed #e0e0e0;
-            font-size: 0.95rem;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .item-list li:last-child { border-bottom: none; }
+
+        .thumb {
+            flex: 0 0 64px;
+            width: 64px;
+            height: 64px;
+            border-radius: 10px;
+            background: var(--accent-soft);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+        }
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
-        .item-list li:last-child {
-            border-bottom: none;
-        }
-
-        .item-name {
-            color: #333;
-        }
-
-        .item-price {
-            font-weight: 600;
-            color: #111;
-        }
+        .item-name { flex: 1; font-size: 0.98rem; line-height: 1.3; }
+        .item-price { font-weight: 600; white-space: nowrap; }
 
         .empty-message {
             text-align: center;
-            color: #999;
-            font-style: italic;
-            margin-top: 30px;
+            color: var(--muted);
+            margin-top: 40px;
             font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.8rem;
+            padding: 0 16px 40px;
+        }
+
+        @media (max-width: 420px) {
+            h1 { font-size: 1.6rem; letter-spacing: 4px; }
+            .thumb { flex-basis: 56px; width: 56px; height: 56px; }
         }
     </style>
 </head>
@@ -129,59 +177,64 @@
         <div class="subtitle">Çay Evi</div>
     </header>
 
-    <!-- Kateqoriya Düymələri -->
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('murebbe')">Mürəbbələr</button>
-        <button class="tab-btn" onclick="switchTab('isti')">İsti İçkilər</button>
-        <button class="tab-btn" onclick="switchTab('soyuq')">Soyuq İçkilər</button>
-        <button class="tab-btn" onclick="switchTab('sirniyyat')">Şirniyyat</button>
-        <button class="tab-btn" onclick="switchTab('cerez')">Çərəzlər</button>
-        <button class="tab-btn" onclick="switchTab('qelyanalti')">Qəlyanaltılar</button>
-        <button class="tab-btn" onclick="switchTab('piva')">Pivə Setləri</button>
-        <button class="tab-btn" onclick="switchTab('siqaret')">Siqaretlər</button>
+    <div class="tabs-wrap">
+        <div class="tabs" id="tabs"></div>
     </div>
 
-    <!-- Məhsul Konteynerləri -->
-    <div id="murebbe" class="menu-container active"></div>
-    <div id="isti" class="menu-container"></div>
-    <div id="soyuq" class="menu-container"></div>
-    <div id="sirniyyat" class="menu-container"></div>
-    <div id="cerez" class="menu-container"></div>
-    <div id="qelyanalti" class="menu-container"></div>
-    <div id="piva" class="menu-container"></div>
-    <div id="siqaret" class="menu-container"></div>
+    <main>
+        <div class="search">
+            <input type="search" id="search" placeholder="Menyuda axtar..." autocomplete="off" aria-label="Menyuda axtar">
+        </div>
+        <div id="menus"></div>
+        <div class="empty-message" id="noResult" style="display:none;">Heç nə tapılmadı.</div>
+    </main>
+
+    <footer>Qiymətlər AZN ilə göstərilib.</footer>
 
     <script>
-        // BAZA: Yalnız Mürəbbələr doludur, qalanları boş saxlanılıb
+        /* ------------------------------------------------------------------
+           ŞƏKİLLƏR HAQQINDA:
+           Hər məhsulun şəkli "sekiller" qovluğunda "kod.jpg" adı ilə axtarılır.
+           Məsələn: sekiller/heyva.jpg
+           Şəkil yoxdursa, avtomatik emoji görünür (sayt pozulmur).
+           Şəkil formatı fərqlidirsə (webp, png), aşağıdakı IMG_EXT dəyişin.
+           İstəsəniz məhsula tam link də verə bilərsiniz: { ..., sekil: "https://..." }
+        ------------------------------------------------------------------ */
+        const IMG_DIR = 'sekiller/';
+        const IMG_EXT = '.jpg';
+
+        // [kod, ad, qiymət, emoji]
+        const m = (kod, ad, qiymet, emoji, sekil) => ({ kod, ad, qiymet, emoji, sekil });
+
         const db = {
             murebbe: [
                 { kateqoriya: "Mürəbbələr", mehsullar: [
-                    { ad: "HEYVA mürəbbəsi", qiymet: "5.00" },
-                    { ad: "Əncir mürəbbəsi", qiymet: "5.00" },
-                    { ad: "BÖYÜRTKƏN mürəbbəsi", qiymet: "5.00" },
-                    { ad: "ÇİYƏLƏK mürəbbəsi", qiymet: "5.00" },
-                    { ad: "ARMUD mürəbbəsi", qiymet: "5.00" },
-                    { ad: "NAR mürəbbəsi", qiymet: "5.00" },
-                    { ad: "KİVİ mürəbbəsi", qiymet: "5.00" },
-                    { ad: "Cır VİŞNƏ mürəbbəsi", qiymet: "5.00" },
-                    { ad: "Ağ ƏRİK mürəbbəsi", qiymet: "6.00" },
-                    { ad: "Ağ GİLAS mürəbbəsi", qiymet: "6.00" },
-                    { ad: "ZOĞAL mürəbbəsi", qiymet: "6.00" },
-                    { ad: "QIZILGÜL mürəbbəsi", qiymet: "6.00" },
-                    { ad: "Qarpız mürəbbəsi", qiymet: "6.00" },
-                    { ad: "ŞPONKA VİŞNƏ mürəbbəsi", qiymet: "6.50" },
-                    { ad: "Yaşıl BADAM mürəbbəsi", qiymet: "6.50" },
-                    { ad: "Qırmızı BADAM mürəbbəsi", qiymet: "6.50" },
-                    { ad: "Sarı BADAM mürəbbəsi", qiymet: "6.50" },
-                    { ad: "Snikers mürəbbəsi", qiymet: "6.50" },
-                    { ad: "Baunty mürəbbəsi", qiymet: "6.50" },
-                    { ad: "Ananas mürəbbəsi", qiymet: "6.50" },
-                    { ad: "Qırmızı GİLAS mürəbbəsi", qiymet: "7.00" },
-                    { ad: "MALİNA mürəbbəsi", qiymet: "7.00" },
-                    { ad: "ZEYTUN mürəbbəsi", qiymet: "7.00" },
-                    { ad: "DONDURMA mürəbbəsi", qiymet: "7.00" },
-                    { ad: "BANANLI PLOMBİR mürəbbəsi", qiymet: "8.00" },
-                    { ad: "QOZ mürəbbəsi", qiymet: "8.00" }
+                    m("heyva", "HEYVA mürəbbəsi", "5.00", "🍐"),
+                    m("encir", "Əncir mürəbbəsi", "5.00", "🍯"),
+                    m("boyurtken", "BÖYÜRTKƏN mürəbbəsi", "5.00", "🫐"),
+                    m("ciyelek", "ÇİYƏLƏK mürəbbəsi", "5.00", "🍓"),
+                    m("armud", "ARMUD mürəbbəsi", "5.00", "🍐"),
+                    m("nar", "NAR mürəbbəsi", "5.00", "🍎"),
+                    m("kivi", "KİVİ mürəbbəsi", "5.00", "🥝"),
+                    m("cir-visne", "Cır VİŞNƏ mürəbbəsi", "5.00", "🍒"),
+                    m("ag-erik", "Ağ ƏRİK mürəbbəsi", "6.00", "🍑"),
+                    m("ag-gilas", "Ağ GİLAS mürəbbəsi", "6.00", "🍒"),
+                    m("zogal", "ZOĞAL mürəbbəsi", "6.00", "🍒"),
+                    m("qizilgul", "QIZILGÜL mürəbbəsi", "6.00", "🌹"),
+                    m("qarpiz", "Qarpız mürəbbəsi", "6.00", "🍉"),
+                    m("sponka-visne", "ŞPONKA VİŞNƏ mürəbbəsi", "6.50", "🍒"),
+                    m("yasil-badam", "Yaşıl BADAM mürəbbəsi", "6.50", "🌰"),
+                    m("qirmizi-badam", "Qırmızı BADAM mürəbbəsi", "6.50", "🌰"),
+                    m("sari-badam", "Sarı BADAM mürəbbəsi", "6.50", "🌰"),
+                    m("snikers", "Snikers mürəbbəsi", "6.50", "🍫"),
+                    m("baunty", "Baunty mürəbbəsi", "6.50", "🥥"),
+                    m("ananas", "Ananas mürəbbəsi", "6.50", "🍍"),
+                    m("qirmizi-gilas", "Qırmızı GİLAS mürəbbəsi", "7.00", "🍒"),
+                    m("malina", "MALİNA mürəbbəsi", "7.00", "🍓"),
+                    m("zeytun", "ZEYTUN mürəbbəsi", "7.00", "🫒"),
+                    m("dondurma", "DONDURMA mürəbbəsi", "7.00", "🍦"),
+                    m("bananli-plombir", "BANANLI PLOMBİR mürəbbəsi", "8.00", "🍌"),
+                    m("qoz", "QOZ mürəbbəsi", "8.00", "🌰")
                 ]}
             ],
             isti: [],
@@ -193,58 +246,97 @@
             siqaret: []
         };
 
+        const categories = [
+            { id: 'murebbe',   ad: 'Mürəbbələr' },
+            { id: 'isti',      ad: 'İsti İçkilər' },
+            { id: 'soyuq',     ad: 'Soyuq İçkilər' },
+            { id: 'sirniyyat', ad: 'Şirniyyat' },
+            { id: 'cerez',     ad: 'Çərəzlər' },
+            { id: 'qelyanalti',ad: 'Qəlyanaltılar' },
+            { id: 'piva',      ad: 'Pivə Setləri' },
+            { id: 'siqaret',   ad: 'Siqaretlər' }
+        ];
+
+        function esc(s) {
+            return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        function thumbHTML(item) {
+            const emoji = item.emoji || '🍵';
+            const src = item.sekil || (item.kod ? IMG_DIR + item.kod + IMG_EXT : '');
+            if (!src) return `<div class="thumb" aria-hidden="true">${emoji}</div>`;
+            // Şəkil yüklənməsə emoji göstərilir
+            return `<div class="thumb" aria-hidden="true">
+                <img src="${esc(src)}" alt="" loading="lazy"
+                     onerror="this.parentNode.textContent='${emoji}'">
+            </div>`;
+        }
+
         function renderMenu() {
-            const categories = ['murebbe', 'isti', 'soyuq', 'sirniyyat', 'cerez', 'qelyanalti', 'piva', 'siqaret'];
+            const tabs = document.getElementById('tabs');
+            const menus = document.getElementById('menus');
+            let tabsHtml = '', menusHtml = '';
 
-            categories.forEach(catId => {
-                const container = document.getElementById(catId);
-                const data = db[catId];
-                
-                // Əgər kateqoriya boşdursa mesaj göstər
+            categories.forEach((cat, i) => {
+                tabsHtml += `<button class="tab-btn${i === 0 ? ' active' : ''}" data-tab="${cat.id}">${cat.ad}</button>`;
+
+                const data = db[cat.id];
+                let inner = '';
                 if (data.length === 0) {
-                    container.innerHTML = `<div class="empty-message">Bu bölməyə tezliklə məhsullar əlavə olunacaq.</div>`;
-                    return;
-                }
-
-                // Əgər kateqoriya doludursa siyahını yarat
-                let html = '';
-                data.forEach(qrup => {
-                    let listItems = '';
-                    qrup.mehsullar.forEach(item => {
-                        let qiymetStr = item.qiymet ? `${item.qiymet} ₼` : '';
-                        listItems += `
+                    inner = `<div class="empty-message">Bu bölməyə tezliklə məhsullar əlavə olunacaq.</div>`;
+                } else {
+                    data.forEach(qrup => {
+                        const items = qrup.mehsullar.map(item => `
                             <li>
-                                <span class="item-name">${item.ad}</span>
-                                <span class="item-price">${qiymetStr}</span>
-                            </li>
-                        `;
+                                ${thumbHTML(item)}
+                                <span class="item-name">${esc(item.ad)}</span>
+                                <span class="item-price">${item.qiymet ? esc(item.qiymet) + ' ₼' : ''}</span>
+                            </li>`).join('');
+                        inner += `<h2 class="category-title">${esc(qrup.kateqoriya)}</h2>
+                                  <ul class="item-list">${items}</ul>`;
                     });
+                }
+                menusHtml += `<div id="${cat.id}" class="menu-container${i === 0 ? ' active' : ''}">${inner}</div>`;
+            });
 
-                    html += `
-                        <h2 class="category-title">${qrup.kateqoriya}</h2>
-                        <ul class="item-list">
-                            ${listItems}
-                        </ul>
-                    `;
-                });
+            tabs.innerHTML = tabsHtml;
+            menus.innerHTML = menusHtml;
 
-                container.innerHTML = html;
+            tabs.addEventListener('click', e => {
+                const btn = e.target.closest('.tab-btn');
+                if (btn) switchTab(btn);
             });
         }
 
-        // Tabların dəyişməsi üçün funksiya
-        function switchTab(tabId) {
-            // Köhnə aktiv tabları bağla
+        function switchTab(btn) {
             document.querySelectorAll('.menu-container').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            
-            // Yeni tabı aktivləşdir
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
+            document.getElementById(btn.dataset.tab).classList.add('active');
+            btn.classList.add('active');
+            btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            document.getElementById('search').value = '';
+            filterItems('');
         }
 
-        // Səhifə açılanda menyunu yüklə
-        window.onload = renderMenu;
+        // Aktiv bölmədə axtarış
+        function filterItems(q) {
+            q = q.trim().toLocaleLowerCase('az');
+            const active = document.querySelector('.menu-container.active');
+            let shown = 0;
+            active.querySelectorAll('.item-list li').forEach(li => {
+                const name = li.querySelector('.item-name').textContent.toLocaleLowerCase('az');
+                const match = !q || name.includes(q);
+                li.style.display = match ? '' : 'none';
+                if (match) shown++;
+            });
+            const hasItems = active.querySelector('.item-list');
+            document.getElementById('noResult').style.display = (hasItems && shown === 0) ? 'block' : 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMenu();
+            document.getElementById('search').addEventListener('input', e => filterItems(e.target.value));
+        });
     </script>
 </body>
 </html>
