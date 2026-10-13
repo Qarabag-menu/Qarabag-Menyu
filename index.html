@@ -83,7 +83,7 @@
             border-color: var(--accent);
             color: #fff;
         }
-        .tab-btn:focus-visible, .search input:focus-visible {
+        .tab-btn:focus-visible, .search input:focus-visible, .copy-btn:focus-visible {
             outline: 2px solid var(--accent);
             outline-offset: 2px;
         }
@@ -91,7 +91,7 @@
         main {
             max-width: 760px;
             margin: 0 auto;
-            padding: 20px 16px 60px;
+            padding: 20px 16px 40px;
         }
  
         .search { margin-bottom: 18px; }
@@ -122,33 +122,61 @@
         .item-list li {
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 10px 0;
+            gap: 16px;
+            padding: 12px 0;
             border-bottom: 1px solid var(--line);
         }
         .item-list li:last-child { border-bottom: none; }
  
+        /* Şəkil ölçüsü: böyük olsun deyə 92px */
         .thumb {
-            flex: 0 0 64px;
-            width: 64px;
-            height: 64px;
-            border-radius: 10px;
+            position: relative;
+            flex: 0 0 92px;
+            width: 92px;
+            height: 92px;
+            border-radius: 12px;
             background: var(--accent-soft);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.7rem;
+            font-size: 2.2rem;
         }
         .thumb img {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            opacity: 0;
+            transition: opacity .3s;
         }
  
-        .item-name { flex: 1; font-size: 0.98rem; line-height: 1.3; }
+        .item-name { flex: 1; font-size: 1rem; line-height: 1.3; }
+ 
+        .item-side {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
         .item-price { font-weight: 600; white-space: nowrap; }
+ 
+        .badge-bitib {
+            font-size: 0.72rem;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            color: #fff;
+            background: #9a928a;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+ 
+        /* Bitmiş məhsul: solğun və ağ-qara şəkil */
+        .item-list li.bitib .thumb img { filter: grayscale(.6); }
+        .item-list li.bitib .thumb,
+        .item-list li.bitib .item-name,
+        .item-list li.bitib .item-price { opacity: .65; }
  
         .empty-message {
             text-align: center;
@@ -157,16 +185,48 @@
             font-size: 0.95rem;
         }
  
+        .wifi {
+            max-width: 330px;
+            margin: 10px auto 0;
+            padding: 14px 18px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--card);
+            text-align: center;
+            font-size: 0.92rem;
+            line-height: 1.8;
+        }
+        .wifi-title {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 2px;
+        }
+        .copy-btn {
+            margin-left: 6px;
+            font-family: inherit;
+            font-size: 0.78rem;
+            padding: 3px 10px;
+            border: 1px solid var(--line);
+            background: var(--accent-soft);
+            color: var(--accent);
+            border-radius: 12px;
+            cursor: pointer;
+        }
+ 
         footer {
             text-align: center;
             color: var(--muted);
             font-size: 0.8rem;
             padding: 0 16px 40px;
         }
+        footer .note { margin-top: 18px; }
  
         @media (max-width: 420px) {
             h1 { font-size: 1.6rem; letter-spacing: 4px; }
-            .thumb { flex-basis: 56px; width: 56px; height: 56px; }
+            .thumb { flex-basis: 84px; width: 84px; height: 84px; }
+            .item-list li { gap: 12px; }
         }
     </style>
 </head>
@@ -189,23 +249,64 @@
         <div class="empty-message" id="noResult" style="display:none;">Heç nə tapılmadı.</div>
     </main>
  
-    <footer>Qiymətlər AZN ilə göstərilib.</footer>
+    <footer>
+        <div class="wifi">
+            <div class="wifi-title">Wi-Fi</div>
+            <div>Şəbəkə: <b>Qarabağ</b></div>
+            <div>Şifrə: <b id="wifiPass">30303030</b><button class="copy-btn" id="copyBtn" type="button">Kopyala</button></div>
+        </div>
+        <div class="note">Qiymətlər AZN ilə göstərilib.</div>
+    </footer>
  
     <script>
         /* ------------------------------------------------------------------
            ŞƏKİLLƏR HAQQINDA:
-           Hər məhsulun şəkli "sekiller" qovluğunda "kod.jpg" adı ilə axtarılır.
-           Məsələn: sekiller/heyva.jpg
-           Şəkil yoxdursa, avtomatik emoji görünür (sayt pozulmur).
-           Şəkil formatı fərqlidirsə (webp, png), aşağıdakı IMG_EXT dəyişin.
-           İstəsəniz məhsula tam link də verə bilərsiniz: { ..., sekil: "https://..." }
+           Hər məhsulun sonuna şəkil linki yazılır: m("kod", "ad", "qiymət", "emoji", "LİNK")
+           Link boşdursa sayt "sekiller/kod.jpg" faylını axtarır, o da yoxdursa emoji görünür.
         ------------------------------------------------------------------ */
         const IMG_DIR = 'sekiller/';
         const IMG_EXT = '.jpg';
  
+        /* ------------------------------------------------------------------
+           BİTİB SİYAHISI:
+           Aşağıdakı kodlar "Bitib" kimi göstərilir.
+           Mürəbbə gələndə həmin sətri SİL (və ya qarşısına // yaz).
+           Mürəbbə bitəndə kodunu yenidən bura əlavə et.
+           Yadda saxla: hər sətir dırnaqda olmalı və sonunda vergül qalmalıdır.
+        ------------------------------------------------------------------ */
+        // Bitib sistemini yandırıb-söndürmək: false = söndürülüb, true = yandırılıb
+        const BITIB_AKTIV = false;
+ 
+        const BITIB = [
+            "heyva",
+            "encir",
+            "boyurtken",
+            "ciyelek",
+            "armud",
+            "nar",
+            "kivi",
+            "cir-visne",
+            "ag-erik",
+            "ag-gilas",
+            "zogal",
+            "qizilgul",
+            "qarpiz",
+            "sponka-visne",
+            "yasil-badam",
+            "qirmizi-badam",
+            "sari-badam",
+            "snikers",
+            "baunty",
+            "ananas",
+            "qirmizi-gilas",
+            "malina",
+            "zeytun",
+            "dondurma",
+            "bananli-plombir",
+            "qoz"
+        ];
+ 
         // m(kod, ad, qiymət, emoji, ŞƏKİL LİNKİ)
-        // Axırıncı dırnaq "" şəkil linki yeridir: oraya link yapışdır, məsələn "https://.../heyva.jpg"
-        // Boş buraxsan sayt sekiller/kod.jpg faylını axtarır, o da yoxdursa emoji göstərir.
         const m = (kod, ad, qiymet, emoji, sekil) => ({ kod, ad, qiymet, emoji, sekil });
  
         const db = {
@@ -263,15 +364,12 @@
             return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         }
  
+        // Əvvəlcə emoji görünür, şəkil yüklənəndə üstünə yumşaq keçir
         function thumbHTML(item) {
             const emoji = item.emoji || '🍵';
             const src = item.sekil || (item.kod ? IMG_DIR + item.kod + IMG_EXT : '');
             if (!src) return `<div class="thumb" aria-hidden="true">${emoji}</div>`;
-            // Şəkil yüklənməsə emoji göstərilir
-            return `<div class="thumb" aria-hidden="true">
-                <img src="${esc(src)}" alt="" loading="lazy"
-                     onerror="this.parentNode.textContent='${emoji}'">
-            </div>`;
+            return `<div class="thumb" aria-hidden="true">${emoji}<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onload="this.style.opacity=1" onerror="this.remove()"></div>`;
         }
  
         function renderMenu() {
@@ -288,12 +386,18 @@
                     inner = `<div class="empty-message">Bu bölməyə tezliklə məhsullar əlavə olunacaq.</div>`;
                 } else {
                     data.forEach(qrup => {
-                        const items = qrup.mehsullar.map(item => `
-                            <li>
+                        const items = qrup.mehsullar.map(item => {
+                            const bitib = BITIB_AKTIV && BITIB.includes(item.kod);
+                            return `
+                            <li class="${bitib ? 'bitib' : ''}">
                                 ${thumbHTML(item)}
                                 <span class="item-name">${esc(item.ad)}</span>
-                                <span class="item-price">${item.qiymet ? esc(item.qiymet) + ' ₼' : ''}</span>
-                            </li>`).join('');
+                                <div class="item-side">
+                                    <span class="item-price">${item.qiymet ? esc(item.qiymet) + ' ₼' : ''}</span>
+                                    ${bitib ? '<span class="badge-bitib">Bitib</span>' : ''}
+                                </div>
+                            </li>`;
+                        }).join('');
                         inner += `<h2 class="category-title">${esc(qrup.kateqoriya)}</h2>
                                   <ul class="item-list">${items}</ul>`;
                     });
@@ -335,8 +439,29 @@
             document.getElementById('noResult').style.display = (hasItems && shown === 0) ? 'block' : 'none';
         }
  
+        // Wi-Fi şifrəsini kopyala
+        function setupCopy() {
+            const btn = document.getElementById('copyBtn');
+            const pass = document.getElementById('wifiPass');
+            btn.addEventListener('click', async () => {
+                try {
+                    await navigator.clipboard.writeText(pass.textContent.trim());
+                    btn.textContent = 'Kopyalandı ✓';
+                } catch (err) {
+                    const r = document.createRange();
+                    r.selectNodeContents(pass);
+                    const s = window.getSelection();
+                    s.removeAllRanges();
+                    s.addRange(r);
+                    btn.textContent = 'Seçildi';
+                }
+                setTimeout(() => { btn.textContent = 'Kopyala'; }, 2000);
+            });
+        }
+ 
         document.addEventListener('DOMContentLoaded', () => {
             renderMenu();
+            setupCopy();
             document.getElementById('search').addEventListener('input', e => filterItems(e.target.value));
         });
     </script>
