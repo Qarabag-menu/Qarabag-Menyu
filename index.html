@@ -152,6 +152,59 @@
             transition: opacity .3s;
         }
  
+        /* Şəkli böyütmək üçün düymə */
+        .thumb { border: 0; padding: 0; margin: 0; font-family: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+        .thumb.has-img { cursor: zoom-in; }
+        .thumb.has-img::after {
+            content: "+";
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(0,0,0,.55);
+            color: #fff;
+            font-size: 16px;
+            line-height: 22px;
+            text-align: center;
+            z-index: 2;
+        }
+ 
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(20,16,14,.9);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px;
+        }
+        .lightbox.open { display: flex; }
+        .lightbox img {
+            max-width: 94vw;
+            max-height: 78vh;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        .lb-cap { color: #fff; font-size: 0.95rem; text-align: center; }
+        .lb-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 44px;
+            height: 44px;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,.2);
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+ 
         .item-name { flex: 1; font-size: 1rem; line-height: 1.3; }
  
         .item-side {
@@ -243,7 +296,7 @@
  
     <main>
         <div class="search">
-            <input type="search" id="search" placeholder="Menyuda axtar..." autocomplete="off" aria-label="Menyuda axtar">
+            <input type="search" id="search" placeholder="Axtar... (məs. s, sob, win)" autocomplete="off" aria-label="Menyuda axtar">
         </div>
         <div id="menus"></div>
         <div class="empty-message" id="noResult" style="display:none;">Heç nə tapılmadı.</div>
@@ -257,6 +310,12 @@
         </div>
         <div class="note">Qiymətlər AZN ilə göstərilib.</div>
     </footer>
+ 
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+        <button class="lb-close" type="button" aria-label="Bağla">✕</button>
+        <img alt="" referrerpolicy="no-referrer">
+        <div class="lb-cap"></div>
+    </div>
  
     <script>
         /* ------------------------------------------------------------------
@@ -346,8 +405,8 @@
             cerez: [],
             qelyanalti: [],
             piva: [],
-            siqaret: [
-                { kateqoriya: "Xarici siqaretlər", mehsullar: [
+            xarici: [
+                { kateqoriya: "Xarici siqaretlər (VİP)", mehsullar: [
                     m("sq01", "PARLIAMENT qalın şves", "18.00", "🚬", "https://sigaraci.net/wp-content/uploads/2025/06/parliament-silver-blue-sigara.png"),
                     m("sq02", "PARLIAMENT nano şves", "18.00", "🚬", "https://ozsigara.com/wp-content/uploads/2025/02/parliament-super-slims-100s-sigara1.webp"),
                     m("sq03", "PARLIAMENT nano mentol şves", "20.00", "🚬", "https://i0.wp.com/sigaraci.net/wp-content/uploads/2025/06/parliament-blossom-breeze-sigara.webp"),
@@ -362,7 +421,9 @@
                     m("sq12", "CIQARONNE", "10.00", "🚬", "https://cdn.phototourl.com/member/2026-10-15-eda3323a-1577-4e29-bc7b-682b37bf14f0.jpg"),
                     m("sq13", "SOBRANIE nano rus", "7.00", "🚬", ""),
                     m("sq14", "KENT nano rus", "7.00", "🚬", "https://cdn.phototourl.com/member/2026-10-15-96317d29-9828-463f-83e2-69007abffcd8.jpg")
-                ]},
+                ]}
+            ],
+            siqaret: [
                 { kateqoriya: "Siqarlar", mehsullar: [
                     m("sq15", "SİQAR shisharillos", "16.00", "🚬", "https://cdn.phototourl.com/member/2026-10-15-8bfdcc08-2cc6-4342-83df-0e1c98b77357.png"),
                     m("sq16", "SİQAR CLARO Melon Double 1 əd", "3.00", "🚬", ""),
@@ -430,6 +491,7 @@
             { id: 'cerez',     ad: 'Çərəzlər' },
             { id: 'qelyanalti',ad: 'Qəlyanaltılar' },
             { id: 'piva',      ad: 'Pivə Setləri' },
+            { id: 'xarici',    ad: 'Xarici Siqaretlər' },
             { id: 'siqaret',   ad: 'Siqaretlər' }
         ];
  
@@ -437,12 +499,12 @@
             return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         }
  
-        // Əvvəlcə emoji görünür, şəkil yüklənəndə üstünə yumşaq keçir
+        // Əvvəlcə emoji görünür, şəkil yüklənəndə üstünə keçir və şəkil böyüdülə bilər
         function thumbHTML(item) {
             const emoji = item.emoji || '🍵';
             const src = item.sekil || (item.kod ? IMG_DIR + item.kod + IMG_EXT : '');
-            if (!src) return `<div class="thumb" aria-hidden="true">${emoji}</div>`;
-            return `<div class="thumb" aria-hidden="true">${emoji}<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onload="this.style.opacity=1" onerror="this.remove()"></div>`;
+            if (!src) return `<div class="thumb">${emoji}</div>`;
+            return `<button type="button" class="thumb" aria-label="Şəkli böyüt">${emoji}<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onload="this.style.opacity=1;this.parentNode.classList.add('has-img')" onerror="this.remove()"></button>`;
         }
  
         function renderMenu() {
@@ -459,10 +521,10 @@
                     inner = `<div class="empty-message">Bu bölməyə tezliklə məhsullar əlavə olunacaq.</div>`;
                 } else {
                     data.forEach(qrup => {
-                        const items = qrup.mehsullar.map(item => {
+                        const items = qrup.mehsullar.map((item, idx) => {
                             const bitib = BITIB_AKTIV && BITIB.includes(item.kod);
                             return `
-                            <li class="${bitib ? 'bitib' : ''}">
+                            <li class="${bitib ? 'bitib' : ''}" data-n="${esc(norm(item.ad))}" data-i="${idx}">
                                 ${thumbHTML(item)}
                                 <span class="item-name">${esc(item.ad)}</span>
                                 <div class="item-side">
@@ -497,25 +559,67 @@
             filterItems('');
         }
  
-        // Aktiv bölmədə axtarış
+        // Hərfləri sadələşdir: ə→e, ı→i, ş→s, ç→c, ö→o, ü→u, ğ→g (s yazanda ş də tapılsın)
+        function norm(str) {
+            return String(str).toLowerCase().normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/ə/g, 'e').replace(/ı/g, 'i');
+        }
+ 
+        // Aktiv bölmədə axtarış: hər sözün başlanğıcına baxır (s yazanda s ilə başlayanlar çıxır)
         function filterItems(q) {
-            q = q.trim().toLocaleLowerCase('az');
+            const tokens = norm(q).trim().split(/\s+/).filter(Boolean);
+            const full = tokens.join(' ');
             const active = document.querySelector('.menu-container.active');
             let shown = 0;
-            active.querySelectorAll('.item-list li').forEach(li => {
-                const name = li.querySelector('.item-name').textContent.toLocaleLowerCase('az');
-                const match = !q || name.includes(q);
-                li.style.display = match ? '' : 'none';
-                if (match) shown++;
-            });
             active.querySelectorAll('.item-list').forEach(ul => {
-                const any = Array.from(ul.children).some(li => li.style.display !== 'none');
+                const lis = Array.from(ul.children);
+                const rank = new Map();
+                lis.forEach(li => {
+                    const n = li.dataset.n || '';
+                    const words = n.split(/[^a-z0-9]+/).filter(Boolean);
+                    const match = tokens.every(t => words.some(w => w.startsWith(t)));
+                    li.style.display = match ? '' : 'none';
+                    rank.set(li, tokens.length && n.startsWith(full) ? 0 : 1);
+                    if (match) shown++;
+                });
+                // Adı axtarılan hərflə başlayanlar yuxarıda, qalanlar sıra ilə
+                lis.sort((x, y) => (rank.get(x) - rank.get(y)) || (Number(x.dataset.i) - Number(y.dataset.i)))
+                   .forEach(li => ul.appendChild(li));
+                const any = lis.some(li => li.style.display !== 'none');
                 ul.style.display = any ? '' : 'none';
                 const h = ul.previousElementSibling;
                 if (h) h.style.display = any ? '' : 'none';
             });
             const hasItems = active.querySelector('.item-list');
             document.getElementById('noResult').style.display = (hasItems && shown === 0) ? 'block' : 'none';
+        }
+ 
+        // Şəkilə toxunanda böyüt, istənilən yerə toxunanda bağla
+        function setupLightbox() {
+            const box = document.getElementById('lightbox');
+            const img = box.querySelector('img');
+            const cap = box.querySelector('.lb-cap');
+            function close() {
+                box.classList.remove('open');
+                box.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                img.removeAttribute('src');
+            }
+            document.addEventListener('click', e => {
+                if (box.classList.contains('open')) { close(); return; }
+                const t = e.target.closest('.thumb.has-img');
+                if (!t) return;
+                const small = t.querySelector('img');
+                const li = t.closest('li');
+                const price = li.querySelector('.item-price').textContent.trim();
+                img.src = small.currentSrc || small.src;
+                cap.textContent = li.querySelector('.item-name').textContent + (price ? ' — ' + price : '');
+                box.classList.add('open');
+                box.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
         }
  
         // Wi-Fi şifrəsini kopyala
@@ -541,6 +645,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderMenu();
             setupCopy();
+            setupLightbox();
             document.getElementById('search').addEventListener('input', e => filterItems(e.target.value));
         });
     </script>
