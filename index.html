@@ -14,9 +14,9 @@
             --accent: #8c3b2a;      /* mürəbbə / çay rəngi */
             --accent-soft: #f3e6e1;
         }
- 
+
         * { box-sizing: border-box; }
- 
+
         body {
             margin: 0;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -24,12 +24,12 @@
             color: var(--text);
             -webkit-text-size-adjust: 100%;
         }
- 
+
         header {
             text-align: center;
             padding: 36px 16px 20px;
         }
- 
+
         h1 {
             font-size: 2rem;
             font-weight: 300;
@@ -37,14 +37,14 @@
             text-transform: uppercase;
             margin: 0 0 6px;
         }
- 
+
         .subtitle {
             font-size: 0.85rem;
             letter-spacing: 4px;
             color: var(--muted);
             text-transform: uppercase;
         }
- 
+
         /* Yapışan və yana sürüşən kateqoriya paneli */
         .tabs-wrap {
             position: sticky;
@@ -53,7 +53,7 @@
             background: var(--bg);
             border-bottom: 1px solid var(--line);
         }
- 
+
         .tabs {
             display: flex;
             gap: 8px;
@@ -64,7 +64,7 @@
             scrollbar-width: none;
         }
         .tabs::-webkit-scrollbar { display: none; }
- 
+
         .tab-btn {
             flex: 0 0 auto;
             background: transparent;
@@ -87,13 +87,13 @@
             outline: 2px solid var(--accent);
             outline-offset: 2px;
         }
- 
+
         main {
             max-width: 760px;
             margin: 0 auto;
             padding: 20px 16px 40px;
         }
- 
+
         .search { margin-bottom: 18px; }
         .search input {
             width: 100%;
@@ -105,10 +105,10 @@
             background: var(--card);
             color: var(--text);
         }
- 
+
         .menu-container { display: none; }
         .menu-container.active { display: block; }
- 
+
         .category-title {
             font-size: 1.05rem;
             font-weight: 600;
@@ -116,9 +116,9 @@
             color: var(--text);
         }
         .category-title:first-child { margin-top: 4px; }
- 
+
         .item-list { list-style: none; padding: 0; margin: 0; }
- 
+
         .item-list li {
             display: flex;
             align-items: center;
@@ -127,7 +127,7 @@
             border-bottom: 1px solid var(--line);
         }
         .item-list li:last-child { border-bottom: none; }
- 
+
         /* Şəkil ölçüsü: böyük olsun deyə 92px */
         .thumb {
             position: relative;
@@ -151,7 +151,7 @@
             opacity: 0;
             transition: opacity .3s;
         }
- 
+
         /* Şəkli böyütmək üçün düymə */
         .thumb { border: 0; padding: 0; margin: 0; font-family: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
         .thumb.has-img { cursor: zoom-in; }
@@ -170,7 +170,7 @@
             text-align: center;
             z-index: 2;
         }
- 
+
         .lightbox {
             position: fixed;
             inset: 0;
@@ -204,9 +204,9 @@
             font-size: 20px;
             cursor: pointer;
         }
- 
+
         .item-name { flex: 1; font-size: 1rem; line-height: 1.3; }
- 
+
         .item-side {
             display: flex;
             flex-direction: column;
@@ -214,7 +214,8 @@
             gap: 6px;
         }
         .item-price { font-weight: 600; white-space: nowrap; }
- 
+        .item-price small { font-weight: 400; font-size: 0.72rem; color: var(--muted); }
+
         .badge-bitib {
             font-size: 0.72rem;
             letter-spacing: .5px;
@@ -224,20 +225,20 @@
             padding: 3px 8px;
             border-radius: 10px;
         }
- 
+
         /* Bitmiş məhsul: solğun və ağ-qara şəkil */
         .item-list li.bitib .thumb img { filter: grayscale(.6); }
         .item-list li.bitib .thumb,
         .item-list li.bitib .item-name,
         .item-list li.bitib .item-price { opacity: .65; }
- 
+
         .empty-message {
             text-align: center;
             color: var(--muted);
             margin-top: 40px;
             font-size: 0.95rem;
         }
- 
+
         .wifi {
             max-width: 330px;
             margin: 10px auto 0;
@@ -267,7 +268,7 @@
             border-radius: 12px;
             cursor: pointer;
         }
- 
+
         footer {
             text-align: center;
             color: var(--muted);
@@ -275,7 +276,7 @@
             padding: 0 16px 40px;
         }
         footer .note { margin-top: 18px; }
- 
+
         @media (max-width: 420px) {
             h1 { font-size: 1.6rem; letter-spacing: 4px; }
             .thumb { flex-basis: 84px; width: 84px; height: 84px; }
@@ -284,16 +285,16 @@
     </style>
 </head>
 <body>
- 
+
     <header>
         <h1>Qarabağ</h1>
         <div class="subtitle">Çay Evi</div>
     </header>
- 
+
     <div class="tabs-wrap">
         <div class="tabs" id="tabs"></div>
     </div>
- 
+
     <main>
         <div class="search">
             <input type="search" id="search" placeholder="Axtar... (məs. s, sob, win)" autocomplete="off" aria-label="Menyuda axtar">
@@ -301,7 +302,7 @@
         <div id="menus"></div>
         <div class="empty-message" id="noResult" style="display:none;">Heç nə tapılmadı.</div>
     </main>
- 
+
     <footer>
         <div class="wifi">
             <div class="wifi-title">Wi-Fi</div>
@@ -310,13 +311,13 @@
         </div>
         <div class="note">Qiymətlər AZN ilə göstərilib.</div>
     </footer>
- 
+
     <div class="lightbox" id="lightbox" aria-hidden="true">
         <button class="lb-close" type="button" aria-label="Bağla">✕</button>
         <img alt="" referrerpolicy="no-referrer">
         <div class="lb-cap"></div>
     </div>
- 
+
     <script>
         /* ------------------------------------------------------------------
            ŞƏKİLLƏR HAQQINDA:
@@ -325,7 +326,7 @@
         ------------------------------------------------------------------ */
         const IMG_DIR = 'sekiller/';
         const IMG_EXT = '.jpg';
- 
+
         /* ------------------------------------------------------------------
            BİTİB SİYAHISI:
            Aşağıdakı kodlar "Bitib" kimi göstərilir.
@@ -335,7 +336,7 @@
         ------------------------------------------------------------------ */
         // Bitib sistemini yandırıb-söndürmək: false = söndürülüb, true = yandırılıb
         const BITIB_AKTIV = false;
- 
+
         const BITIB = [
             "heyva",
             "encir",
@@ -364,10 +365,12 @@
             "bananli-plombir",
             "qoz"
         ];
- 
+
         // m(kod, ad, qiymət, emoji, ŞƏKİL LİNKİ)
         const m = (kod, ad, qiymet, emoji, sekil) => ({ kod, ad, qiymet, emoji, sekil });
- 
+        // İki qiymətli məhsul (fincan / çaynik): fc("1.00", "4.00")
+        const fc = (a, b) => [["fincan", a], ["çaynik", b]];
+
         const db = {
             murebbe: [
                 { kateqoriya: "Mürəbbələr", mehsullar: [
@@ -399,12 +402,214 @@
                     m("qoz", "QOZ mürəbbəsi", "8.00", "🌰", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9ZdPGFQw-sCzF-y98fjlBfX2VXP7DwNnlkDjR0lIU9kh7vBZ4DQk254Du&s=10")
                 ]}
             ],
-            isti: [],
-            soyuq: [],
-            sirniyyat: [],
-            cerez: [],
-            qelyanalti: [],
-            piva: [],
+            isti: [
+                { kateqoriya: "Çaylar", mehsullar: [
+                    m("ic01", "ÇAY limon konfet", "", "☕", ""),
+                    m("ic02", "ÇAY limon konfet, kəkotu, mixək, nanə, darçın", "", "☕", ""),
+                    m("ic03", "GÜL çayı", "", "🌹", ""),
+                    m("ic04", "YAŞIL çay", "", "🍵", "")
+                ]},
+                { kateqoriya: "Qəhvə və isti içkilər", mehsullar: [
+                    m("ic05", "MacCoffee CLASSIC", fc("1.00", "4.00"), "☕", ""),
+                    m("ic06", "NESCAFE MİLD / CLASSİK", fc("1.00", "4.50"), "☕", ""),
+                    m("ic07", "MacCoffee cappuccino DITORINO", fc("2.00", "5.00"), "☕", ""),
+                    m("ic08", "MacCoffee Macchocolate isti şokolad", fc("2.00", "5.00"), "🍫", ""),
+                    m("ic09", "JARDİN cappuccino / mocaccino / latte", fc("2.00", "5.00"), "☕", ""),
+                    m("ic10", "NESCAFE nejnaya penka cappuccino / latte / plombir", fc("3.00", "7.00"), "☕", "")
+                ]}
+            ],
+            soyuq: [
+                { kateqoriya: "Qazsız sular", mehsullar: [
+                    m("sy01", "BONAQUA 0.5 l pet", "1.00", "💧", ""),
+                    m("sy02", "SİRAB qazsız 0.5 l şüşə", "3.00", "💧", ""),
+                    m("sy03", "BADAMLI 0.6 l şüşə qazsız", "3.00", "💧", ""),
+                    m("sy04", "SİRAB qazsız 750 ml sport", "3.00", "💧", ""),
+                    m("sy05", "SİRAB 750 ml şüşə premium", "5.50", "💧", ""),
+                    m("sy06", "SİRAB qazsız 1 lt", "3.00", "💧", ""),
+                    m("sy07", "SLAVYANKA 1 lt pet", "2.50", "💧", "")
+                ]},
+                { kateqoriya: "Qazlı sular", mehsullar: [
+                    m("sy08", "SARIKIZ sadə 200 ml", "2.00", "🫧", ""),
+                    m("sy09", "ULUDAĞ 250 ml qazoz", "3.00", "🫧", ""),
+                    m("sy10", "SİRAB 0.5 l şüşə qazlı", "3.00", "🫧", ""),
+                    m("sy11", "NABEQLAVİ 0.5 l şüşə", "3.00", "🫧", ""),
+                    m("sy12", "İSTİSU 0.5 l pet", "2.00", "🫧", ""),
+                    m("sy13", "İSTİSU 0.5 l şüşə", "3.00", "🫧", ""),
+                    m("sy14", "KOBİ 0.5 l pet (GÜRCÜ)", "2.00", "🫧", ""),
+                    m("sy15", "NARZAN 0.5 l şüşə", "3.00", "🫧", ""),
+                    m("sy16", "BARJOMİ 0.5 l şüşə", "3.50", "🫧", ""),
+                    m("sy17", "RİCAL 0.5 l şüşə", "3.00", "🫧", ""),
+                    m("sy18", "ESSENTUKİ No. 4 0.5 l şüşə", "3.50", "🫧", ""),
+                    m("sy19", "ESSENTUKİ No. 17 0.5 l şüşə", "3.50", "🫧", ""),
+                    m("sy20", "SİRAB 750 ml şüşə premium", "5.50", "🫧", ""),
+                    m("sy21", "QAX 1 lt", "3.00", "🫧", ""),
+                    m("sy22", "İSTİSU 1 lt pet", "3.00", "🫧", ""),
+                    m("sy23", "MORAMOR 1 lt pet", "3.00", "🫧", "")
+                ]},
+                { kateqoriya: "Soyuq çay", mehsullar: [
+                    m("sy24", "FUSE tea 0.5 l ananas, qarpız, şaftalı, çiyələk, yemiş", "2.00", "🧋", ""),
+                    m("sy25", "CAPPY 0.5 l vişnə", "2.50", "🍒", ""),
+                    m("sy26", "FUSE İCE TEA şaftalı, manqo-ananas 1 lt", "3.00", "🧋", ""),
+                    m("sy27", "CAPPY 1 lt", "3.50", "🧃", "")
+                ]},
+                { kateqoriya: "Qazsız şirələr və kompot", mehsullar: [
+                    m("sy28", "MEQABİZ 290 ml ananas, çiyələk-moruq, qarağat", "3.00", "🧃", ""),
+                    m("sy29", "KOMPOT", "4.00", "🥤", ""),
+                    m("sy30", "KOMPOT EV", "5.00", "🥤", "")
+                ]},
+                { kateqoriya: "Qazlı soklar", mehsullar: [
+                    m("sy31", "SARIKIZ 200 ml nar, C-vitamin", "2.00", "🥤", ""),
+                    m("sy32", "KIZILAY 200 ml qara tut, qarağat", "2.00", "🥤", ""),
+                    m("sy33", "ULUDAĞ 250 ml qazoz portağal", "3.00", "🥤", ""),
+                    m("sy34", "FRESH BOR 200 ml yaşıl alma, portağal", "2.00", "🥤", ""),
+                    m("sy35", "FRESH BOR 200 ml manqo, şaftalı, qarpız, çiyələk", "2.00", "🥤", ""),
+                    m("sy36", "BARJOMİ limonad düşes, limon", "3.50", "🥤", ""),
+                    m("sy37", "Coca-Cola, Pepsi, Fanta, Sprite, Mirinda alma 0.5 l (pet)", "2.00", "🥤", ""),
+                    m("sy38", "Coca-Cola, Pepsi, Fanta, Sprite 330 ml (banka)", "2.50", "🥤", ""),
+                    m("sy39", "Coca-Cola, Fanta 330 ml (şüşə)", "3.00", "🥤", ""),
+                    m("sy40", "Coca-Cola, Pepsi, Fanta, Sprite, Mirinda yaşıl alma 1 lt", "3.00", "🥤", ""),
+                    m("sy41", "Coca-Cola, Pepsi, Fanta, Sprite, Mirinda yaşıl alma 2 lt", "4.00", "🥤", "")
+                ]}
+            ],
+            sirniyyat: [
+                { kateqoriya: "Peçenyelər", mehsullar: [
+                    m("sr01", "SPORT 240 qr", "3.00", "🍪", ""),
+                    m("sr02", "CHOKOBİS 180 qr", "3.50", "🍪", ""),
+                    m("sr03", "ESMİRALDO 127 qr", "4.00", "🍪", ""),
+                    m("sr04", "ÇOKOPRENS 300 qr", "5.50", "🍪", ""),
+                    m("sr05", "POSİDELKİNO 310 qr üzüm dadlı", "5.50", "🍪", ""),
+                    m("sr06", "OREO 228 qr", "7.00", "🍪", "")
+                ]},
+                { kateqoriya: "Rületlər", mehsullar: [
+                    m("sr07", "BONİTA RULET çeşidləri 150 qr", "3.00", "🧁", ""),
+                    m("sr08", "POPKEK rulet 180 qr", "4.50", "🧁", "")
+                ]},
+                { kateqoriya: "Kekslər", mehsullar: [
+                    m("sr09", "POPKEK keks 200 qr", "5.00", "🧁", ""),
+                    m("sr10", "KEKSTRA mini çiyələkli 150 qr", "5.50", "🧁", ""),
+                    m("sr11", "DANKEK TART mini çiyələkli 150 qr", "5.50", "🧁", ""),
+                    m("sr12", "OLALA BOLD keks 156 qr", "7.00", "🧁", ""),
+                    m("sr13", "OLALA SUFLE mini 162 qr", "6.50", "🧁", ""),
+                    m("sr14", "ADICTO BROVNİ 144 qr intense", "6.50", "🍫", "")
+                ]},
+                { kateqoriya: "Pryaniklər və vafli", mehsullar: [
+                    m("sr15", "YAŞKİNO PRYANİK 350 qr", "7.00", "🍪", ""),
+                    m("sr16", "HOŞBEŞ VAFLİ çeşidləri 142 qr", "4.50", "🍪", ""),
+                    m("sr17", "KONAFETTA VAFLİ RULO 156 qr", "4.50", "🍪", ""),
+                    m("sr18", "YAŞKİNO vafli rulo 190 qr", "4.50", "🍪", ""),
+                    m("sr19", "YAŞKİNO XRUSTYAŞİE vafli 300 qr", "6.50", "🍪", "")
+                ]},
+                { kateqoriya: "Tortlar", mehsullar: [
+                    m("sr20", "OREŞKİN vafli tort 220 qr", "6.00", "🍰", ""),
+                    m("sr21", "YAŞKİNO vafli tort 250 qr", "6.00", "🍰", ""),
+                    m("sr22", "MİSHKA KOSOLAPIY vafli tort 250 qr", "6.00", "🍰", ""),
+                    m("sr23", "CHEREMUSHKİN tortu 720 qr", "14.00", "🍰", ""),
+                    m("sr24", "CUDO VAFLİ TORT 190 qr", "7.50", "🍰", ""),
+                    m("sr25", "ÇEREMUŞKİ tort BELÇİKA 420 qr", "11.00", "🍰", ""),
+                    m("sr26", "7 DAYS MİNİ KRUASSAN 200 qr", "6.00", "🥐", "")
+                ]},
+                { kateqoriya: "Şokoladlar", mehsullar: [
+                    m("sr27", "SNİCKERS baton 50 qr", "3.00", "🍫", ""),
+                    m("sr28", "MARS baton 50 qr", "3.00", "🍫", ""),
+                    m("sr29", "BAUNTY baton 57 qr", "3.00", "🍫", ""),
+                    m("sr30", "TWIX baton 50 qr", "3.00", "🍫", ""),
+                    m("sr31", "NUTS baton 50 qr", "3.00", "🍫", ""),
+                    m("sr32", "SNİCKERS baton araxisli 80 qr", "4.00", "🍫", ""),
+                    m("sr33", "SLADKA 80 qr", "4.00", "🍫", ""),
+                    m("sr34", "BAUNTY TRİO baton 82.5 qr", "4.50", "🍫", ""),
+                    m("sr35", "SNİCKERS baton funduqlu 80 qr", "5.00", "🍫", ""),
+                    m("sr36", "SNİCKERS baton ağ araxisli 80 qr", "5.00", "🍫", ""),
+                    m("sr37", "SNİCKERS baton göy araxisli 80 qr", "6.00", "🍫", ""),
+                    m("sr38", "LACMİ plitka 90 qr", "4.00", "🍫", ""),
+                    m("sr39", "ALBENİ plitka şokolad çeşidləri 85 qr", "4.50", "🍫", ""),
+                    m("sr40", "NESTLE plitka şokolad çeşidləri 80 qr", "5.00", "🍫", ""),
+                    m("sr41", "ALPENGOLD plitka şokolad çeşidləri 90 qr", "5.00", "🍫", ""),
+                    m("sr42", "ALYONKA plitka şokolad çeşidləri 90 qr", "6.00", "🍫", ""),
+                    m("sr43", "MİLKA plitka şokolad çeşidləri 90 qr", "6.00", "🍫", ""),
+                    m("sr44", "SHONİZ Real Milk şokolad çeşidləri 100 qr", "6.00", "🍫", ""),
+                    m("sr45", "BABAYEVSKİY plitka şokolad çeşidləri 90 qr", "7.00", "🍫", ""),
+                    m("sr46", "DUBAİ plitka şokolad 93 qr", "10.00", "🍫", ""),
+                    m("sr47", "SCHOGETTEN plitka şokolad ağ, qara 100 qr", "10.00", "🍫", ""),
+                    m("sr48", "MİLKA plitka qozlu içliklə 110 qr", "14.00", "🍫", ""),
+                    m("sr49", "RAFAELLO karobka 150 qr", "14.00", "🍬", ""),
+                    m("sr50", "MİLKA plitka şokolad çeşidləri 300 qr", "16.00", "🍫", ""),
+                    m("sr51", "MERCİ karobka şokolad çeşidləri 112 qr", "10.00", "🍬", ""),
+                    m("sr52", "MERCİ karobka şokolad çeşidləri 250 qr", "16.00", "🍬", "")
+                ]}
+            ],
+            cerez: [
+                { kateqoriya: "Çərəzlər", mehsullar: [
+                    m("cz01", "QOZ 90 qr", "4.00", "🌰", ""),
+                    m("cz02", "FINDIQ 90 qr", "4.00", "🌰", ""),
+                    m("cz03", "BADAM 90 qr", "4.00", "🌰", ""),
+                    m("cz04", "ARAXİS 90 qr", "3.00", "🥜", ""),
+                    m("cz05", "PUSTƏ 90 qr", "8.00", "🥜", ""),
+                    m("cz06", "KAJU (KİKO) 90 qr", "5.00", "🥜", ""),
+                    m("cz07", "HİND QOZU 90 qr", "5.00", "🥥", ""),
+                    m("cz08", "Qarışıq ÇƏRƏZ 180 qr", "", "🥜", ""),
+                    m("cz09", "QABIQLI YER FISTIQ", "3.50", "🥜", ""),
+                    m("cz10", "QABIQLI FISTIQ 150 qr", "", "🥜", ""),
+                    m("cz11", "ŞABALID qovrulmuş 200 qr", "4.00", "🌰", ""),
+                    m("cz12", "ŞABALID qovrulmuş soyulmuş 200 qr", "5.00", "🌰", "")
+                ]}
+            ],
+            qelyanalti: [
+                { kateqoriya: "Pivə məzələri", mehsullar: [
+                    m("qa01", "Saçaq pendir (limon)", "2.00", "🧀", ""),
+                    m("qa02", "Saçaq pendir qızartma (limon)", "3.00", "🧀", ""),
+                    m("qa03", "Gürzə", "3.00", "🥨", ""),
+                    m("qa04", "Düşbərə tomat", "3.00", "🍅", ""),
+                    m("qa05", "SOUS", "1.00", "🥫", ""),
+                    m("qa06", "Boğaz", "2.00", "🥩", ""),
+                    m("qa07", "Patana", "3.00", "🍢", ""),
+                    m("qa08", "Bildirçin", "3.00", "🍗", ""),
+                    m("qa09", "Qluşitel toyuq", "4.50", "🍗", ""),
+                    m("qa10", "Qluşitel toyuq qanadlı", "5.00", "🍗", ""),
+                    m("qa11", "Qluşitel hinduşka", "18.00", "🍗", ""),
+                    m("qa12", "Fanat Suxari 65", "1.50", "🍞", ""),
+                    m("qa13", "Cipsi İmplus 65 qr", "3.50", "🥔", ""),
+                    m("qa14", "Cipsi İmplus 125 qr", "4.50", "🥔", ""),
+                    m("qa15", "Cipsim tomatlı, paprika, kabablı 70 qr", "", "🥔", ""),
+                    m("qa16", "Cipsim tomatlı, paprika, kabablı 140 qr", "", "🥔", ""),
+                    m("qa17", "Cipsi LAYS tomatlı, pendirli, xamalı soğanlı 70 qr", "3.50", "🥔", ""),
+                    m("qa18", "Cipsi LAYS tomatlı, pendirli, xamalı soğanlı 140 qr", "5.00", "🥔", ""),
+                    m("qa19", "TUM Patron YAQUAR 100", "2.50", "🌻", ""),
+                    m("qa20", "TUM Patron 4 D 110", "2.50", "🌻", ""),
+                    m("qa21", "TUM Patron 4 D", "2.50", "🌻", ""),
+                    m("qa22", "TUM MİSTER ALA", "2.50", "🌻", ""),
+                    m("qa23", "CİKO ağ", "1.50", "🌻", ""),
+                    m("qa24", "CİKO ağ, sarı", "2.50", "🌻", ""),
+                    m("qa25", "CİKO balqabaq", "3.00", "🎃", ""),
+                    m("qa26", "CİKO balqabaq", "5.00", "🎃", ""),
+                    m("qa27", "TADIM balqabaq tumu", "5.00", "🎃", ""),
+                    m("qa28", "Acroyali fıstıq qovrulmuş və duzlu 185 qr (dəmir qab)", "5.00", "🥜", ""),
+                    m("qa29", "Life PEANUTS duzlu 120 qr (dəmir qab)", "4.00", "🥜", ""),
+                    m("qa30", "Peanuts Xiang Hong araxis 185 qr (dəmir qab)", "5.50", "🥜", "")
+                ]}
+            ],
+            piva: [
+                { kateqoriya: "Pivələr", mehsullar: [
+                    m("pv01", "PİVƏ NZS (bakal)", "2.00", "🍺", ""),
+                    m("pv02", "PİVƏ VOLSBERQ (bakal)", "2.00", "🍺", ""),
+                    m("pv03", "PİVƏ XIRDALAN (bakal)", "2.50", "🍺", ""),
+                    m("pv04", "NZS sadə", "3.00", "🍺", ""),
+                    m("pv05", "NZS sadə non filtr", "3.50", "🍺", ""),
+                    m("pv06", "NZS STRONG 500 ml", "3.50", "🍺", ""),
+                    m("pv07", "NZS PREMİUM filtirsiz 500 ml", "3.50", "🍺", ""),
+                    m("pv08", "XIRDALAN sadə 500 ml", "3.50", "🍺", ""),
+                    m("pv09", "XIRDALAN filtirsiz 500 ml", "5.00", "🍺", ""),
+                    m("pv10", "XIRDALAN draft 500 ml", "5.00", "🍺", ""),
+                    m("pv11", "XIRDALAN 9 500 ml", "5.00", "🍺", ""),
+                    m("pv12", "EFES DRAFT 450 ml", "5.00", "🍺", ""),
+                    m("pv13", "KULİCE 0.5 l", "3.50", "🍺", ""),
+                    m("pv14", "KULLER", "4.50", "🍺", ""),
+                    m("pv15", "CARLSBERG 4.8%", "5.00", "🍺", ""),
+                    m("pv16", "MİLLER 330 ml", "5.50", "🍺", ""),
+                    m("pv17", "CORONA 330 ml", "6.00", "🍺", ""),
+                    m("pv18", "BLANC Kronenbourg şüşə 4.6 %", "6.00", "🍺", ""),
+                    m("pv19", "MİLLER 500 ml", "6.50", "🍺", "")
+                ]}
+            ],
             xarici: [
                 { kateqoriya: "Xarici siqaretlər (VİP)", mehsullar: [
                     m("sq01", "PARLIAMENT qalın şves", "18.00", "🚬", "https://sigaraci.net/wp-content/uploads/2025/06/parliament-silver-blue-sigara.png"),
@@ -448,7 +653,7 @@
                     m("sq33", "ROTHMANS kompakt demi silver (boz)", "4.00", "🚬", ""),
                     m("sq34", "ROTHMANS kompakt click amber (aromat)", "4.00", "🚬", ""),
                     m("sq35", "SOBRANIE nano blue (göy)", "5.50", "🚬", ""),
-                    m("sq36", "SOBRANIE kompakt blue (göy)", "5.50", "🚬", "https://cdn.phototourl.com/member/2026-10-16-ba61abc2-dc49-4ccb-aede-f77154660264.png"),
+                    m("sq36", "SOBRANIE kompakt blue (göy)", "5.50", "🚬", ""),
                     m("sq37", "SOBRANIE qalın kiss blue (göy)", "5.50", "🚬", ""),
                     m("sq38", "SOBRANIE ağ qalın", "5.50", "🚬", ""),
                     m("sq39", "SOBRANIE nano slim whites", "5.50", "🚬", ""),
@@ -482,7 +687,7 @@
                 ]}
             ]
         };
- 
+
         const categories = [
             { id: 'murebbe',   ad: 'Mürəbbələr' },
             { id: 'isti',      ad: 'İsti İçkilər' },
@@ -494,11 +699,11 @@
             { id: 'xarici',    ad: 'Xarici Siqaretlər' },
             { id: 'siqaret',   ad: 'Siqaretlər' }
         ];
- 
+
         function esc(s) {
             return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         }
- 
+
         // Əvvəlcə emoji görünür, şəkil yüklənəndə üstünə keçir və şəkil böyüdülə bilər
         function thumbHTML(item) {
             const emoji = item.emoji || '🍵';
@@ -506,15 +711,23 @@
             if (!src) return `<div class="thumb">${emoji}</div>`;
             return `<button type="button" class="thumb" aria-label="Şəkli böyüt">${emoji}<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onload="this.style.opacity=1;this.parentNode.classList.add('has-img')" onerror="this.remove()"></button>`;
         }
- 
+
+        // Qiymət bir ədəd (mətn) və ya bir neçə ([ad, qiymət] cütləri) ola bilər
+        function priceHTML(q) {
+            if (Array.isArray(q)) {
+                return q.map(([lbl, p]) => `<span class="item-price"><small>${esc(lbl)}</small> ${esc(p)} ₼</span>`).join('');
+            }
+            return `<span class="item-price">${q ? esc(q) + ' ₼' : ''}</span>`;
+        }
+
         function renderMenu() {
             const tabs = document.getElementById('tabs');
             const menus = document.getElementById('menus');
             let tabsHtml = '', menusHtml = '';
- 
+
             categories.forEach((cat, i) => {
                 tabsHtml += `<button class="tab-btn${i === 0 ? ' active' : ''}" data-tab="${cat.id}">${cat.ad}</button>`;
- 
+
                 const data = db[cat.id];
                 let inner = '';
                 if (data.length === 0) {
@@ -528,7 +741,7 @@
                                 ${thumbHTML(item)}
                                 <span class="item-name">${esc(item.ad)}</span>
                                 <div class="item-side">
-                                    <span class="item-price">${item.qiymet ? esc(item.qiymet) + ' ₼' : ''}</span>
+                                    ${priceHTML(item.qiymet)}
                                     ${bitib ? '<span class="badge-bitib">Bitib</span>' : ''}
                                 </div>
                             </li>`;
@@ -539,16 +752,16 @@
                 }
                 menusHtml += `<div id="${cat.id}" class="menu-container${i === 0 ? ' active' : ''}">${inner}</div>`;
             });
- 
+
             tabs.innerHTML = tabsHtml;
             menus.innerHTML = menusHtml;
- 
+
             tabs.addEventListener('click', e => {
                 const btn = e.target.closest('.tab-btn');
                 if (btn) switchTab(btn);
             });
         }
- 
+
         function switchTab(btn) {
             document.querySelectorAll('.menu-container').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -558,14 +771,14 @@
             document.getElementById('search').value = '';
             filterItems('');
         }
- 
+
         // Hərfləri sadələşdir: ə→e, ı→i, ş→s, ç→c, ö→o, ü→u, ğ→g (s yazanda ş də tapılsın)
         function norm(str) {
             return String(str).toLowerCase().normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '')
                 .replace(/ə/g, 'e').replace(/ı/g, 'i');
         }
- 
+
         // Aktiv bölmədə axtarış: hər sözün başlanğıcına baxır (s yazanda s ilə başlayanlar çıxır)
         function filterItems(q) {
             const tokens = norm(q).trim().split(/\s+/).filter(Boolean);
@@ -594,7 +807,7 @@
             const hasItems = active.querySelector('.item-list');
             document.getElementById('noResult').style.display = (hasItems && shown === 0) ? 'block' : 'none';
         }
- 
+
         // Şəkilə toxunanda böyüt, istənilən yerə toxunanda bağla
         function setupLightbox() {
             const box = document.getElementById('lightbox');
@@ -612,7 +825,7 @@
                 if (!t) return;
                 const small = t.querySelector('img');
                 const li = t.closest('li');
-                const price = li.querySelector('.item-price').textContent.trim();
+                const price = Array.from(li.querySelectorAll('.item-price')).map(p => p.textContent.trim()).filter(Boolean).join(' · ');
                 img.src = small.currentSrc || small.src;
                 cap.textContent = li.querySelector('.item-name').textContent + (price ? ' — ' + price : '');
                 box.classList.add('open');
@@ -621,7 +834,7 @@
             });
             document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
         }
- 
+
         // Wi-Fi şifrəsini kopyala
         function setupCopy() {
             const btn = document.getElementById('copyBtn');
@@ -641,7 +854,7 @@
                 setTimeout(() => { btn.textContent = 'Kopyala'; }, 2000);
             });
         }
- 
+
         document.addEventListener('DOMContentLoaded', () => {
             renderMenu();
             setupCopy();
@@ -651,4 +864,3 @@
     </script>
 </body>
 </html>
- 
