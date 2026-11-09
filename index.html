@@ -298,8 +298,100 @@
         .lb-close { position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgba(255,255,255,.2); color: #fff; font-size: 20px; cursor: pointer; }
 
         /* ---------- Görünüşlər ---------- */
-        body.v-home #catView { display: none; }
-        body.v-cat #homeView, body.v-cat .hero { display: none; }
+        body.v-home #catView, body.v-home #kabView, body.v-cat #kabView { display: none; }
+        body.v-cat #homeView, body.v-cat .hero, body.v-kab #homeView, body.v-kab #catView, body.v-kab .hero { display: none; }
+
+        /* ---------- Masa nişanı ---------- */
+        .masa { display: inline-block; margin-top: 12px; background: rgba(227,191,106,.2); border: 1px solid var(--gold-2); color: var(--gold-2); border-radius: 14px; padding: 4px 12px; font-size: .8rem; letter-spacing: 1px; }
+
+        /* ---------- Seçim (+) düymələri ---------- */
+        .pv { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+        .add {
+            width: 32px; height: 32px; flex: 0 0 auto;
+            border-radius: 50%; border: 1px solid var(--gold);
+            background: var(--gold-soft); color: var(--wine);
+            font-size: 1.2rem; line-height: 1; cursor: pointer; padding: 0;
+        }
+        .add:active { background: var(--gold-2); }
+        .qty { display: inline-flex; align-items: center; gap: 6px; background: var(--ink); color: #fff; border-radius: 18px; padding: 2px 4px; }
+        .qty button { width: 28px; height: 28px; border-radius: 50%; border: 0; background: var(--gold-2); color: #14171d; font-size: 1.1rem; line-height: 1; cursor: pointer; padding: 0; }
+        .qty b { min-width: 18px; text-align: center; font-size: .9rem; }
+        .promo-card .ctl, .set-price .ctl { display: flex; justify-content: flex-end; margin-top: 6px; }
+        .promo-prices { justify-content: space-between; }
+        .set-price .ctl { margin-top: 8px; }
+        .set-price .add { background: var(--gold-2); border-color: var(--gold-2); color: #14171d; }
+
+        /* ---------- Kiçik səbət nişanı ---------- */
+        .cart-pill {
+            position: fixed; right: 12px; bottom: calc(82px + env(safe-area-inset-bottom, 0px)); z-index: 45;
+            display: none; align-items: center; gap: 6px;
+            background: var(--wine); color: #fff; border: 0; border-radius: 22px;
+            padding: 9px 15px; font-weight: 700; font-size: .9rem; cursor: pointer;
+            box-shadow: 0 6px 18px rgba(123,30,43,.45);
+        }
+        .cart-pill.show { display: flex; }
+        .cart-pill.pop { animation: pop .3s; }
+        @keyframes pop { 0% { transform: scale(.85); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+        .badge { font-style: normal; font-size: .62rem; font-weight: 700; background: var(--wine); color: #fff; border-radius: 9px; padding: 1px 5px; margin-left: 2px; vertical-align: top; display: none; }
+        .badge.on { display: inline-block; }
+
+        /* ---------- Kənardan çıxan kiçik təklif ---------- */
+        .toast {
+            position: fixed; right: 10px; bottom: calc(132px + env(safe-area-inset-bottom, 0px)); z-index: 44;
+            width: min(270px, 80vw);
+            background: #fff; border: 1px solid var(--gold); border-radius: 16px;
+            padding: 10px 12px 8px; box-shadow: 0 10px 28px rgba(40,28,10,.28);
+            transform: translateX(120%); transition: transform .35s ease; font-size: .85rem;
+        }
+        .toast.show { transform: none; }
+        .toast-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-weight: 700; margin-bottom: 6px; }
+        .toast-x { border: 0; background: none; font-size: 1.1rem; color: var(--muted); cursor: pointer; padding: 0 2px; }
+        .toast-row { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-top: 1px solid var(--line); }
+        .toast-row span { flex: 1; line-height: 1.2; }
+        .toast-row small { color: var(--wine); font-weight: 700; white-space: nowrap; }
+
+        /* ---------- Seçimlər pəncərəsi ---------- */
+        .cart-line { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+        .cart-line .nm { flex: 1; font-size: .92rem; line-height: 1.25; }
+        .cart-line .lt { font-weight: 700; color: var(--wine); white-space: nowrap; min-width: 58px; text-align: right; }
+        .cart-total { display: flex; justify-content: space-between; align-items: baseline; font-size: 1.15rem; font-weight: 700; padding: 14px 2px 4px; }
+        .cart-note { font-size: .78rem; color: var(--muted); margin: 2px 2px 12px; }
+        .cart-actions { display: grid; gap: 8px; margin-top: 10px; }
+        .btn { display: block; width: 100%; text-align: center; border: 0; border-radius: 14px; padding: 14px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit; }
+        .btn-gold { background: var(--ink); color: var(--gold-2); }
+        .btn-wa { background: #1f9d55; color: #fff; }
+        .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 400; padding: 10px; font-size: .9rem; }
+        .cart-empty { text-align: center; color: var(--muted); padding: 26px 0 10px; }
+
+        /* ---------- Ofisiant görünüşü ---------- */
+        .waiter { position: fixed; inset: 0; z-index: 95; background: #fff; color: #111; display: none; flex-direction: column; padding: calc(16px + env(safe-area-inset-top, 0px)) 18px calc(16px + env(safe-area-inset-bottom, 0px)); overflow-y: auto; }
+        .waiter.open { display: flex; }
+        .waiter h2 { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 4px; }
+        .waiter .w-masa { color: var(--wine); font-weight: 700; margin-bottom: 10px; }
+        .w-line { display: flex; justify-content: space-between; gap: 12px; font-size: 1.35rem; padding: 12px 0; border-bottom: 1px solid #ddd; }
+        .w-line b { white-space: nowrap; }
+        .w-total { display: flex; justify-content: space-between; font-size: 1.6rem; font-weight: 700; padding: 16px 0; }
+        .waiter .btn { margin-top: auto; }
+
+        /* ---------- Kabinetlər ---------- */
+        .kab-banner {
+            display: flex; align-items: center; gap: 14px; margin-top: 26px;
+            background: linear-gradient(135deg, #3a1118, #7b1e2b);
+            color: #fff; border-radius: 18px; padding: 14px 16px;
+            border: 1px solid rgba(227,191,106,.5);
+            box-shadow: 0 6px 20px rgba(123,30,43,.3);
+        }
+        .kab-banner > span { font-size: 2rem; }
+        .kab-banner b { font-family: var(--serif); font-size: 1.1rem; color: var(--gold-2); display: block; }
+        .kab-banner small { color: #f0d9dc; font-size: .8rem; }
+        .kab-banner i { margin-left: auto; font-style: normal; font-size: 1.6rem; color: var(--gold-2); }
+        .kab-card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 12px; margin-top: 16px; box-shadow: 0 4px 16px rgba(60,40,10,.08); }
+        .kab-card .thumb { width: 100%; height: auto; aspect-ratio: 16 / 10; flex: none; border-radius: 14px; font-size: 3.4rem; }
+        .kab-name { font-family: var(--serif); font-size: 1.2rem; margin: 10px 2px 2px; }
+        .kab-info { color: var(--muted); font-size: .85rem; margin: 0 2px 10px; min-height: 1em; }
+        .kab-actions { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+        .kab-actions .btn { padding: 12px; font-size: .95rem; }
+        .btn-call { background: var(--gold-soft); color: var(--wine); width: auto; padding: 12px 18px; }
 
         @media (min-width: 560px) {
             .promo-grid, .tiles { grid-template-columns: 1fr 1fr 1fr; }
@@ -317,6 +409,7 @@
         <img class="logo" src="sekiller/logo.jpg" alt="Qarabağ Çay Evi" onerror="this.style.display='none';document.getElementById('logoText').style.display='block'">
         <div class="logo-text" id="logoText">QARABAĞ<small>ÇAY EVİ</small></div>
         <div class="menu-label"><span></span>MENYU<span></span></div>
+        <div class="masa" id="masaChip" style="display:none;"></div>
     </header>
 
     <!-- ANA SƏHİFƏ -->
@@ -329,6 +422,7 @@
             <div id="homeSections">
                 <div id="promoSec"></div>
                 <div id="setSec"></div>
+                <div id="kabSec"></div>
                 <h2 class="sec-title" id="menuAnchor">Menyu</h2>
                 <div class="tiles" id="tiles"></div>
 
@@ -360,13 +454,41 @@
         </div>
     </section>
 
+    <!-- KABİNETLƏR SƏHİFƏSİ -->
+    <section id="kabView">
+        <div class="catbar">
+            <div class="wrap">
+                <div class="catbar-row">
+                    <a class="back" href="#/" aria-label="Geri">←</a>
+                    <div><div class="cat-title-main">🛋️ Kabinetlər</div><div class="cat-count">Rezerv üçün WhatsApp-a yaz</div></div>
+                </div>
+            </div>
+        </div>
+        <div class="wrap">
+            <div id="kabList"></div>
+            <div class="foot-note">Rezerv düyməsinə toxunanda WhatsApp açılır, mesaj hazır yazılır. Yalnız tarixi, saatı və nəfər sayını yazıb göndərirsən.</div>
+        </div>
+    </section>
+
     <!-- AŞAĞI NAVİQASİYA -->
     <nav class="nav" aria-label="Naviqasiya">
         <button class="nav-btn on" id="navHome" type="button"><i>🏠</i>Ana səhifə</button>
         <button class="nav-btn" id="navMenu" type="button"><i>☰</i>Menyu</button>
         <button class="nav-btn" id="navSearch" type="button"><i>🔍</i>Axtar</button>
-        <button class="nav-btn" id="navWifi" type="button"><i>📶</i>Wi-Fi</button>
+        <button class="nav-btn" id="navCart" type="button"><i>🧾<em class="badge" id="navBadge"></em></i>Seçimlərim</button>
     </nav>
+
+    <!-- SEÇİMLƏRİM (SƏBƏT) -->
+    <button class="cart-pill" id="cartPill" type="button" aria-label="Seçimlərim"></button>
+    <div class="toast" id="toast" aria-live="polite"></div>
+    <div class="sheet" id="cartSheet" aria-hidden="true">
+        <div class="sheet-panel">
+            <div class="sheet-grip"></div>
+            <h2 class="sheet-title">🧾 Seçimlərim</h2>
+            <div id="cartBody"></div>
+        </div>
+    </div>
+    <div class="waiter" id="waiter" aria-hidden="true"></div>
 
     <!-- MENYU PƏNCƏRƏSİ -->
     <div class="sheet" id="sheet" aria-hidden="true">
@@ -430,7 +552,6 @@
             "dondurma",
             "bananli-plombir",
             "qoz"
-            "AĞ GİLAS QOZLU"
         ];
 
         // m(kod, ad, qiymət, emoji, ŞƏKİL LİNKİ)
@@ -441,7 +562,7 @@
         const db = {
             murebbe: [
                 { kateqoriya: "Mürəbbələr", mehsullar: [
-                    m("heyva", "HEYVA mürəbbəsi", "4.00", "🍐", "https://www.azcookbook.com/wp-content/uploads/2010/11/quince-preserve2.jpg"),
+                    m("heyva", "HEYVA mürəbbəsi", "5.00", "🍐", "https://www.azcookbook.com/wp-content/uploads/2010/11/quince-preserve2.jpg"),
                     m("encir", "Əncir mürəbbəsi", "5.00", "🍯", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC20Yj2bV4zakWyttxsvGERGYn9T6RUW3yzplvx4DCUksuEDY9zRC1p5g8&s=10"),
                     m("boyurtken", "BÖYÜRTKƏN mürəbbəsi", "5.00", "🫐", "https://i.ytimg.com/vi/_MrLzEvGecs/hqdefault.jpg"),
                     m("ciyelek", "ÇİYƏLƏK mürəbbəsi", "5.00", "🍓", "https://upload.wikimedia.org/wikipedia/commons/8/88/Az-Strawberry_jam%2C_making_by_e-citizen_%28moonsun1981%29.JPG?utm_source=az.wikibooks.org&utm_campaign=index&utm_content=original"),
@@ -462,13 +583,12 @@
                     m("baunty", "Baunty mürəbbəsi", "6.50", "🥥", "https://i.ytimg.com/vi/l2qHCQOVmOs/sddefault.jpg"),
                     m("ananas", "Ananas mürəbbəsi", "6.50", "🍍", "https://i.pinimg.com/474x/75/41/5b/75415b5ea074eccf963bf178349e6b31.jpg"),
                     m("qirmizi-gilas", "Qırmızı GİLAS mürəbbəsi", "7.00", "🍒", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHoEFGioFRgoR3hDkoWpwKWaY6Ut9A5YPBGR8eGXqdOZ2tW4jZz9tEXQ&s=10"),
-                    m("malina", "MALİNA mürəbbəsi", "6.00", "🍓", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjWhKKU0aaPSxR7fr_5zSrjd1Rlat85iUaHt2CZqgQ8kIm-yeMEG4XBPKd&s=10"),
+                    m("malina", "MALİNA mürəbbəsi", "7.00", "🍓", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjWhKKU0aaPSxR7fr_5zSrjd1Rlat85iUaHt2CZqgQ8kIm-yeMEG4XBPKd&s=10"),
                     m("zeytun", "ZEYTUN mürəbbəsi", "7.00", "🫒", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9nOn2lce-QmHgX7oepk45oGPCg6PrIjxB0B2eo_wrmRaeVETWKgow_QVr&s=10"),
                     m("dondurma", "DONDURMA mürəbbəsi", "7.00", "🍦", "https://evdar.az/wp-content/uploads/Kafelerde-cayin-Yaninda-Verilen-Dad-Plombir-Murebbesi-1170x650.jpeg"),
                     m("bananli-plombir", "BANANLI PLOMBİR mürəbbəsi", "8.00", "🍌", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT30gldxloD8Ht16d1R07xqYgtYmfxPu41SlRkKe87yiME66NdkaWL1EpM&s=10"),
                     m("qoz", "QOZ mürəbbəsi", "8.00", "🌰", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9ZdPGFQw-sCzF-y98fjlBfX2VXP7DwNnlkDjR0lIU9kh7vBZ4DQk254Du&s=10")
-                    m("AĞ GİLAS QOZLU", "7.00")
-            ]}
+                ]}
             ],
             isti: [
                 { kateqoriya: "Çaylar", mehsullar: [
@@ -783,6 +903,27 @@
         };
 
         
+
+        // =====================================================================
+        //  ƏLAQƏ VƏ KABİNETLƏR
+        //  Kabinet şəklini "sekiller" qovluğuna kab1.jpg, kab2.jpg ... adı ilə yüklə,
+        //  sayt özü tapıb göstərəcək. Neçə nəfərlik və təsvir istəyə bağlıdır.
+        // =====================================================================
+        const WA_NOMRE = "994505823737";
+        const TEL = "+994505823737";
+        const KABINETLER = [
+            { kod: "kab1", ad: "Kabinet 1", nefer: "", tesvir: "" },
+            { kod: "kab2", ad: "Kabinet 2", nefer: "", tesvir: "" },
+            { kod: "kab3", ad: "Kabinet 3", nefer: "", tesvir: "" },
+            { kod: "kab4", ad: "Kabinet 4", nefer: "", tesvir: "" },
+            { kod: "kab5", ad: "Kabinet 5", nefer: "", tesvir: "" },
+            { kod: "kab6", ad: "Kabinet 6", nefer: "", tesvir: "" }
+        ];
+
+        // Çay seçəndə təklif olunan mürəbbələr və əksinə (məhsul kodları)
+        const MUREBBE_TEKLIF = ["heyva", "cir-visne", "qizilgul"];
+        const CAY_TEKLIF = ["ic01", "ic04", "ic03"];
+
         // =====================================================================
         //  ENDİRİMLİ MƏHSULLAR  (NÜMUNƏDİR — öz qiymətlərinlə dəyiş, ya da sil)
         //  Format: ["məhsulun kodu", "yeni qiymət"]
@@ -822,6 +963,146 @@
         const byCode = {};
         categories.forEach(c => (db[c.id] || []).forEach(g => g.mehsullar.forEach(it => { byCode[it.kod] = it; })));
 
+        // masa/kabinet nömrəsi: saytın linkinin sonuna  ?masa=Kabinet-3  yazılır
+        const MASA = (new URLSearchParams(location.search).get('masa') || '').trim().slice(0, 30);
+
+        // ---------- Seçimlərim (səbət) ----------
+        let CART = {};
+        try { CART = JSON.parse(localStorage.getItem('qarabag_sebet') || '{}') || {}; } catch (e) { CART = {}; }
+        function saveCart() { try { localStorage.setItem('qarabag_sebet', JSON.stringify(CART)); } catch (e) {} }
+
+        function setSum(s) {
+            return s.items.reduce((t, [kod, say]) => { const it = byCode[kod]; return t + (it ? priceNum(it.qiymet) * say : 0); }, 0);
+        }
+        function setPrice(s) { return s.qiymet ? parseFloat(s.qiymet) : setSum(s); }
+
+        function lineInfo(key) {
+            if (key.startsWith('set:')) {
+                const s = SETLER[+key.slice(4)];
+                return s ? { ad: 'Set: ' + s.ad, price: setPrice(s) } : null;
+            }
+            let k = key, vi = 0, promo = false;
+            if (k.endsWith('@p')) { promo = true; k = k.slice(0, -2); }
+            if (k.includes('|')) { const p = k.split('|'); k = p[0]; vi = +p[1] || 0; }
+            const it = byCode[k];
+            if (!it) return null;
+            let price, label = '';
+            if (Array.isArray(it.qiymet)) { price = parseFloat(it.qiymet[vi][1]); label = ' (' + it.qiymet[vi][0] + ')'; }
+            else price = priceNum(it.qiymet);
+            if (promo) { const e = ENDIRIM.find(x => x[0] === k); if (e) { price = parseFloat(e[1]); label = ' (endirimli)'; } }
+            return { ad: it.ad + label, price: isNaN(price) ? 0 : price };
+        }
+        function ctlHTML(key) {
+            const q = CART[key] || 0;
+            return q > 0
+                ? `<span class="qty"><button type="button" data-dec="${key}" aria-label="Azalt">−</button><b>${q}</b><button type="button" data-add="${key}" aria-label="Artır">+</button></span>`
+                : `<button type="button" class="add" data-add="${key}" aria-label="Seçimə əlavə et">+</button>`;
+        }
+        function ctl(key) { return `<span class="ctl" data-k="${key}">${ctlHTML(key)}</span>`; }
+        function refreshCtl(key) {
+            document.querySelectorAll('.ctl[data-k="' + key + '"]').forEach(el => { el.innerHTML = ctlHTML(key); });
+        }
+        function cartTotals() {
+            let n = 0, sum = 0, unknown = false;
+            Object.entries(CART).forEach(([k, q]) => {
+                const L = lineInfo(k);
+                if (!L || q <= 0) return;
+                n += q; sum += L.price * q; if (!L.price) unknown = true;
+            });
+            return { n, sum, unknown };
+        }
+        function setQty(key, q) {
+            if (q <= 0) delete CART[key]; else CART[key] = Math.min(q, 99);
+            saveCart(); refreshCtl(key); updateCartUI();
+        }
+        function addKey(key) {
+            const was = CART[key] || 0;
+            setQty(key, was + 1);
+            if (was === 0) suggestFor(key);
+        }
+        function decKey(key) { setQty(key, (CART[key] || 0) - 1); }
+
+        function updateCartUI() {
+            const t = cartTotals();
+            const pill = $('cartPill');
+            const had = pill.classList.contains('show');
+            pill.classList.toggle('show', t.n > 0);
+            pill.innerHTML = `🧾 ${t.n} <span>·</span> ${t.sum.toFixed(2)} ₼${t.unknown ? '+' : ''}`;
+            if (t.n > 0) { pill.classList.remove('pop'); void pill.offsetWidth; pill.classList.add('pop'); }
+            const b = $('navBadge');
+            b.textContent = t.n; b.classList.toggle('on', t.n > 0);
+            if ($('cartSheet').classList.contains('open')) renderCartSheet();
+            if (!t.n && had) hideToast();
+        }
+
+        function renderCartSheet() {
+            const rows = Object.entries(CART).map(([k, q]) => ({ k, q, L: lineInfo(k) })).filter(r => r.L && r.q > 0);
+            const t = cartTotals();
+            if (!rows.length) {
+                $('cartBody').innerHTML = '<div class="cart-empty">Hələ heç nə seçməmisiniz.<br>Məhsulun yanındakı <b>+</b> düyməsinə toxunun.</div><button class="btn btn-ghost" type="button" data-close-cart>Bağla</button>';
+                return;
+            }
+            $('cartBody').innerHTML =
+                (MASA ? `<div class="cart-note">📍 ${esc(MASA)}</div>` : '') +
+                rows.map(r => `<div class="cart-line"><div class="nm">${esc(r.L.ad)}</div>
+                    <span class="qty"><button type="button" data-dec="${r.k}">−</button><b>${r.q}</b><button type="button" data-add="${r.k}">+</button></span>
+                    <div class="lt">${r.L.price ? (r.L.price * r.q).toFixed(2) + ' ₼' : '—'}</div></div>`).join('') +
+                `<div class="cart-total"><span>Yekun</span><span>${t.sum.toFixed(2)} ₼${t.unknown ? ' +' : ''}</span></div>` +
+                (t.unknown ? '<div class="cart-note">Qiyməti yazılmayan məhsulların (məs. çay) qiymətini ofisiant deyəcək.</div>' : '<div class="cart-note">Bu, sifariş deyil, seçim siyahısıdır. Ofisianta göstərin və ya WhatsApp ilə göndərin.</div>') +
+                `<div class="cart-actions">
+                    <button class="btn btn-gold" type="button" data-waiter>👨‍🍳 Ofisianta göstər</button>
+                    <button class="btn btn-wa" type="button" data-wa>💬 WhatsApp ilə göndər</button>
+                    <button class="btn btn-ghost" type="button" data-clear>Siyahını təmizlə</button>
+                </div>`;
+        }
+        function openCart() { renderCartSheet(); $('cartSheet').classList.add('open'); $('cartSheet').setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
+        function closeCart() { $('cartSheet').classList.remove('open'); $('cartSheet').setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+
+        function cartText() {
+            const rows = Object.entries(CART).map(([k, q]) => ({ q, L: lineInfo(k) })).filter(r => r.L && r.q > 0);
+            const t = cartTotals();
+            return 'Salam!' + (MASA ? ' (' + MASA + ')' : '') + '\nSeçimlərim:\n' +
+                rows.map(r => '• ' + r.L.ad + ' × ' + r.q + (r.L.price ? ' = ' + (r.L.price * r.q).toFixed(2) + ' ₼' : '')).join('\n') +
+                '\nYekun: ' + t.sum.toFixed(2) + ' ₼' + (t.unknown ? ' + (qiyməti yazılmayanlar)' : '');
+        }
+        function sendWA() { window.open('https://wa.me/' + WA_NOMRE + '?text=' + encodeURIComponent(cartText()), '_blank'); }
+        function showWaiter() {
+            const rows = Object.entries(CART).map(([k, q]) => ({ q, L: lineInfo(k) })).filter(r => r.L && r.q > 0);
+            const t = cartTotals();
+            $('waiter').innerHTML = `<h2>Qarabağ Çay Evi</h2>${MASA ? `<div class="w-masa">📍 ${esc(MASA)}</div>` : ''}
+                ${rows.map(r => `<div class="w-line"><span>${r.q} × ${esc(r.L.ad)}</span><b>${r.L.price ? (r.L.price * r.q).toFixed(2) + ' ₼' : ''}</b></div>`).join('')}
+                <div class="w-total"><span>Yekun</span><span>${t.sum.toFixed(2)} ₼${t.unknown ? ' +' : ''}</span></div>
+                <button class="btn btn-gold" type="button" data-close-waiter>Bağla</button>`;
+            $('waiter').classList.add('open');
+        }
+
+        // ---------- Kənardan çıxan kiçik təklif (məcburi deyil) ----------
+        let toastTimer = null; const toastSeen = new Set();
+        function hideToast() { $('toast').classList.remove('show'); clearTimeout(toastTimer); }
+        function showToast(title, kodlar) {
+            const rows = kodlar.map(kod => byCode[kod]).filter(Boolean).map(it =>
+                `<div class="toast-row"><span>${esc(it.emoji || '')} ${esc(it.ad)}</span>${it.qiymet ? `<small>${esc(Array.isArray(it.qiymet) ? it.qiymet[0][1] : it.qiymet)} ₼</small>` : ''}${ctl(it.kod)}</div>`).join('');
+            if (!rows) return;
+            $('toast').innerHTML = `<div class="toast-head"><span>${title}</span><button class="toast-x" type="button" data-toast-x aria-label="Bağla">✕</button></div>${rows}`;
+            $('toast').classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(hideToast, 11000);
+        }
+        function baseCode(key) { return key.replace('@p', '').split('|')[0]; }
+        function suggestFor(key) {
+            const base = baseCode(key);
+            const cayKodlari = ((db.isti || []).find(g => g.kateqoriya === 'Çaylar') || { mehsullar: [] }).mehsullar.map(i => i.kod);
+            const murebbeKodlari = ((db.murebbe || [])[0] || { mehsullar: [] }).mehsullar.map(i => i.kod);
+            const inCart = list => Object.keys(CART).some(k => list.includes(baseCode(k)));
+            if (cayKodlari.includes(base)) {
+                if (inCart(murebbeKodlari) || toastSeen.has('c')) return;
+                toastSeen.add('c'); showToast('🍓 Çayın yanına mürəbbə?', MUREBBE_TEKLIF);
+            } else if (murebbeKodlari.includes(base)) {
+                if (inCart(cayKodlari) || toastSeen.has('m')) return;
+                toastSeen.add('m'); showToast('🍵 Mürəbbənin yanına çay?', CAY_TEKLIF);
+            }
+        }
+
         function esc(s) {
             return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         }
@@ -854,13 +1135,21 @@
             if (!src) return `<div class="thumb">${emoji}</div>`;
             return `<button type="button" class="thumb" aria-label="Şəkli böyüt">${emoji}<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onload="this.style.opacity=1;this.parentNode.classList.add('has-img')" onerror="this.remove()"></button>`;
         }
+        function sideHTML(item, bitib) {
+            const q = item.qiymet;
+            if (!q) return `<div class="pv">${ctl(item.kod)}</div>` + (bitib ? '<span class="badge-bitib">Bitib</span>' : '');
+            if (Array.isArray(q)) {
+                return q.map(([l, p], vi) => `<div class="pv"><span class="item-price"><small>${esc(l)}</small> ${esc(p)} ₼</span>${ctl(item.kod + '|' + vi)}</div>`).join('') + (bitib ? '<span class="badge-bitib">Bitib</span>' : '');
+            }
+            return `<span class="item-price">${esc(q)} ₼</span>${ctl(item.kod)}` + (bitib ? '<span class="badge-bitib">Bitib</span>' : '');
+        }
         function itemHTML(item, idx) {
             const bitib = BITIB_AKTIV && BITIB.includes(item.kod);
             const cap = item.ad + (priceText(item.qiymet) ? ' — ' + priceText(item.qiymet) : '');
             return `<li class="${bitib ? 'bitib' : ''}" data-n="${esc(norm(item.ad))}" data-i="${idx}" data-cap="${esc(cap)}">
                 ${thumbHTML(item)}
                 <span class="item-name">${esc(item.ad)}</span>
-                <div class="item-side">${priceHTML(item.qiymet)}${bitib ? '<span class="badge-bitib">Bitib</span>' : ''}</div>
+                <div class="item-side">${sideHTML(item, bitib)}</div>
             </li>`;
         }
 
@@ -876,18 +1165,19 @@
                     ${pct > 0 ? `<div class="badge-off">-${pct}%</div>` : ''}
                     ${thumbHTML(it)}
                     <div class="promo-name">${esc(it.ad)}</div>
-                    <div class="promo-prices"><span class="price-new">${esc(yeni)} ₼</span><span class="price-old">${old.toFixed(2)} ₼</span></div>
+                    <div class="promo-prices"><span><span class="price-new">${esc(yeni)} ₼</span> <span class="price-old">${old.toFixed(2)} ₼</span></span></div>
+                    ${ctl(kod + '@p')}
                 </div>`;
             }).join('');
             $('promoSec').innerHTML = cards ? `<h2 class="sec-title">🔥 Endirimli məhsullar</h2><div class="promo-grid">${cards}</div>` : '';
         }
 
         function renderSets() {
-            const cards = SETLER.map(s => {
+            const cards = SETLER.map((s, si) => {
                 const rows = s.items.map(([kod, say]) => ({ it: byCode[kod], say })).filter(r => r.it);
                 if (!rows.length) return '';
-                const sum = rows.reduce((t, r) => t + priceNum(r.it.qiymet) * r.say, 0);
-                const price = s.qiymet ? parseFloat(s.qiymet) : sum;
+                const sum = setSum(s);
+                const price = setPrice(s);
                 const pics = rows.slice(0, 3).map(r => {
                     const src = srcOf(r.it);
                     return `<span class="mini">${r.it.emoji || s.emoji}${src ? `<img src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="this.style.opacity=1" onerror="this.remove()">` : ''}</span>`;
@@ -896,10 +1186,29 @@
                 return `<div class="set-card">
                     <div class="set-pics">${pics}</div>
                     <div class="set-body"><div class="set-tag">Set</div><div class="set-title">${esc(s.emoji + ' ' + s.ad)}</div><div class="set-items">${esc(names)}</div></div>
-                    <div class="set-price"><b>${price.toFixed(2)} ₼</b>${price < sum - 0.001 ? `<s>${sum.toFixed(2)} ₼</s>` : ''}</div>
+                    <div class="set-price"><b>${price.toFixed(2)} ₼</b>${price < sum - 0.001 ? `<s>${sum.toFixed(2)} ₼</s>` : ''}${ctl('set:' + si)}</div>
                 </div>`;
             }).join('');
             $('setSec').innerHTML = cards ? `<h2 class="sec-title">🎁 Setlər</h2>${cards}` : '';
+        }
+
+        function renderKabBanner() {
+            $('kabSec').innerHTML = `<a class="kab-banner" href="#/kab"><span>🛋️</span><div><b>Kabinetlər</b><small>Şəkillərə bax və WhatsApp ilə rezerv et</small></div><i>›</i></a>`;
+        }
+        function renderKab() {
+            $('kabList').innerHTML = KABINETLER.map(k => {
+                const info = [k.nefer, k.tesvir].filter(Boolean).join(' · ');
+                const msg = `Salam! ${k.ad} kabinetini rezerv etmək istəyirəm.\nTarix: \nSaat: \nNəfər sayı: `;
+                return `<div class="kab-card" data-cap="${esc(k.ad)}">
+                    ${thumbHTML({ kod: k.kod, sekil: k.sekil || '', emoji: '🛋️' })}
+                    <div class="kab-name">${esc(k.ad)}</div>
+                    <div class="kab-info">${esc(info)}</div>
+                    <div class="kab-actions">
+                        <a class="btn btn-wa" target="_blank" rel="noopener" href="https://wa.me/${WA_NOMRE}?text=${encodeURIComponent(msg)}">📲 Rezerv et</a>
+                        <a class="btn btn-call" href="tel:${TEL}">📞</a>
+                    </div>
+                </div>`;
+            }).join('');
         }
 
         function renderTiles() {
@@ -919,7 +1228,7 @@
                     <div class="tile-txt"><div><div class="tile-name">${esc(c.ad)}</div><div class="tile-count">${all.length} məhsul</div></div></div>
                 </a>`;
             }).join('');
-            $('sheetList').innerHTML = categories.map(c => {
+            $('sheetList').innerHTML = '<a class="sheet-link" href="#/kab"><i>🛋️</i>Kabinetlər<small>rezerv</small></a>' + categories.map(c => {
                 const n = (db[c.id] || []).reduce((t, g) => t + g.mehsullar.length, 0);
                 return `<a class="sheet-link" href="#/k/${c.id}"><i>${c.emoji}</i>${esc(c.ad)}<small>${n}</small></a>`;
             }).join('');
@@ -997,24 +1306,25 @@
         // ---------- Marşrut (geri düyməsi də işləyir) ----------
         let pendingScroll = null;
         function route() {
-            const m = (location.hash || '#/').match(/^#\/k\/([a-z]+)/);
+            const hash = location.hash || '#/';
+            const m = hash.match(/^#\/k\/([a-z]+)/);
             const cat = m && categories.some(c => c.id === m[1]) ? m[1] : null;
-            closeSheet();
+            const kab = hash.startsWith('#/kab');
+            closeSheet(); closeCart(); hideToast();
+            $('waiter').classList.remove('open');
             if (cat) {
                 document.body.className = 'v-cat';
                 renderCat(cat);
                 window.scrollTo(0, 0);
+            } else if (kab) {
+                document.body.className = 'v-kab';
+                window.scrollTo(0, 0);
             } else {
                 document.body.className = 'v-home';
-                if (pendingScroll) {
-                    const el = $(pendingScroll); pendingScroll = null;
-                    if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 60);
-                } else {
-                    window.scrollTo(0, 0);
-                }
+                window.scrollTo(0, 0);
             }
-            $('navHome').classList.toggle('on', !cat);
-            $('navMenu').classList.toggle('on', !!cat);
+            $('navHome').classList.toggle('on', !cat && !kab);
+            $('navMenu').classList.toggle('on', !!cat || kab);
         }
 
         function openSheet() { $('sheet').classList.add('open'); $('sheet').setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
@@ -1065,9 +1375,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderPromo();
             renderSets();
+            renderKabBanner();
+            renderKab();
             renderTiles();
             setupCopy();
             setupLightbox();
+            if (MASA) { const c = $('masaChip'); c.textContent = '📍 ' + MASA; c.style.display = ''; }
 
             $('gsearch').addEventListener('input', e => globalSearch(e.target.value));
             $('csearch').addEventListener('input', e => filterCat(e.target.value));
@@ -1079,6 +1392,21 @@
                 if (h) h.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
 
+            // + / − düymələri, səbət və təklif (hamısı bir yerdə)
+            document.addEventListener('click', e => {
+                const add = e.target.closest('[data-add]'); if (add) { addKey(add.dataset.add); return; }
+                const dec = e.target.closest('[data-dec]'); if (dec) { decKey(dec.dataset.dec); return; }
+                if (e.target.closest('[data-toast-x]')) { hideToast(); return; }
+                if (e.target.closest('[data-waiter]')) { showWaiter(); return; }
+                if (e.target.closest('[data-close-waiter]')) { $('waiter').classList.remove('open'); return; }
+                if (e.target.closest('[data-wa]')) { sendWA(); return; }
+                if (e.target.closest('[data-clear]')) { CART = {}; saveCart(); document.querySelectorAll('.ctl').forEach(el => { el.innerHTML = ctlHTML(el.dataset.k); }); updateCartUI(); return; }
+                if (e.target.closest('[data-close-cart]')) { closeCart(); return; }
+            });
+            $('cartPill').addEventListener('click', openCart);
+            $('navCart').addEventListener('click', openCart);
+            $('cartSheet').addEventListener('click', e => { if (e.target === $('cartSheet')) closeCart(); });
+
             $('navHome').addEventListener('click', () => {
                 $('gsearch').value = ''; globalSearch('');
                 if (location.hash && location.hash !== '#/') location.hash = '#/'; else window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1089,14 +1417,11 @@
                 if (location.hash && location.hash !== '#/') { location.hash = '#/'; }
                 setTimeout(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); $('gsearch').focus(); }, 80);
             });
-            $('navWifi').addEventListener('click', () => {
-                $('gsearch').value = ''; globalSearch('');
-                if (location.hash && location.hash !== '#/') { pendingScroll = 'wifi'; location.hash = '#/'; }
-                else $('wifi').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCart(); $('waiter').classList.remove('open'); } });
 
             window.addEventListener('hashchange', route);
             route();
+            updateCartUI();
         });
     </script>
 </body>
