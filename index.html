@@ -21,7 +21,19 @@
             --wine: #7b1e2b;
             --accent-soft: #f3e6e1;
             --serif: Georgia, 'Times New Roman', serif;
+            --catbar: rgba(248,244,236,.96);
         }
+        /* Spirtli içkilər: tünd, zərif mövzu */
+        body.spirit {
+            --bg: #101216; --card: #191c22; --text: #f0e6d0; --muted: #9a917f; --line: #2b2e36;
+            --wine: #e3bf6a; --accent-soft: #23262d; --gold-soft: #2a2620; --catbar: rgba(16,18,22,.96);
+        }
+        body.spirit .thumb img { background: #23262d; }
+        body.spirit .thumb { background: #23262d; }
+        body.spirit .qty { background: #2b2e36; }
+        body.spirit .add { background: #2a2620; color: var(--gold-2); }
+        body.spirit .cat-search { color: var(--text); }
+        body.spirit .item-list { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; }
         body {
@@ -72,7 +84,7 @@
             padding: 15px 16px 15px 46px;
             border: 1px solid var(--line);
             border-radius: 16px;
-            background: #fff;
+            background: var(--card);
             color: var(--text);
             box-shadow: 0 8px 24px rgba(40,28,10,.14);
             outline: none;
@@ -165,7 +177,7 @@
         /* ---------- Kateqoriya səhifəsi ---------- */
         .catbar {
             position: sticky; top: 0; z-index: 20;
-            background: rgba(248,244,236,.96);
+            background: var(--catbar);
             backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--line);
             padding: calc(10px + env(safe-area-inset-top, 0px)) 0 10px;
@@ -223,6 +235,7 @@
             transform: scale(1.22);
             background: #fff;
         }
+        .thumb img.fit { object-fit: contain; transform: none; padding: 3px; }
         .thumb.has-img { cursor: zoom-in; }
         .thumb.has-img::after {
             content: "+"; position: absolute; right: 5px; bottom: 5px;
@@ -265,9 +278,9 @@
             display: flex; justify-content: space-around;
         }
         .nav-btn {
-            flex: 1; max-width: 120px; background: none; border: 0; color: #b9b2a4;
+            flex: 1; max-width: 100px; background: none; border: 0; color: #b9b2a4;
             display: flex; flex-direction: column; align-items: center; gap: 2px;
-            padding: 6px 0; font-size: .68rem; letter-spacing: .3px; cursor: pointer;
+            padding: 6px 0; font-size: .64rem; letter-spacing: .2px; cursor: pointer;
         }
         .nav-btn i { font-style: normal; font-size: 1.25rem; }
         .nav-btn.on { color: var(--gold-2); }
@@ -298,8 +311,40 @@
         .lb-close { position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgba(255,255,255,.2); color: #fff; font-size: 20px; cursor: pointer; }
 
         /* ---------- Görünüşlər ---------- */
-        body.v-home #catView, body.v-home #kabView, body.v-cat #kabView { display: none; }
-        body.v-cat #homeView, body.v-cat .hero, body.v-kab #homeView, body.v-kab #catView, body.v-kab .hero { display: none; }
+        #catView, #kabView, #kabOne { display: none; }
+        body.v-cat #catView, body.v-kab #kabView, body.v-kabone #kabOne { display: block; }
+        body.v-cat #homeView, body.v-kab #homeView, body.v-kabone #homeView,
+        body.v-cat .hero, body.v-kab .hero, body.v-kabone .hero { display: none; }
+
+        /* ---------- Alt-bölmə tabları (Spirtli içkilər) ---------- */
+        .subtabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0 4px; }
+        .subtab {
+            border: 1px solid var(--gold); background: transparent; color: var(--gold-2);
+            padding: 12px 8px; border-radius: 14px; font-size: .95rem; font-weight: 600;
+            cursor: pointer; font-family: var(--serif); letter-spacing: .5px;
+        }
+        .subtab small { display: block; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 400; font-size: .7rem; opacity: .7; margin-top: 2px; }
+        .subtab.on { background: linear-gradient(135deg, var(--gold), var(--gold-2)); color: #14171d; border-color: var(--gold-2); box-shadow: 0 4px 14px rgba(227,191,106,.25); }
+        .grp.hide { display: none; }
+        .age-note { margin: 12px 2px 0; font-size: .78rem; color: var(--muted); text-align: center; }
+        .grp { animation: fadeIn .3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+        /* tünd kateqoriya kartı */
+        .tile.spirit { background: linear-gradient(160deg, #1d2027, #101216); border-color: rgba(227,191,106,.5); }
+        .tile.spirit .tile-name { color: var(--gold-2); }
+        .tile.spirit .tile-count { color: #b8ae98; }
+        .tile.spirit .tile-pics, .tile.spirit .tile-pics span { background: #23262d; }
+
+        /* ---------- Kabinet səhifəsi ---------- */
+        .kab-more { display: block; text-align: center; font-size: .85rem; color: var(--wine); margin: 0 0 10px; }
+        .kab-hero .thumb { width: 100%; height: auto; aspect-ratio: 4 / 5; flex: none; border-radius: 18px; font-size: 4rem; }
+        .kab-hero .thumb img { transform: none; object-fit: cover; }
+        .kab-desc { margin: 14px 2px; line-height: 1.5; color: var(--text); }
+        .kab-btns { display: grid; gap: 10px; margin: 16px 0 8px; }
+        .btn-menu { background: var(--gold-soft); color: var(--wine); border: 1px solid var(--gold); }
+        .btn-share { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 400; }
+        .kab-others { margin-top: 26px; }
 
         /* ---------- Masa nişanı ---------- */
         .masa { display: inline-block; margin-top: 12px; background: rgba(227,191,106,.2); border: 1px solid var(--gold-2); color: var(--gold-2); border-radius: 14px; padding: 4px 12px; font-size: .8rem; letter-spacing: 1px; }
@@ -386,7 +431,8 @@
         .kab-banner small { color: #f0d9dc; font-size: .8rem; }
         .kab-banner i { margin-left: auto; font-style: normal; font-size: 1.6rem; color: var(--gold-2); }
         .kab-card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 12px; margin-top: 16px; box-shadow: 0 4px 16px rgba(60,40,10,.08); }
-        .kab-card .thumb { width: 100%; height: auto; aspect-ratio: 16 / 10; flex: none; border-radius: 14px; font-size: 3.4rem; }
+        .kab-card .thumb { width: 100%; height: auto; aspect-ratio: 16 / 11; flex: none; border-radius: 14px; font-size: 3.4rem; }
+        .kab-card .thumb img { transform: none; }
         .kab-name { font-family: var(--serif); font-size: 1.2rem; margin: 10px 2px 2px; }
         .kab-info { color: var(--muted); font-size: .85rem; margin: 0 2px 10px; min-height: 1em; }
         .kab-actions { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
@@ -420,11 +466,10 @@
             <div id="searchResults" style="display:none;"></div>
 
             <div id="homeSections">
-                <div id="promoSec"></div>
-                <div id="setSec"></div>
-                <div id="kabSec"></div>
                 <h2 class="sec-title" id="menuAnchor">Menyu</h2>
                 <div class="tiles" id="tiles"></div>
+                <div id="setSec"></div>
+                <div id="promoSec"></div>
 
                 <div class="wifi" id="wifi">
                     <div class="wifi-title">Wi-Fi</div>
@@ -470,10 +515,24 @@
         </div>
     </section>
 
+    <!-- TƏK KABİNET SƏHİFƏSİ -->
+    <section id="kabOne">
+        <div class="catbar">
+            <div class="wrap">
+                <div class="catbar-row">
+                    <a class="back" href="#/kab" aria-label="Geri">←</a>
+                    <div><div class="cat-title-main" id="kabOneName"></div><div class="cat-count" id="kabOneSub"></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="wrap" id="kabOneBody"></div>
+    </section>
+
     <!-- AŞAĞI NAVİQASİYA -->
     <nav class="nav" aria-label="Naviqasiya">
         <button class="nav-btn on" id="navHome" type="button"><i>🏠</i>Ana səhifə</button>
         <button class="nav-btn" id="navMenu" type="button"><i>☰</i>Menyu</button>
+        <button class="nav-btn" id="navKab" type="button"><i>🛋️</i>Kabinetlər</button>
         <button class="nav-btn" id="navSearch" type="button"><i>🔍</i>Axtar</button>
         <button class="nav-btn" id="navCart" type="button"><i>🧾<em class="badge" id="navBadge"></em></i>Seçimlərim</button>
     </nav>
@@ -620,19 +679,21 @@
                     m("sy08", "SARIKIZ sadə 200 ml", "2.00", "🫧", ""),
                     m("sy09", "ULUDAĞ 250 ml qazoz", "3.00", "🫧", "https://b7x9kq.arazmarket.az/storage/products/1000017026.png"),
                     m("sy10", "SİRAB 0.5 l şüşə qazlı", "3.00", "🫧", "https://b7x9kq.arazmarket.az/storage/products/1000005014.png"),
-                    m("sy11", "NABEQLAVİ 0.5 l şüşə", "3.00", "🫧", "https://b7x9kq.arazmarket.az/storage/products/1000004639.png"),
+                    m("sy11", "NABEQLAVİ 0.5 l şüşə", "3.00", "🫧", "sekiller/sy11.jpg"),
                     m("sy12", "İSTİSU 0.5 l pet", "2.00", "🫧", "https://imageproxy.wolt.com/assets/688b9d9f23fa16f725afbbf5"),
                     m("sy13", "İSTİSU 0.5 l şüşə", "3.00", "🫧", "https://strgimgr.umico.az/img/product/1680/6a034f4e-a352-4c0d-8696-fc9003e487bd.jpeg"),
                     m("sy14", "KOBİ 0.5 l pet (GÜRCÜ)", "2.00", "🫧", "https://kompas.ge/img/rs:fill:600:600/f:webp/q:80/plain/s3://product-photos/kobi-min-wyali-peti-05l/kobi-min-wyali-peti-05l-1.jpg"),
-                    m("sy15", "NARZAN 0.5 l şüşə", "3.00", "🫧", "https://m.media-amazon.com/images/I/81zP0wAMqML._AC_UF894,1000_QL80_.jpg"),
-                    m("sy16", "BARJOMİ 0.5 l şüşə", "3.50", "🫧", "https://ipeksu.az/upload/iblock/e36/e369472da5dba11d1db7831c5aaf9bad.png"),
+                    m("sy15", "NARZAN 0.5 l şüşə", "3.00", "🫧", "sekiller/sy15.jpg"),
+                    m("sy16", "BARJOMİ 0.5 l şüşə", "3.50", "🫧", "sekiller/sy16.jpg"),
                     m("sy17", "RİCAL 0.5 l şüşə", "3.00", "🫧", "https://cdn.shopify.com/s/files/1/0748/2395/8833/products/30010786_d6a71c90-0bd2-4103-9be7-2a2bd9f8105f.jpg"),
                     m("sy18", "ESSENTUKİ No. 4 0.5 l şüşə", "3.50", "🫧", "https://gastronomusa.com/cdn/shop/files/d6204578-e414-4cc6-9195-3cb588bd9851_8196e919-5ec9-4859-9141-bb7b25149f50.png"),
-                    m("sy19", "ESSENTUKİ No. 17 0.5 l şüşə", "3.50", "🫧", "https://ipeksu.az/upload/iblock/3b8/3b8bd46133aef400cf0854bcfb5a33ec.png"),
+                    m("sy19", "ESSENTUKİ No. 17 0.5 l şüşə", "3.50", "🫧", "sekiller/sy19.jpg"),
                     m("sy20", "SİRAB 750 ml şüşə premium", "5.50", "🫧", "https://b7x9kq.arazmarket.az/storage/products/1000105954.png"),
                     m("sy21", "QAX 1 lt", "3.00", "🫧", ""),
                     m("sy22", "İSTİSU 1 lt pet", "3.00", "🫧", ""),
-                    m("sy23", "MORAMOR 1 lt pet", "3.00", "🫧", "")
+                    m("sy23", "MORAMOR 1 lt pet", "3.00", "🫧", ""),
+                    m("sy50", "BORJOMİ 330 ml (banka)", "", "🫧", ""),
+                    m("sy51", "ZAPOVEDNİK ZDOROVYA № 17 (şüşə)", "", "🫧", "")
                 ]},
                 { kateqoriya: "Soyuq çay", mehsullar: [
                     m("sy24", "FUSE tea 0.5 l ananas, qarpız, şaftalı, çiyələk, yemiş", "2.00", "🧋", "https://b7x9kq.arazmarket.az/storage/products/1000013493.png"),
@@ -643,7 +704,10 @@
                 { kateqoriya: "Qazsız şirələr və kompot", mehsullar: [
                     m("sy28", "MEQABİZ 290 ml ananas, çiyələk-moruq, qarağat", "3.00", "🧃", ""),
                     m("sy29", "KOMPOT", "4.00", "🥤", ""),
-                    m("sy30", "KOMPOT EV", "5.00", "🥤", "")
+                    m("sy30", "KOMPOT EV", "5.00", "🥤", ""),
+                    m("sy42", "NATURA MOOD şaftalı 500 ml", "", "🍑", ""),
+                    m("sy43", "NATURA MOOD albalı (cherry) 500 ml", "", "🍒", ""),
+                    m("sy44", "NATURA MOOD portağal 500 ml", "", "🍊", "")
                 ]},
                 { kateqoriya: "Qazlı soklar", mehsullar: [
                     m("sy31", "SARIKIZ 200 ml nar, C-vitamin", "2.00", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000009627.png"),
@@ -651,7 +715,12 @@
                     m("sy33", "ULUDAĞ 250 ml qazoz portağal", "3.00", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000017026.png"),
                     m("sy34", "FRESH BOR 200 ml yaşıl alma, portağal", "2.00", "🥤", "https://admhalal.com/application/files/7317/8149/6993/product-main-img-9182.jpg"),
                     m("sy35", "FRESH BOR 200 ml manqo, şaftalı, qarpız, çiyələk", "2.00", "🥤", ""),
-                    m("sy36", "BARJOMİ limonad düşes, limon", "3.50", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000121048.png")
+                    m("sy36", "BARJOMİ limonad düşes, limon", "3.50", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000121048.png"),
+                    m("sy45", "COOL COLA (şüşə)", "", "🥤", ""),
+                    m("sy46", "COOL FANCY (şüşə)", "", "🍊", ""),
+                    m("sy47", "LIMONATI by BORJOMI armud (şüşə)", "", "🍐", "https://imageproxy.wolt.com/assets/686fd7b49aa298f40fee26f9"),
+                    m("sy48", "SİRAB alma ləzzətli", "", "🍏", ""),
+                    m("sy49", "SİRAB limon ləzzətli", "", "🍋", "")
                 ]},
                 { kateqoriya: "Qazlı içkilər — 0.5 l (pet)", mehsullar: [
                     m("cl01", "Coca-Cola 0.5 l (pet)", "2.00", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000012561.png"),
@@ -675,7 +744,7 @@
                     m("cl13", "Pepsi 1 lt", "3.00", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000012737.png"),
                     m("cl14", "Fanta 1 lt", "3.00", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000012594.png"),
                     m("cl15", "Sprite 1 lt", "3.00", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000013218.png"),
-                    m("cl16", "Mirinda yaşıl alma 1 lt", "3.00", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000019550.png")
+                    m("cl16", "Mirinda yaşıl alma 1 lt", "3.00", "🥤", "sekiller/cl16.jpg")
                 ]},
                 { kateqoriya: "Qazlı içkilər — 2 lt", mehsullar: [
                     m("cl17", "Coca-Cola 2 lt", "4.00", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000012445.png"),
@@ -683,6 +752,11 @@
                     m("cl19", "Fanta 2 lt", "4.00", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000012546.png"),
                     m("cl20", "Sprite 2 lt", "4.00", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000013044.png"),
                     m("cl21", "Mirinda yaşıl alma 2 lt", "4.00", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000019550.png")
+                ]},
+                { kateqoriya: "Enerji içkiləri", mehsullar: [
+                    m("en01", "RED BULL", "", "⚡", "https://b7x9kq.arazmarket.az/storage/products/1000004537.png"),
+                    m("en02", "GORILLA energetik", "", "⚡", ""),
+                    m("en03", "TAC Soft Drink 500 ml (kofeinli)", "", "⚡", "")
                 ]}
             ],
             sirniyyat: [
@@ -799,6 +873,12 @@
                     m("qa28", "Acroyali fıstıq qovrulmuş və duzlu 185 qr (dəmir qab)", "5.00", "🥜", ""),
                     m("qa29", "Life PEANUTS duzlu 120 qr (dəmir qab)", "4.00", "🥜", "https://strgimgr.umico.az/sized/1680/142821-bd61248b7802231f2fb2a02014665c62.jpg"),
                     m("qa30", "Peanuts Xiang Hong araxis 185 qr (dəmir qab)", "5.50", "🥜", "https://b7x9kq.arazmarket.az/storage/products/1000013171.png")
+                ]},
+                { kateqoriya: "Qızardılmışlar və turşular", mehsullar: [
+                    m("qa31", "SOSİSKA (qızardılmış)", "", "🌭", ""),
+                    m("qa32", "SOSİSKALI YUMURTA", "", "🍳", ""),
+                    m("qa33", "ZEYTUN", "", "🫒", ""),
+                    m("qa34", "XIYAR TURŞUSU", "", "🥒", "")
                 ]}
             ],
             piva: [
@@ -821,7 +901,46 @@
                     m("pv16", "MİLLER 330 ml", "5.50", "🍺", "https://alcoartbaku.com/storage/2147/01KR4TAPJBXBY3HRT975QE9G5E.webp"),
                     m("pv17", "CORONA 330 ml", "6.00", "🍺", "https://i5.walmartimages.com/asr/ecb40469-7265-45c4-b972-3ee488f78337.e470e340c28fc4d8c4c9d9998b92fe33.jpeg"),
                     m("pv18", "BLANC Kronenbourg şüşə 4.6 %", "6.00", "🍺", ""),
-                    m("pv19", "MİLLER 500 ml", "6.50", "🍺", "https://alcoartbaku.com/storage/2147/01KR4TAPJBXBY3HRT975QE9G5E.webp")
+                    m("pv19", "MİLLER 500 ml", "6.50", "🍺", "https://alcoartbaku.com/storage/2147/01KR4TAPJBXBY3HRT975QE9G5E.webp"),
+                    m("pv20", "BALTIKA 0.0 alkoqolsuz 0.5 l", "", "🍺", "https://cdn.insales-shop.ru/images/products/1/2092/447588396/005805-1000x1000.jpg"),
+                    m("pv21", "BOÇKARİ Nemetskoe (filtrsiz, açıq)", "", "🍺", ""),
+                    m("pv22", "HEINEKEN Original 0.33 l", "", "🍺", ""),
+                    m("pv23", "BW Belgian Lager Pilsner 4.6%", "", "🍺", ""),
+                    m("pv24", "BOÇKARYOV Jivoy rozliv 4.3%", "", "🍺", ""),
+                    m("pv25", "BOÇKARYOV Xolod i Solod 4.1%", "", "🍺", ""),
+                    m("pv26", "CARLSBERG Pilsner 0.5 l (banka)", "", "🍺", "")
+                ]}
+            ],
+            spirtli: [
+                { kateqoriya: "Şərablar", mehsullar: [
+                    m("sp01", "DOMAINE HILLSIDE Premium (qırmızı etiket)", "", "🍷", ""),
+                    m("sp02", "DOMAINE HILLSIDE Premium Cuvée (qırmızı, quru)", "", "🍷", "https://www.tasting.de/cdn/shop/files/HillsideReserveCuvee.webp"),
+                    m("sp03", "DOMAINE HILLSIDE Premium Reserve (qırmızı, quru)", "", "🍷", "https://images.vivino.com/labels/bnQi2HPATTWoevknYHAEWQ.jpg"),
+                    m("sp04", "CASPIAN COAST Superior (qırmızı, yarımşirin)", "", "🍷", ""),
+                    m("sp05", "PIANO", "", "🍷", ""),
+                    m("sp06", "NAZLI Private Collection", "", "🍷", ""),
+                    m("sp07", "GÖYGÖL Cabernet Sauvignon", "", "🍷", "https://strgimgr.umico.az/img/product/1680/691d41d7-1944-4630-9757-39a61256b8ca.jpeg"),
+                    m("sp08", "MIRACLE Sparkling Wine (köpüklü)", "", "🍾", "")
+                ]},
+                { kateqoriya: "Çaxırlar", mehsullar: [
+                    m("sp09", "IZABELLA", "", "🍇", ""),
+                    m("sp10", "KAGOR", "", "🍇", "")
+                ]},
+                { kateqoriya: "Araqlar", mehsullar: [
+                    m("sp11", "STOLİTSA araq 0.5 l", "", "🍶", ""),
+                    m("sp12", "BANKETNAYA Exclusive araq", "", "🍶", "https://alcoartbaku.com/storage/2607/01KTSFTVM2XNMMZ6S572CQEMDA.webp"),
+                    m("sp13", "SAMAR Organic Export araq 40%", "", "🍶", ""),
+                    m("sp14", "KUTUZOV araq 40%", "", "🍶", ""),
+                    m("sp15", "NEFT araq 40%", "", "🍶", ""),
+                    m("sp16", "ZERNOW Organic araq 250 ml", "", "🍶", "https://khachmazsharab.az/uploads/posts/2024-05/araq.jpg"),
+                    m("sp17", "RUSSKAYA VOLOTA araq", "", "🍶", ""),
+                    m("sp18", "ZOLOTOY BOKAL araq", "", "🍶", ""),
+                    m("sp19", "KHLEBNAYA STRANA Classic araq", "", "🍶", ""),
+                    m("sp20", "SHOT Vodka Cocktail 8% (banka)", "", "🍸", ""),
+                    m("sp21", "GO! Vodka Cocktail Drink 8% (banka)", "", "🍸", "")
+                ]},
+                { kateqoriya: "Viskilər", mehsullar: [
+                    m("sp22", "BRENNOR Whiskey 7 il", "", "🥃", "")
                 ]}
             ],
             xarici: [
@@ -904,6 +1023,7 @@
 
         
 
+
         // =====================================================================
         //  ƏLAQƏ VƏ KABİNETLƏR
         //  Kabinet şəklini "sekiller" qovluğuna kab1.jpg, kab2.jpg ... adı ilə yüklə,
@@ -954,6 +1074,8 @@
             { id: 'cerez',      ad: 'Çərəzlər',          emoji: '🥜', tint: '#f1e6c9' },
             { id: 'qelyanalti', ad: 'Qəlyanaltılar',     emoji: '🍟', tint: '#f6ecc6' },
             { id: 'piva',       ad: 'Pivələr',           emoji: '🍺', tint: '#f4e2b4' },
+            { id: 'spirtli',    ad: 'Spirtli içkilər',   emoji: '🥃', tint: '#2a2620', spirit: true, tabs: true,
+              note: '🔞 Spirtli içkilər yalnız 18 yaşdan yuxarılar üçündür.' },
             { id: 'xarici',     ad: 'Xarici (VİP) Siqaretlər', emoji: '💎', tint: '#e3e0ee' },
             { id: 'siqaret',    ad: 'Siqaretlər',        emoji: '🚬', tint: '#e6e2dc' }
         ];
@@ -964,7 +1086,14 @@
         categories.forEach(c => (db[c.id] || []).forEach(g => g.mehsullar.forEach(it => { byCode[it.kod] = it; })));
 
         // masa/kabinet nömrəsi: saytın linkinin sonuna  ?masa=Kabinet-3  yazılır
-        const MASA = (new URLSearchParams(location.search).get('masa') || '').trim().slice(0, 30);
+        let MASA = (new URLSearchParams(location.search).get('masa') || '').trim().slice(0, 30);
+        if (!MASA) { try { MASA = sessionStorage.getItem('qarabag_masa') || ''; } catch (e) {} }
+        function setMasa(v) {
+            MASA = (v || '').slice(0, 30);
+            try { sessionStorage.setItem('qarabag_masa', MASA); } catch (e) {}
+            const c = document.getElementById('masaChip');
+            if (c) { c.textContent = MASA ? '📍 ' + MASA : ''; c.style.display = MASA ? '' : 'none'; }
+        }
 
         // ---------- Seçimlərim (səbət) ----------
         let CART = {};
@@ -1133,7 +1262,9 @@
             const emoji = item.emoji || '🍵';
             const src = srcOf(item);
             if (!src) return `<div class="thumb">${emoji}</div>`;
-            return `<button type="button" class="thumb" aria-label="Şəkli böyüt">${emoji}<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onload="this.style.opacity=1;this.parentNode.classList.add('has-img')" onerror="this.remove()"></button>`;
+            const fb = (item.kod && item.sekil && item.sekil !== IMG_DIR + item.kod + IMG_EXT) ? IMG_DIR + item.kod + IMG_EXT : '';
+            const fit = /^sekiller\/(sp|sy|cl|pv|en)\d/.test(src) ? ' class="fit"' : '';
+            return `<button type="button" class="thumb" aria-label="Şəkli böyüt">${emoji}<img${fit} src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" ${fb ? ` data-fb="${esc(fb)}"` : ''} onload="this.style.opacity=1;this.parentNode.classList.add('has-img')" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.dataset.fb=''}else{this.remove()}"></button>`;
         }
         function sideHTML(item, bitib) {
             const q = item.qiymet;
@@ -1192,23 +1323,41 @@
             $('setSec').innerHTML = cards ? `<h2 class="sec-title">🎁 Setlər</h2>${cards}` : '';
         }
 
-        function renderKabBanner() {
-            $('kabSec').innerHTML = `<a class="kab-banner" href="#/kab"><span>🛋️</span><div><b>Kabinetlər</b><small>Şəkillərə bax və WhatsApp ilə rezerv et</small></div><i>›</i></a>`;
+        function kabLink(i) { return '#/kab/' + (i + 1); }
+        function waLink(k) {
+            const msg = `Salam! ${k.ad} kabinetini rezerv etmək istəyirəm.\nTarix: \nSaat: \nNəfər sayı: `;
+            return `https://wa.me/${WA_NOMRE}?text=${encodeURIComponent(msg)}`;
         }
+        function kabInfo(k) { return [k.nefer, k.tesvir].filter(Boolean).join(' · '); }
         function renderKab() {
-            $('kabList').innerHTML = KABINETLER.map(k => {
-                const info = [k.nefer, k.tesvir].filter(Boolean).join(' · ');
-                const msg = `Salam! ${k.ad} kabinetini rezerv etmək istəyirəm.\nTarix: \nSaat: \nNəfər sayı: `;
-                return `<div class="kab-card" data-cap="${esc(k.ad)}">
+            $('kabList').innerHTML = KABINETLER.map((k, i) => `<div class="kab-card" data-cap="${esc(k.ad)}">
+                ${thumbHTML({ kod: k.kod, sekil: k.sekil || '', emoji: '🛋️' })}
+                <div class="kab-name">${esc(k.ad)}</div>
+                <div class="kab-info">${esc(kabInfo(k))}</div>
+                <a class="kab-more" href="${kabLink(i)}">Ətraflı bax ›</a>
+                <div class="kab-actions">
+                    <a class="btn btn-wa" target="_blank" rel="noopener" href="${waLink(k)}">📲 Rezerv et</a>
+                    <a class="btn btn-call" href="tel:${TEL}">📞</a>
+                </div>
+            </div>`).join('');
+        }
+        function renderKabOne(n) {
+            const k = KABINETLER[n];
+            $('kabOneName').textContent = '🛋️ ' + k.ad;
+            $('kabOneSub').textContent = kabInfo(k) || 'Rezerv üçün WhatsApp-a yaz';
+            const others = KABINETLER.map((x, i) => i === n ? '' : `<a class="chip" href="${kabLink(i)}">${esc(x.ad)}</a>`).join('');
+            $('kabOneBody').innerHTML = `<div class="kab-card kab-hero" data-cap="${esc(k.ad)}" style="margin-top:16px;">
                     ${thumbHTML({ kod: k.kod, sekil: k.sekil || '', emoji: '🛋️' })}
-                    <div class="kab-name">${esc(k.ad)}</div>
-                    <div class="kab-info">${esc(info)}</div>
-                    <div class="kab-actions">
-                        <a class="btn btn-wa" target="_blank" rel="noopener" href="https://wa.me/${WA_NOMRE}?text=${encodeURIComponent(msg)}">📲 Rezerv et</a>
-                        <a class="btn btn-call" href="tel:${TEL}">📞</a>
-                    </div>
-                </div>`;
-            }).join('');
+                </div>
+                ${k.tesvir ? `<div class="kab-desc">${esc(k.tesvir)}</div>` : ''}
+                <div class="kab-btns">
+                    <a class="btn btn-wa" target="_blank" rel="noopener" href="${waLink(k)}">📲 WhatsApp ilə rezerv et</a>
+                    <a class="btn btn-call" style="width:100%;text-align:center;" href="tel:${TEL}">📞 Zəng et</a>
+                    <button class="btn btn-menu" type="button" data-kab-menu="${n}">🧾 Bu kabinet üçün menyudan seç</button>
+                    <button class="btn btn-share" type="button" data-kab-share>🔗 Kabinetin linkini kopyala</button>
+                </div>
+                <div class="sec-title kab-others">Digər kabinetlər</div>
+                <div class="chips">${others}</div>`;
         }
 
         function renderTiles() {
@@ -1223,7 +1372,7 @@
                         ? `<span>${esc(it.emoji || c.emoji)}<img src="${esc(it.sekil)}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="this.style.opacity=1" onerror="this.remove()" style="opacity:0;transition:opacity .3s"></span>`
                         : `<span>${k === 0 ? c.emoji : ''}</span>`);
                 }
-                return `<a class="tile" href="#/k/${c.id}" style="--tint:${c.tint}">
+                return `<a class="tile${c.spirit ? ' spirit' : ''}" href="#/k/${c.id}" style="--tint:${c.tint}">
                     <div class="tile-pics">${cells.join('')}</div>
                     <div class="tile-txt"><div><div class="tile-name">${esc(c.ad)}</div><div class="tile-count">${all.length} məhsul</div></div></div>
                 </a>`;
@@ -1283,24 +1432,42 @@
                 const h = ul.previousElementSibling;
                 if (h && h.classList.contains('category-title')) h.style.display = any ? '' : 'none';
             });
+            applyGroup();
             $('noResult').style.display = shown === 0 ? 'block' : 'none';
         }
 
         // ---------- Kateqoriya səhifəsi ----------
+        let activeGroup = 0, tabsMode = false;
+        function applyGroup() {
+            document.querySelectorAll('#catList .grp').forEach(g => {
+                g.classList.toggle('hide', tabsMode && Number(g.dataset.g) !== activeGroup && !tokensOf($('csearch').value).length);
+            });
+            document.querySelectorAll('#chips .subtab').forEach(b => b.classList.toggle('on', Number(b.dataset.g) === activeGroup));
+        }
         function renderCat(id) {
             const c = categories.find(x => x.id === id);
             const groups = db[id] || [];
             const total = groups.reduce((t, g) => t + g.mehsullar.length, 0);
+            tabsMode = !!c.tabs && groups.length > 1;
+            activeGroup = 0;
             $('catName').textContent = c.emoji + ' ' + c.ad;
             $('catCount').textContent = total + ' məhsul';
-            $('chips').innerHTML = groups.length > 1
-                ? groups.map((g, gi) => `<button class="chip" type="button" data-g="${gi}">${esc(g.kateqoriya)}</button>`).join('')
-                : '';
+            if (tabsMode) {
+                $('chips').className = 'subtabs';
+                $('chips').innerHTML = groups.map((g, gi) => `<button class="subtab" type="button" data-g="${gi}">${esc(g.kateqoriya)}<small>${g.mehsullar.length} məhsul</small></button>`).join('');
+            } else {
+                $('chips').className = 'chips';
+                $('chips').innerHTML = groups.length > 1
+                    ? groups.map((g, gi) => `<button class="chip" type="button" data-g="${gi}">${esc(g.kateqoriya)}</button>`).join('')
+                    : '';
+            }
             $('catList').innerHTML = groups.length
-                ? groups.map((g, gi) => `<h2 class="category-title" id="g${gi}">${esc(g.kateqoriya)}</h2><ul class="item-list">${g.mehsullar.map((it, i) => itemHTML(it, i)).join('')}</ul>`).join('')
+                ? (c.note ? `<div class="age-note">${esc(c.note)}</div>` : '') +
+                  groups.map((g, gi) => `<div class="grp" data-g="${gi}"><h2 class="category-title" id="g${gi}">${esc(g.kateqoriya)}</h2><ul class="item-list">${g.mehsullar.map((it, i) => itemHTML(it, i)).join('')}</ul></div>`).join('')
                 : '<div class="empty-message">Bu bölməyə tezliklə məhsullar əlavə olunacaq.</div>';
             $('csearch').value = '';
             $('noResult').style.display = 'none';
+            applyGroup();
         }
 
         // ---------- Marşrut (geri düyməsi də işləyir) ----------
@@ -1309,22 +1476,26 @@
             const hash = location.hash || '#/';
             const m = hash.match(/^#\/k\/([a-z]+)/);
             const cat = m && categories.some(c => c.id === m[1]) ? m[1] : null;
-            const kab = hash.startsWith('#/kab');
+            const km = hash.match(/^#\/kab\/(\d+)/);
+            const kabOne = km && KABINETLER[Number(km[1]) - 1] ? Number(km[1]) - 1 : null;
+            const kab = !kabOne && kabOne !== 0 && hash.startsWith('#/kab');
             closeSheet(); closeCart(); hideToast();
             $('waiter').classList.remove('open');
             if (cat) {
-                document.body.className = 'v-cat';
+                document.body.className = 'v-cat' + (categories.find(c => c.id === cat).spirit ? ' spirit' : '');
                 renderCat(cat);
-                window.scrollTo(0, 0);
+            } else if (kabOne !== null) {
+                document.body.className = 'v-kabone';
+                renderKabOne(kabOne);
             } else if (kab) {
                 document.body.className = 'v-kab';
-                window.scrollTo(0, 0);
             } else {
                 document.body.className = 'v-home';
-                window.scrollTo(0, 0);
             }
-            $('navHome').classList.toggle('on', !cat && !kab);
-            $('navMenu').classList.toggle('on', !!cat || kab);
+            window.scrollTo(0, 0);
+            $('navHome').classList.toggle('on', document.body.className === 'v-home');
+            $('navMenu').classList.toggle('on', !!cat);
+            $('navKab').classList.toggle('on', kabOne !== null || kab);
         }
 
         function openSheet() { $('sheet').classList.add('open'); $('sheet').setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
@@ -1375,17 +1546,18 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderPromo();
             renderSets();
-            renderKabBanner();
             renderKab();
             renderTiles();
             setupCopy();
             setupLightbox();
-            if (MASA) { const c = $('masaChip'); c.textContent = '📍 ' + MASA; c.style.display = ''; }
+            setMasa(MASA);
 
             $('gsearch').addEventListener('input', e => globalSearch(e.target.value));
             $('csearch').addEventListener('input', e => filterCat(e.target.value));
 
             $('chips').addEventListener('click', e => {
+                const st = e.target.closest('.subtab');
+                if (st) { activeGroup = Number(st.dataset.g); $('csearch').value = ''; filterCat(''); applyGroup(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
                 const b = e.target.closest('.chip');
                 if (!b) return;
                 const h = $('g' + b.dataset.g);
@@ -1402,6 +1574,15 @@
                 if (e.target.closest('[data-wa]')) { sendWA(); return; }
                 if (e.target.closest('[data-clear]')) { CART = {}; saveCart(); document.querySelectorAll('.ctl').forEach(el => { el.innerHTML = ctlHTML(el.dataset.k); }); updateCartUI(); return; }
                 if (e.target.closest('[data-close-cart]')) { closeCart(); return; }
+                const km = e.target.closest('[data-kab-menu]');
+                if (km) { setMasa(KABINETLER[Number(km.dataset.kabMenu)].ad); location.hash = '#/'; return; }
+                const ks = e.target.closest('[data-kab-share]');
+                if (ks) {
+                    const url = location.href;
+                    (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(() => { ks.textContent = '✓ Link kopyalandı'; }).catch(() => { ks.textContent = url; });
+                    setTimeout(() => { ks.textContent = '🔗 Kabinetin linkini kopyala'; }, 2500);
+                    return;
+                }
             });
             $('cartPill').addEventListener('click', openCart);
             $('navCart').addEventListener('click', openCart);
@@ -1412,6 +1593,7 @@
                 if (location.hash && location.hash !== '#/') location.hash = '#/'; else window.scrollTo({ top: 0, behavior: 'smooth' });
             });
             $('navMenu').addEventListener('click', openSheet);
+            $('navKab').addEventListener('click', () => { location.hash = '#/kab'; });
             $('sheet').addEventListener('click', e => { if (e.target === $('sheet') || e.target.closest('.sheet-link')) closeSheet(); });
             $('navSearch').addEventListener('click', () => {
                 if (location.hash && location.hash !== '#/') { location.hash = '#/'; }
