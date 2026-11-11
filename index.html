@@ -9,19 +9,19 @@
     <link rel="apple-touch-icon" href="sekiller/logo.jpg">
     <style>
         :root {
-            --bg: #f8f4ec;
-            --card: #ffffff;
-            --text: #241f1a;
-            --muted: #8a8072;
-            --line: #ece4d6;
-            --ink: #14171d;
-            --gold: #b98a2e;
-            --gold-2: #e3bf6a;
-            --gold-soft: #f4e8cc;
-            --wine: #7b1e2b;
-            --accent-soft: #f3e6e1;
+            --bg: #faf8f3;
+            --card: #fffefb;
+            --text: #3b352d;
+            --muted: #8c8579;
+            --line: #eee8dc;
+            --ink: #1b1d22;
+            --gold: #b48a3a;
+            --gold-2: #dcbc72;
+            --gold-soft: #f5eddb;
+            --wine: #8a4b34;
+            --accent-soft: #f4ece4;
             --serif: Georgia, 'Times New Roman', serif;
-            --catbar: rgba(248,244,236,.96);
+            --catbar: rgba(250,248,243,.96);
         }
         /* Spirtli içkilər: tünd, zərif mövzu */
         body.spirit {
@@ -447,6 +447,46 @@
             .thumb { flex-basis: 80px; width: 80px; height: 80px; }
             .logo { width: 120px; height: 120px; }
         }
+
+        /* ===== Yumşaq menyu görünüşü (gözü yormasın) ===== */
+        .searchbox input, .cat-search { box-shadow: 0 2px 10px rgba(60,40,10,.07); border-color: var(--line); }
+        .sec-title { font-size: 1.15rem; margin: 26px 0 12px; font-weight: 600; }
+        .sec-title::after { background: var(--line); }
+        .category-title { font-size: 1.05rem; font-weight: 600; margin: 22px 0 8px; color: var(--text); }
+        .category-title::before { content: ''; width: 4px; height: 16px; border-radius: 2px; background: var(--gold-2); font-size: 0; }
+        .item-list { border-radius: 16px; box-shadow: 0 1px 4px rgba(60,40,10,.05); padding: 0 14px; }
+        .item-list li { padding: 13px 0; gap: 14px; }
+        .thumb { flex: 0 0 76px; width: 76px; height: 76px; border-radius: 12px; font-size: 1.9rem; background: var(--accent-soft); }
+        .item-name { font-size: .96rem; line-height: 1.35; font-weight: 500; color: var(--text); }
+        .item-price { font-weight: 600; color: var(--wine); font-size: .95rem; }
+        .item-price small { font-size: .74rem; }
+        .add { width: 30px; height: 30px; background: transparent; border: 1px solid var(--gold-2); color: var(--wine); font-size: 1.1rem; }
+        .qty { background: var(--wine); }
+        .qty button { background: var(--gold-soft); color: var(--wine); width: 26px; height: 26px; }
+        .chip { border-color: var(--line); background: var(--card); color: var(--text); }
+        .chip:active { background: var(--gold-soft); }
+        .tile-simple { display: flex; align-items: center; justify-content: center; height: 86px; font-size: 2.3rem; background: var(--tint, var(--gold-soft)); }
+        .tile { border-radius: 18px; box-shadow: 0 1px 5px rgba(60,40,10,.06); }
+        .tile.spirit .tile-simple { background: #23262d; }
+        .tile-name { font-weight: 600; font-size: .92rem; }
+        .promo-card, .set-card { box-shadow: 0 1px 6px rgba(60,40,10,.07); }
+        .badge-off { background: #b55a45; box-shadow: none; }
+        .cart-pill { background: var(--wine); box-shadow: 0 4px 14px rgba(80,40,20,.3); }
+        .nav { background: rgba(255,254,251,.97); border-top: 1px solid var(--line); backdrop-filter: blur(8px); }
+        .nav-btn { color: #9a9285; }
+        .nav-btn.on { color: var(--wine); font-weight: 600; }
+        .btn-gold { background: var(--wine); color: #fff; }
+        body.spirit .nav { background: rgba(16,18,22,.97); border-top-color: #2b2e36; }
+        body.spirit .nav-btn.on { color: var(--gold-2); }
+        .set-card { background: var(--card); color: var(--text); border: 1px solid var(--line); box-shadow: 0 1px 6px rgba(60,40,10,.06); }
+        .set-title { color: var(--wine); }
+        .set-items { color: var(--muted); }
+        .set-price b { color: var(--text); }
+        .set-price s { color: var(--muted); }
+        .set-tag { color: var(--gold); }
+        .set-price .add { background: var(--gold-soft); border-color: var(--gold-2); color: var(--wine); }
+        .mini { border-color: var(--gold-2); }
+        @media (max-width: 380px) { .thumb { flex-basis: 68px; width: 68px; height: 68px; } }
     </style>
 </head>
 <body class="v-home">
@@ -913,34 +953,34 @@
             ],
             spirtli: [
                 { kateqoriya: "Şərablar", mehsullar: [
-                    m("sp01", "DOMAINE HILLSIDE Premium (qırmızı etiket)", "", "🍷", ""),
-                    m("sp02", "DOMAINE HILLSIDE Premium Cuvée (qırmızı, quru)", "", "🍷", "https://www.tasting.de/cdn/shop/files/HillsideReserveCuvee.webp"),
-                    m("sp03", "DOMAINE HILLSIDE Premium Reserve (qırmızı, quru)", "", "🍷", "https://images.vivino.com/labels/bnQi2HPATTWoevknYHAEWQ.jpg"),
+                    m("sp01", "DOMAINE HILLSIDE Prestige (qırmızı, kəmşirin)", "", "🍷", "https://bazarstore.az/images/thumbs/0014893_hillside-qirmizi-serab-750-ml-kemsirin_510.jpeg"),
+                    m("sp02", "DOMAINE HILLSIDE Premium Cuvée (qırmızı, quru)", "", "🍷", "https://imageproxy.wolt.com/menu/menu-images/672b2063a6c24d27db115384/2245e03e-b33d-11f0-83ae-22aa8ed78f2b_280731_0_0.png"),
+                    m("sp03", "DOMAINE HILLSIDE Premium Reserve (qırmızı, quru)", "", "🍷", "https://bazarstore.az/images/thumbs/0014894_hillside-qirmizi-serab-750-ml-reserve_510.jpeg"),
                     m("sp04", "CASPIAN COAST Superior (qırmızı, yarımşirin)", "", "🍷", ""),
-                    m("sp05", "PIANO", "", "🍷", ""),
+                    m("sp05", "PIANO", "", "🍷", "https://strgimgr.b-cdn.net/img/product/280/19472db9-3863-4e4f-bf6a-bd87eb7bcc6a.jpeg"),
                     m("sp06", "NAZLI Private Collection", "", "🍷", ""),
                     m("sp07", "GÖYGÖL Cabernet Sauvignon", "", "🍷", "https://strgimgr.umico.az/img/product/1680/691d41d7-1944-4630-9757-39a61256b8ca.jpeg"),
                     m("sp08", "MIRACLE Sparkling Wine (köpüklü)", "", "🍾", "")
                 ]},
                 { kateqoriya: "Çaxırlar", mehsullar: [
                     m("sp09", "IZABELLA", "", "🍇", ""),
-                    m("sp10", "KAGOR", "", "🍇", "")
+                    m("sp10", "KAQOR Şamaxı (Kagor)", "", "🍇", "https://strgimgr.b-cdn.net/img/product/840/69a4d3de-2c92-4366-9935-5f7e97bc9912.jpeg")
                 ]},
                 { kateqoriya: "Araqlar", mehsullar: [
                     m("sp11", "STOLİTSA araq 0.5 l", "", "🍶", ""),
                     m("sp12", "BANKETNAYA Exclusive araq", "", "🍶", "https://alcoartbaku.com/storage/2607/01KTSFTVM2XNMMZ6S572CQEMDA.webp"),
-                    m("sp13", "SAMAR Organic Export araq 40%", "", "🍶", ""),
+                    m("sp13", "SAMAR Organic Export araq 1 l 40%", "", "🍶", ""),
                     m("sp14", "KUTUZOV araq 40%", "", "🍶", ""),
-                    m("sp15", "NEFT araq 40%", "", "🍶", ""),
+                    m("sp15", "NEFT Black Barrel araq 40%", "", "🍶", ""),
                     m("sp16", "ZERNOW Organic araq 250 ml", "", "🍶", "https://khachmazsharab.az/uploads/posts/2024-05/araq.jpg"),
-                    m("sp17", "RUSSKAYA VOLOTA araq", "", "🍶", ""),
+                    m("sp17", "RUSSKAYA VALYUTA araq", "", "🍶", "https://beer.kg/assets/images/products/386/560x560/russkaya-valuta-premium.jpg"),
                     m("sp18", "ZOLOTOY BOKAL araq", "", "🍶", ""),
                     m("sp19", "KHLEBNAYA STRANA Classic araq", "", "🍶", ""),
-                    m("sp20", "SHOT Vodka Cocktail 8% (banka)", "", "🍸", ""),
-                    m("sp21", "GO! Vodka Cocktail Drink 8% (banka)", "", "🍸", "")
+                    m("sp20", "SHOT Vodka Cocktail 8% 450 ml (banka)", "", "🍸", ""),
+                    m("sp21", "GO Alco Cocktail Silver 8% 450 ml (banka)", "", "🍸", "https://b7x9kq.arazmarket.az/storage/products/1000012485.png")
                 ]},
                 { kateqoriya: "Viskilər", mehsullar: [
-                    m("sp22", "BRENNOR Whiskey 7 il", "", "🥃", "")
+                    m("sp22", "BRENNOR Whiskey 7 il 500 ml", "", "🥃", "")
                 ]}
             ],
             xarici: [
@@ -1362,18 +1402,9 @@
 
         function renderTiles() {
             $('tiles').innerHTML = categories.map(c => {
-                const groups = db[c.id] || [];
-                const all = groups.flatMap(g => g.mehsullar);
-                const withImg = all.filter(i => i.sekil).slice(0, 4);
-                const cells = [];
-                for (let k = 0; k < 4; k++) {
-                    const it = withImg[k];
-                    cells.push(it
-                        ? `<span>${esc(it.emoji || c.emoji)}<img src="${esc(it.sekil)}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="this.style.opacity=1" onerror="this.remove()" style="opacity:0;transition:opacity .3s"></span>`
-                        : `<span>${k === 0 ? c.emoji : ''}</span>`);
-                }
+                const all = (db[c.id] || []).flatMap(g => g.mehsullar);
                 return `<a class="tile${c.spirit ? ' spirit' : ''}" href="#/k/${c.id}" style="--tint:${c.tint}">
-                    <div class="tile-pics">${cells.join('')}</div>
+                    <div class="tile-simple">${c.emoji}</div>
                     <div class="tile-txt"><div><div class="tile-name">${esc(c.ad)}</div><div class="tile-count">${all.length} məhsul</div></div></div>
                 </a>`;
             }).join('');
