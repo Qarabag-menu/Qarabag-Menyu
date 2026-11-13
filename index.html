@@ -310,6 +310,22 @@
         .lb-cap { color: #fff; font-size: .95rem; text-align: center; }
         .lb-close { position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgba(255,255,255,.2); color: #fff; font-size: 20px; cursor: pointer; }
 
+        /* ---------- Giriş kodu (kilidli bölmələr) ---------- */
+        .gate { position: fixed; inset: 0; z-index: 110; background: rgba(10,10,12,.72); display: none; align-items: center; justify-content: center; padding: 20px; }
+        .gate.open { display: flex; }
+        .gate-box { width: 100%; max-width: 330px; background: var(--card); color: var(--text); border-radius: 22px; padding: 22px 20px 16px; text-align: center; box-shadow: 0 14px 44px rgba(0,0,0,.4); }
+        .gate-ico { font-size: 2rem; }
+        .gate-box h2 { font-family: var(--serif); font-size: 1.3rem; margin: 4px 0 2px; }
+        .gate-sub { color: var(--muted); font-size: .85rem; margin: 0 0 14px; }
+        #gateInput { width: 100%; text-align: center; font-size: 1.7rem; letter-spacing: .5em; padding: 10px 8px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--text); font-family: inherit; }
+        #gateInput:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+        .gate-err { min-height: 1.4em; color: #b3261e; font-size: .85rem; margin: 8px 0 6px; }
+        .gate-box .btn + .btn { margin-top: 8px; }
+        .gate-box.shake { animation: gshake .35s; }
+        @keyframes gshake { 0%,100% { transform: none; } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(5px); } }
+        .tile.locked .tile-simple { font-size: 2.6rem; }
+        .relock { display: block; margin: 12px auto 0; border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 14px; padding: 8px 16px; font-size: .82rem; cursor: pointer; }
+
         /* ---------- Görünüşlər ---------- */
         #catView, #kabView, #kabOne { display: none; }
         body.v-cat #catView, body.v-kab #kabView, body.v-kabone #kabOne { display: block; }
@@ -599,6 +615,19 @@
         </div>
     </div>
 
+    <!-- GİRİŞ KODU -->
+    <div class="gate" id="gate" aria-hidden="true">
+        <div class="gate-box" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+            <div class="gate-ico">🔒</div>
+            <h2 id="gateTitle">Giriş kodu</h2>
+            <p class="gate-sub">Bu bölməyə baxmaq üçün 4 rəqəmli kodu yaz</p>
+            <input id="gateInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="••••" aria-label="Giriş kodu">
+            <div class="gate-err" id="gateErr" aria-live="polite"></div>
+            <button class="btn btn-gold" id="gateOk" type="button">Aç</button>
+            <button class="btn btn-ghost" id="gateCancel" type="button">Ləğv et</button>
+        </div>
+    </div>
+
     <!-- ŞƏKİL BÖYÜTMƏ -->
     <div class="lightbox" id="lightbox" aria-hidden="true">
         <button class="lb-close" type="button" aria-label="Bağla">✕</button>
@@ -757,8 +786,9 @@
                     m("sy34", "FRESH BOR 200 ml yaşıl alma, portağal", "2.00", "🥤", "https://admhalal.com/application/files/7317/8149/6993/product-main-img-9182.jpg"),
                     m("sy35", "FRESH BOR 200 ml manqo, şaftalı, qarpız, çiyələk", "2.00", "🥤", ""),
                     m("sy36", "BARJOMİ limonad düşes, limon", "3.50", "🥤", "https://b7x9kq.arazmarket.az/storage/products/1000121048.png"),
-                    m("sy45", "COOL COLA (şüşə)", "", "🥤", ""),
-                    m("sy46", "COOL FANCY (şüşə)", "", "🍊", ""),
+                    m("sy45", "COOL COLA (şüşə)", "", "🥤", "https://ochakovo.ru/wp-content/uploads/2024/09/cool-glass-2026.png"),
+                    m("sy50", "COOL COLA ZERO (şüşə)", "", "🥤", "https://ochakovo.ru/wp-content/uploads/2026/01/cool-zero-glass-2026.png"),
+                    m("sy46", "COOL FANCY (şüşə)", "", "🍊", "https://ochakovo.ru/wp-content/uploads/2024/09/fancy-glass-2026.png"),
                     m("sy47", "LIMONATI by BORJOMI armud (şüşə)", "", "🍐", "https://imageproxy.wolt.com/assets/686fd7b49aa298f40fee26f9"),
                     m("sy48", "SİRAB alma ləzzətli", "", "🍏", ""),
                     m("sy49", "SİRAB limon ləzzətli", "", "🍋", "")
@@ -887,7 +917,8 @@
                     m("qa40", "XIRDA DÜŞBƏRƏ", "", "🥟", "https://qebulol.az/wp-content/uploads/2025/08/14818751246722a21e16367.png"),
                     m("qa41", "QIZARMALIQ DÜŞBƏRƏ", "", "🥟", "https://api.peljmeni.rs/uploads/medium_peljmeni_fried_chicken_01_ea0267d160.webp"),
                     m("qa42", "PELMENİ", "", "🥟", "https://valentinascorner.com/wp-content/uploads/2019/05/Pelemeni-20-of-24.jpg"),
-                    m("qa43", "GÜRCÜ XƏNGƏLİ (20 ədəd)", "", "🥟", "https://katiecouric.com/wp-content/uploads/2024/11/Georgian-dumplings-WEB.png")
+                    m("qa43", "GÜRCÜ XƏNGƏLİ (20 ədəd)", "", "🥟", "https://katiecouric.com/wp-content/uploads/2024/11/Georgian-dumplings-WEB.png"),
+                    m("qa56", "ÖZBƏK MANTISI", "", "🥟", "https://valentinascorner.com/wp-content/uploads/2016/09/Uzbek-Manti-1.jpg")
                 ]},
                 { kateqoriya: "Qızardılmışlar və turşular", mehsullar: [
                     m("qa31", "SOSİSKA (qızardılmış)", "", "🌭", ""),
@@ -907,7 +938,10 @@
                     m("qa52", "NAGES (toyuq)", "", "🍗", "https://www.allrecipes.com/thmb/Dw_WFOvCds43ksPxkrE60qxcwSk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/AR-8849-HomemadeChickenNuggets-beauty-4x3-ca915ee936054272af1b506181923c7f.jpg"),
                     m("qa53", "TOYUQ KOTLETİ", "", "🍗", "https://www.allrecipes.com/thmb/L83UAXyDgQ07pivxrLxIX5v7Hqo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/236703_ChefJohnsChickenKiev_MFS-WD-2x1-1-0623099a09b0478491078daeeecb96fd.jpg"),
                     m("qa54", "FRİ (kartof)", "", "🍟", "https://thecozycook.com/wp-content/uploads/2018/10/Homemade-French-Fry-Recipe-.jpg"),
-                    m("qa55", "MİNİ ÇORAT QUTABLARI", "", "🥙", "https://shicocooks.com/wp-content/uploads/2026/09/IMG_7881-e1790345241888-1024x1024.jpg")
+                    m("qa55", "MİNİ ÇORAT QUTABLARI", "", "🥙", "https://shicocooks.com/wp-content/uploads/2026/09/IMG_7881-e1790345241888-1024x1024.jpg"),
+                    m("qa57", "KONFET İÇİ İVERİA SOSİSKASI", "", "🌭", "https://kandns.com/storage/recipes/IDEDbYOP9gBRIXAR3qED1XGo0bPUjNyelssD14Jn.png"),
+                    m("qa58", "TOYUQ POPKORNU", "", "🍗", "https://thecozycook.com/wp-content/uploads/2023/02/Popcorn-Chicken-1.jpg"),
+                    m("qa59", "HAMSİ BALIĞI PANKOLU", "", "🐟", "https://cupofyum.com/uploads/images/000/092/730/92730-hamsi-tava-crispy-fried-anchovies-9d28e5cd2830d65ff21b4db1a8c01678.jpg")
                 ]},
                 { kateqoriya: "Pivə məzələri", mehsullar: [
                     m("qa01", "Saçaq pendir (limon)", "2.00", "🧀", ""),
@@ -1022,6 +1056,7 @@
                     m("sq14", "KENT nano rus", "7.00", "🚬", "https://cdn.phototourl.com/member/2026-10-15-96317d29-9828-463f-83e2-69007abffcd8.jpg")
                 ]}
             ],
+            xaricick: [],
             siqaret: [
                 { kateqoriya: "Siqarlar", mehsullar: [
                     m("sq15", "SİQAR shisharillos", "16.00", "🚬", "https://cdn.phototourl.com/member/2026-10-15-8bfdcc08-2cc6-4342-83df-0e1c98b77357.png"),
@@ -1137,9 +1172,20 @@
             { id: 'piva', cover: 'pv15',       ad: 'Pivələr',           emoji: '🍺', tint: '#f4e2b4' },
             { id: 'spirtli', cover: 'sp02',    ad: 'Spirtli içkilər',   emoji: '🥃', tint: '#2a2620', spirit: true, tabs: true,
               note: '🔞 Spirtli içkilər yalnız 18 yaşdan yuxarılar üçündür.' },
-            { id: 'xarici', cover: 'sq01',     ad: 'Xarici (VİP) Siqaretlər', emoji: '💎', tint: '#e3e0ee' },
+            { id: 'xarici', cover: 'sq01',     ad: 'Xarici (VİP) Siqaretlər', emoji: '💎', tint: '#e3e0ee', lock: true },
+            { id: 'xaricick', cover: '',        ad: 'Xarici içkilər',    emoji: '🍾', tint: '#e3e0ee', lock: true },
             { id: 'siqaret', cover: 'sq53',    ad: 'Siqaretlər',        emoji: '🚬', tint: '#e6e2dc' }
         ];
+
+        // =====================================================================
+        //  KODLU BÖLMƏLƏR  (categories-də  lock: true  olan bölmələr)
+        //  Giriş kodunu dəyişmək üçün aşağıdakı rəqəmi dəyiş.
+        //  DİQQƏT: bu sadə qoruma müştərini yayındırmaq üçündür, real təhlükəsizlik deyil.
+        // =====================================================================
+        const LOCK_KOD = "2502";
+        let UNLOCKED = false;
+        try { UNLOCKED = sessionStorage.getItem('qarabag_kilid') === '1'; } catch (e) {}
+        const isLockedCat = c => !!(c && c.lock) && !UNLOCKED;
 
         // ---------- Köməkçilər ----------
         const $ = id => document.getElementById(id);
@@ -1324,7 +1370,7 @@
             const src = srcOf(item);
             if (!src) return `<div class="thumb">${emoji}</div>`;
             const fb = (item.kod && item.sekil && item.sekil !== IMG_DIR + item.kod + IMG_EXT) ? IMG_DIR + item.kod + IMG_EXT : '';
-            const fit = /^sekiller\/(sp|sy|cl|pv|en)\d/.test(src) ? ' class="fit"' : '';
+            const fit = /^sekiller\/(sp|sy|cl|pv|en)\d|ochakovo\.ru/.test(src) ? ' class="fit"' : '';
             return `<button type="button" class="thumb" aria-label="Şəkli böyüt">${emoji}<img${fit} src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" ${fb ? ` data-fb="${esc(fb)}"` : ''} onload="this.style.opacity=1;this.parentNode.classList.add('has-img')" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.dataset.fb=''}else{this.remove()}"></button>`;
         }
         function sideHTML(item, bitib) {
@@ -1432,14 +1478,15 @@
         function renderTiles() {
             $('tiles').innerHTML = categories.map(c => {
                 const all = (db[c.id] || []).flatMap(g => g.mehsullar);
-                return `<a class="tile${c.spirit ? ' spirit' : ''}" href="#/k/${c.id}" style="--tint:${c.tint}">
-                    <div class="tile-simple">${c.emoji}${coverImg(c)}</div>
-                    <div class="tile-txt"><div><div class="tile-name">${esc(c.ad)}</div><div class="tile-count">${all.length} məhsul</div></div></div>
+                const lk = isLockedCat(c);
+                return `<a class="tile${c.spirit ? ' spirit' : ''}${lk ? ' locked' : ''}" href="#/k/${c.id}" style="--tint:${c.tint}">
+                    <div class="tile-simple">${lk ? '🔒' : c.emoji + coverImg(c)}</div>
+                    <div class="tile-txt"><div><div class="tile-name">${esc(c.ad)}</div><div class="tile-count">${lk ? '🔒 Kodla açılır' : all.length + ' məhsul'}</div></div></div>
                 </a>`;
             }).join('');
             $('sheetList').innerHTML = '<a class="sheet-link" href="#/kab"><i>🛋️</i>Kabinetlər<small>rezerv</small></a>' + categories.map(c => {
                 const n = (db[c.id] || []).reduce((t, g) => t + g.mehsullar.length, 0);
-                return `<a class="sheet-link" href="#/k/${c.id}"><i>${c.emoji}</i>${esc(c.ad)}<small>${n}</small></a>`;
+                return `<a class="sheet-link" href="#/k/${c.id}"><i>${c.emoji}</i>${esc(c.ad)}<small>${isLockedCat(c) ? '🔒' : n}</small></a>`;
             }).join('');
         }
 
@@ -1457,6 +1504,7 @@
             const full = tokens.join(' ');
             let html = '', total = 0;
             categories.forEach(c => {
+                if (isLockedCat(c)) return;
                 const rows = [];
                 (db[c.id] || []).forEach(g => g.mehsullar.forEach((it, i) => {
                     const n = norm(it.ad);
@@ -1522,9 +1570,10 @@
                     : '';
             }
             $('catList').innerHTML = groups.length
-                ? (c.note ? `<div class="age-note">${esc(c.note)}</div>` : '') +
+                ? (c.lock ? '<button type="button" class="relock" data-relock>🔒 Kilidlə və çıx</button>' : '') +
+                  (c.note ? `<div class="age-note">${esc(c.note)}</div>` : '') +
                   groups.map((g, gi) => `<div class="grp" data-g="${gi}"><h2 class="category-title" id="g${gi}">${esc(g.kateqoriya)}</h2><ul class="item-list">${g.mehsullar.map((it, i) => itemHTML(it, i)).join('')}</ul></div>`).join('')
-                : '<div class="empty-message">Bu bölməyə tezliklə məhsullar əlavə olunacaq.</div>';
+                : (c.lock ? '<button type="button" class="relock" data-relock>🔒 Kilidlə və çıx</button>' : '') + '<div class="empty-message">Bu bölməyə tezliklə məhsullar əlavə olunacaq.</div>';
             $('csearch').value = '';
             $('noResult').style.display = 'none';
             applyGroup();
@@ -1535,7 +1584,9 @@
         function route() {
             const hash = location.hash || '#/';
             const m = hash.match(/^#\/k\/([a-z]+)/);
-            const cat = m && categories.some(c => c.id === m[1]) ? m[1] : null;
+            let cat = m && categories.some(c => c.id === m[1]) ? m[1] : null;
+            closeGate();
+            if (cat && isLockedCat(categories.find(c => c.id === cat))) { openGate(cat); cat = null; }
             const km = hash.match(/^#\/kab\/(\d+)/);
             const kabOne = km && KABINETLER[Number(km[1]) - 1] ? Number(km[1]) - 1 : null;
             const kab = !kabOne && kabOne !== 0 && hash.startsWith('#/kab');
@@ -1556,6 +1607,51 @@
             $('navHome').classList.toggle('on', document.body.className === 'v-home');
             $('navMenu').classList.toggle('on', !!cat);
             $('navKab').classList.toggle('on', kabOne !== null || kab);
+        }
+
+        // ---------- Giriş kodu pəncərəsi ----------
+        let gateTarget = null;
+        function openGate(id) {
+            gateTarget = id;
+            const c = categories.find(x => x.id === id);
+            $('gateTitle').textContent = c ? c.emoji + ' ' + c.ad : 'Giriş kodu';
+            $('gateInput').value = '';
+            $('gateErr').textContent = '';
+            $('gate').classList.add('open');
+            $('gate').setAttribute('aria-hidden', 'false');
+            setTimeout(() => { try { $('gateInput').focus(); } catch (e) {} }, 60);
+        }
+        function closeGate() {
+            $('gate').classList.remove('open');
+            $('gate').setAttribute('aria-hidden', 'true');
+            gateTarget = null;
+        }
+        function tryGate() {
+            const v = $('gateInput').value.trim();
+            if (v === LOCK_KOD) {
+                const t = gateTarget;
+                UNLOCKED = true;
+                try { sessionStorage.setItem('qarabag_kilid', '1'); } catch (e) {}
+                closeGate();
+                renderTiles();
+                if (t) { if (location.hash === '#/k/' + t) route(); else location.hash = '#/k/' + t; }
+            } else {
+                $('gateErr').textContent = 'Kod səhvdir, yenidən yaz';
+                $('gateInput').value = '';
+                const b = $('gate').querySelector('.gate-box');
+                b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake');
+            }
+        }
+        function cancelGate() {
+            closeGate();
+            if (/^#\/k\//.test(location.hash)) location.hash = '#/'; else route();
+        }
+        function relock() {
+            UNLOCKED = false;
+            try { sessionStorage.removeItem('qarabag_kilid'); } catch (e) {}
+            renderTiles();
+            globalSearch($('gsearch').value);
+            location.hash = '#/';
         }
 
         function openSheet() { $('sheet').classList.add('open'); $('sheet').setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
@@ -1629,6 +1725,7 @@
                 const add = e.target.closest('[data-add]'); if (add) { addKey(add.dataset.add); return; }
                 const dec = e.target.closest('[data-dec]'); if (dec) { decKey(dec.dataset.dec); return; }
                 if (e.target.closest('[data-toast-x]')) { hideToast(); return; }
+                if (e.target.closest('[data-relock]')) { relock(); return; }
                 if (e.target.closest('[data-waiter]')) { showWaiter(); return; }
                 if (e.target.closest('[data-close-waiter]')) { $('waiter').classList.remove('open'); return; }
                 if (e.target.closest('[data-wa]')) { sendWA(); return; }
@@ -1644,6 +1741,11 @@
                     return;
                 }
             });
+            $('gateOk').addEventListener('click', tryGate);
+            $('gateCancel').addEventListener('click', cancelGate);
+            $('gateInput').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4); $('gateErr').textContent = ''; if (e.target.value.length === 4) tryGate(); });
+            $('gateInput').addEventListener('keydown', e => { if (e.key === 'Enter') tryGate(); });
+            $('gate').addEventListener('click', e => { if (e.target === $('gate')) cancelGate(); });
             $('cartPill').addEventListener('click', openCart);
             $('navCart').addEventListener('click', openCart);
             $('cartSheet').addEventListener('click', e => { if (e.target === $('cartSheet')) closeCart(); });
@@ -1659,7 +1761,7 @@
                 if (location.hash && location.hash !== '#/') { location.hash = '#/'; }
                 setTimeout(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); $('gsearch').focus(); }, 80);
             });
-            document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCart(); $('waiter').classList.remove('open'); } });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCart(); $('waiter').classList.remove('open'); if ($('gate').classList.contains('open')) cancelGate(); } });
 
             window.addEventListener('hashchange', route);
             route();
