@@ -465,7 +465,8 @@
         .qty button { background: var(--gold-soft); color: var(--wine); width: 26px; height: 26px; }
         .chip { border-color: var(--line); background: var(--card); color: var(--text); }
         .chip:active { background: var(--gold-soft); }
-        .tile-simple { display: flex; align-items: center; justify-content: center; height: 86px; font-size: 2.3rem; background: var(--tint, var(--gold-soft)); }
+        .tile-simple { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 112px; font-size: 2.3rem; background: var(--tint, var(--gold-soft)); }
+        .tile-simple img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 8px; background: transparent; opacity: 0; transition: opacity .3s; }
         .tile { border-radius: 18px; box-shadow: 0 1px 5px rgba(60,40,10,.06); }
         .tile.spirit .tile-simple { background: #23262d; }
         .tile-name { font-weight: 600; font-size: .92rem; }
@@ -919,6 +920,26 @@
                     m("qa32", "SOSİSKALI YUMURTA", "", "🍳", ""),
                     m("qa33", "ZEYTUN", "", "🫒", ""),
                     m("qa34", "XIYAR TURŞUSU", "", "🥒", "")
+                ]},
+                { kateqoriya: "Xəngəl və düşbərə", mehsullar: [
+                    m("qa40", "XIRDA DÜŞBƏRƏ", "", "🥟", "https://qebulol.az/wp-content/uploads/2025/08/14818751246722a21e16367.png"),
+                    m("qa41", "QIZARMALIQ DÜŞBƏRƏ", "", "🥟", ""),
+                    m("qa42", "PELMENİ", "", "🥟", "https://valentinascorner.com/wp-content/uploads/2019/05/Pelemeni-20-of-24.jpg"),
+                    m("qa43", "GÜRCÜ XƏNGƏLİ (20 ədəd)", "", "🥟", "https://katiecouric.com/wp-content/uploads/2024/11/Georgian-dumplings-WEB.png")
+                ]},
+                { kateqoriya: "Qızardılmış atıştırmalıqlar", mehsullar: [
+                    m("qa44", "PENDİR ÇUBUQLARI", "", "🧀", "https://www.foodnetwork.com/content/dam/images/food/fullset/2021/10/20/WU2908_garlic-herb-mozzarella-sticks_s4x3.jpg"),
+                    m("qa45", "PENDİR TOPLARI", "", "🧀", "https://doublethespoonfuls.com/wp-content/uploads/2025/01/fried-cheese-balls-1.jpg"),
+                    m("qa46", "KARTOF İÇİ PENDİR TOPLARI", "", "🥔", "https://www.onionringsandthings.com/wp-content/uploads/2016/05/loaded-mashed-potato-balls-1-1.jpg"),
+                    m("qa47", "TOYUQ İÇİ PENDİRLİ TOPLAR", "", "🍗", ""),
+                    m("qa48", "GÖBƏLƏKLİ TEMPURA", "", "🍄", "https://www.australianmushrooms.com.au/wp-content/uploads/2016/04/Tempura-Mushrooms-HR_1205080621.jpg"),
+                    m("qa49", "KFC QANAD", "", "🍗", "https://www.foodjunkieuk.co.uk/wp-content/uploads/2020/05/IMG_4584.jpg"),
+                    m("qa50", "SOSİSKA ÇUBUQLARI", "", "🌭", "https://dudefoods.com/wp-content/uploads/2016/01/HotDogPringles2.jpg"),
+                    m("qa51", "CORNDOG (sosis və pendirli)", "", "🌭", ""),
+                    m("qa52", "NAGES (toyuq)", "", "🍗", "https://www.allrecipes.com/thmb/Dw_WFOvCds43ksPxkrE60qxcwSk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/AR-8849-HomemadeChickenNuggets-beauty-4x3-ca915ee936054272af1b506181923c7f.jpg"),
+                    m("qa53", "TOYUQ KOTLETİ", "", "🍗", "https://www.allrecipes.com/thmb/L83UAXyDgQ07pivxrLxIX5v7Hqo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/236703_ChefJohnsChickenKiev_MFS-WD-2x1-1-0623099a09b0478491078daeeecb96fd.jpg"),
+                    m("qa54", "FRİ (kartof)", "", "🍟", ""),
+                    m("qa55", "MİNİ ÇORAT QUTABLARI", "", "🥙", "https://shicocooks.com/wp-content/uploads/2026/09/IMG_7881-e1790345241888-1024x1024.jpg")
                 ]}
             ],
             piva: [
@@ -1107,17 +1128,17 @@
         ];
 
         const categories = [
-            { id: 'murebbe',    ad: 'Mürəbbələr',        emoji: '🍯', tint: '#f6e3d3' },
-            { id: 'isti',       ad: 'İsti İçkilər',      emoji: '☕', tint: '#efe1d2' },
-            { id: 'soyuq',      ad: 'Soyuq İçkilər',     emoji: '🥤', tint: '#dcecf3' },
-            { id: 'sirniyyat',  ad: 'Şirniyyat',         emoji: '🍫', tint: '#f3dfe0' },
-            { id: 'cerez',      ad: 'Çərəzlər',          emoji: '🥜', tint: '#f1e6c9' },
-            { id: 'qelyanalti', ad: 'Qəlyanaltılar',     emoji: '🍟', tint: '#f6ecc6' },
-            { id: 'piva',       ad: 'Pivələr',           emoji: '🍺', tint: '#f4e2b4' },
-            { id: 'spirtli',    ad: 'Spirtli içkilər',   emoji: '🥃', tint: '#2a2620', spirit: true, tabs: true,
+            { id: 'murebbe', cover: 'ciyelek',    ad: 'Mürəbbələr',        emoji: '🍯', tint: '#f6e3d3' },
+            { id: 'isti', cover: 'ic05',       ad: 'İsti İçkilər',      emoji: '☕', tint: '#efe1d2' },
+            { id: 'soyuq', cover: 'cl12',      ad: 'Soyuq İçkilər',     emoji: '🥤', tint: '#dcecf3' },
+            { id: 'sirniyyat', cover: 'sr27',  ad: 'Şirniyyat',         emoji: '🍫', tint: '#f3dfe0' },
+            { id: 'cerez', cover: 'cz03',      ad: 'Çərəzlər',          emoji: '🥜', tint: '#f1e6c9' },
+            { id: 'qelyanalti', cover: 'qa17', ad: 'Qəlyanaltılar',     emoji: '🍟', tint: '#f6ecc6' },
+            { id: 'piva', cover: 'pv15',       ad: 'Pivələr',           emoji: '🍺', tint: '#f4e2b4' },
+            { id: 'spirtli', cover: 'sp02',    ad: 'Spirtli içkilər',   emoji: '🥃', tint: '#2a2620', spirit: true, tabs: true,
               note: '🔞 Spirtli içkilər yalnız 18 yaşdan yuxarılar üçündür.' },
-            { id: 'xarici',     ad: 'Xarici (VİP) Siqaretlər', emoji: '💎', tint: '#e3e0ee' },
-            { id: 'siqaret',    ad: 'Siqaretlər',        emoji: '🚬', tint: '#e6e2dc' }
+            { id: 'xarici', cover: 'sq01',     ad: 'Xarici (VİP) Siqaretlər', emoji: '💎', tint: '#e3e0ee' },
+            { id: 'siqaret', cover: 'sq53',    ad: 'Siqaretlər',        emoji: '🚬', tint: '#e6e2dc' }
         ];
 
         // ---------- Köməkçilər ----------
@@ -1400,11 +1421,19 @@
                 <div class="chips">${others}</div>`;
         }
 
+        function coverImg(c) {
+            const it = byCode[c.cover];
+            if (!it) return '';
+            const src = srcOf(it);
+            if (!src) return '';
+            const fb = (it.sekil && it.sekil !== IMG_DIR + it.kod + IMG_EXT) ? IMG_DIR + it.kod + IMG_EXT : '';
+            return `<img src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer"${fb ? ` data-fb="${esc(fb)}"` : ''} onload="this.style.opacity=1" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.dataset.fb=''}else{this.remove()}">`;
+        }
         function renderTiles() {
             $('tiles').innerHTML = categories.map(c => {
                 const all = (db[c.id] || []).flatMap(g => g.mehsullar);
                 return `<a class="tile${c.spirit ? ' spirit' : ''}" href="#/k/${c.id}" style="--tint:${c.tint}">
-                    <div class="tile-simple">${c.emoji}</div>
+                    <div class="tile-simple">${c.emoji}${coverImg(c)}</div>
                     <div class="tile-txt"><div><div class="tile-name">${esc(c.ad)}</div><div class="tile-count">${all.length} məhsul</div></div></div>
                 </a>`;
             }).join('');
