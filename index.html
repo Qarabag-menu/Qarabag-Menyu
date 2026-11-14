@@ -646,6 +646,15 @@
             .item-list .item-name { font-size: .86rem; padding: 8px 10px 2px; }
             .item-list .item-side { padding: 6px 10px 10px; }
         }
+
+        /* ===== Krem bir az qalın + tam şəkilli kateqoriya kartları ===== */
+        :root { --bg: #ece2cd; --card: #f7f0e1; --line: #dccfb5; --accent-soft: #e3d6bb; --catbar: rgba(236,226,205,.94); }
+        .nav { background: rgba(244,236,219,.97); }
+        .tile-simple { padding-bottom: 0; font-size: 3.4rem; }
+        .tile-simple img.tile-bg { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; object-fit: cover; opacity: 0; transition: opacity .35s; }
+        .tile.locked { background: linear-gradient(160deg, #3a4436, #232a21); }
+        .tile.locked .tile-simple { background: transparent; color: #fff; }
+        .tiles { margin-bottom: 4px; }
     </style>
 </head>
 <body class="v-home">
@@ -665,8 +674,7 @@
             <div id="searchResults" style="display:none;"></div>
 
             <div id="homeSections">
-                <h2 class="sec-title" id="menuAnchor">Menyu</h2>
-                <div class="tiles" id="tiles"></div>
+                <div id="tiles"></div>
                 <div id="setSec"></div>
                 <div id="promoSec"></div>
 
@@ -1305,18 +1313,18 @@
         ];
 
         const categories = [
-            { id: 'murebbe', cover: 'ciyelek',    ad: 'Mürəbbələr',        emoji: '🍯', tint: '#f6e3d3' },
-            { id: 'isti', cover: 'ic05',       ad: 'İsti İçkilər',      emoji: '☕', tint: '#efe1d2' },
-            { id: 'soyuq', cover: 'cl12',      ad: 'Soyuq İçkilər',     emoji: '🥤', tint: '#dcecf3' },
-            { id: 'sirniyyat', cover: 'sr27',  ad: 'Şirniyyat',         emoji: '🍫', tint: '#f3dfe0' },
-            { id: 'cerez', cover: 'cz03',      ad: 'Çərəzlər',          emoji: '🥜', tint: '#f1e6c9' },
-            { id: 'qelyanalti', cover: 'qa17', ad: 'Qəlyanaltılar',     emoji: '🍟', tint: '#f6ecc6' },
-            { id: 'piva', cover: 'pv15',       ad: 'Pivələr',           emoji: '🍺', tint: '#f4e2b4' },
-            { id: 'spirtli', cover: 'sp02',    ad: 'Spirtli içkilər',   emoji: '🥃', tint: '#2a2620', spirit: true, tabs: true,
+            { id: 'murebbe', foto: 'https://images.unsplash.com/photo-1633084426862-3a8c25aa7ce5?auto=format&fit=crop&w=600&q=70', cover: 'ciyelek',    ad: 'Mürəbbələr',        emoji: '🍯', tint: '#f6e3d3' },
+            { id: 'isti', foto: 'https://images.unsplash.com/photo-1564323419405-29b0193a47c2?auto=format&fit=crop&w=600&q=70', cover: 'ic05',       ad: 'İsti İçkilər',      emoji: '☕', tint: '#efe1d2' },
+            { id: 'soyuq', foto: 'https://images.unsplash.com/photo-1623084918757-56d74eb2c650?auto=format&fit=crop&w=600&q=70', cover: 'cl12',      ad: 'Soyuq İçkilər',     emoji: '🥤', tint: '#dcecf3' },
+            { id: 'sirniyyat', foto: 'https://images.unsplash.com/photo-1702743692629-b11e94c63b0a?auto=format&fit=crop&w=600&q=70', cover: 'sr27',  ad: 'Şirniyyat',         emoji: '🍫', tint: '#f3dfe0' },
+            { id: 'cerez', foto: 'https://images.unsplash.com/photo-1769255484233-94ece98f722d?auto=format&fit=crop&w=600&q=70', cover: 'cz03',      ad: 'Çərəzlər',          emoji: '🥜', tint: '#f1e6c9' },
+            { id: 'qelyanalti', foto: 'https://images.unsplash.com/photo-1623653387945-2fd25214f8fc?auto=format&fit=crop&w=600&q=70', cover: 'qa17', ad: 'Qəlyanaltılar',     emoji: '🍟', tint: '#f6ecc6' },
+            { id: 'piva', foto: 'https://images.unsplash.com/photo-1774109078105-83b89022a6d0?auto=format&fit=crop&w=600&q=70', cover: 'pv15',       ad: 'Pivələr',           emoji: '🍺', tint: '#f4e2b4' },
+            { id: 'spirtli', foto: 'https://images.unsplash.com/photo-1546540749-3229ce1f48da?auto=format&fit=crop&w=600&q=70', cover: 'sp02',    ad: 'Spirtli içkilər',   emoji: '🥃', tint: '#2a2620', spirit: true, tabs: true,
               note: '🔞 Spirtli içkilər yalnız 18 yaşdan yuxarılar üçündür.' },
-            { id: 'xarici', cover: 'sq01',     ad: 'Xarici (VİP) Siqaretlər', emoji: '💎', tint: '#e3e0ee', lock: true },
+            { id: 'xarici', foto: 'https://plus.unsplash.com/premium_photo-1682125790146-85e7239eb2e1?auto=format&fit=crop&w=600&q=70', cover: 'sq01',     ad: 'Xarici (VİP) Siqaretlər', emoji: '💎', tint: '#e3e0ee', lock: true },
             { id: 'xaricick', cover: '',        ad: 'Xarici içkilər',    emoji: '🍾', tint: '#e3e0ee', lock: true },
-            { id: 'siqaret', cover: 'sq53',    ad: 'Siqaretlər',        emoji: '🚬', tint: '#e6e2dc' }
+            { id: 'siqaret', foto: 'https://images.unsplash.com/photo-1632094183960-266df564e674?auto=format&fit=crop&w=600&q=70', cover: 'sq53',    ad: 'Siqaretlər',        emoji: '🚬', tint: '#e6e2dc' }
         ];
 
         // =====================================================================
@@ -1617,15 +1625,35 @@
             const fb = (it.sekil && it.sekil !== IMG_DIR + it.kod + IMG_EXT) ? IMG_DIR + it.kod + IMG_EXT : '';
             return `<img src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer"${fb ? ` data-fb="${esc(fb)}"` : ''} onload="this.style.opacity=1" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.dataset.fb=''}else{this.remove()}">`;
         }
+        function bgImg(c) {
+            if (!c.foto) return '';
+            return `<img class="tile-bg" src="${esc(c.foto)}" alt="" loading="lazy" referrerpolicy="no-referrer" onload="this.style.opacity=1" onerror="this.remove()">`;
+        }
+        const TIL_QRUPLAR = [
+            { ad: 'Çay süfrəsi', ids: ['murebbe', 'sirniyyat', 'cerez'] },
+            { ad: 'İçkilər', ids: ['soyuq', 'isti'] },
+            { ad: 'Pivə və qəlyanaltılar', ids: ['piva', 'qelyanalti'] },
+            { ad: 'Siqaretlər', ids: ['xarici', 'siqaret'] },
+            { ad: 'Spirtli içkilər', ids: ['spirtli', 'xaricick'] }
+        ];
+        function tileHTML(c) {
+            const all = (db[c.id] || []).flatMap(g => g.mehsullar);
+            const lk = isLockedCat(c);
+            return `<a class="tile${c.spirit ? ' spirit' : ''}${lk ? ' locked' : ''}" href="#/k/${c.id}" style="--tint:${c.tint}">
+                <div class="tile-simple">${lk ? '🔒' : c.emoji + bgImg(c)}</div>
+                <div class="tile-txt"><div><div class="tile-name">${esc(c.ad)}</div><div class="tile-count">${lk ? '🔒 Kodla açılır' : all.length + ' məhsul'}</div></div></div>
+            </a>`;
+        }
         function renderTiles() {
-            $('tiles').innerHTML = categories.map(c => {
-                const all = (db[c.id] || []).flatMap(g => g.mehsullar);
-                const lk = isLockedCat(c);
-                return `<a class="tile${c.spirit ? ' spirit' : ''}${lk ? ' locked' : ''}" href="#/k/${c.id}" style="--tint:${c.tint}">
-                    <div class="tile-simple">${lk ? '🔒' : c.emoji + coverImg(c)}</div>
-                    <div class="tile-txt"><div><div class="tile-name">${esc(c.ad)}</div><div class="tile-count">${lk ? '🔒 Kodla açılır' : all.length + ' məhsul'}</div></div></div>
-                </a>`;
+            const used = new Set();
+            let html = TIL_QRUPLAR.map(q => {
+                const cs = q.ids.map(id => categories.find(c => c.id === id)).filter(Boolean);
+                cs.forEach(c => used.add(c.id));
+                return cs.length ? `<h2 class="sec-title">${esc(q.ad)}</h2><div class="tiles">${cs.map(tileHTML).join('')}</div>` : '';
             }).join('');
+            const rest = categories.filter(c => !used.has(c.id));
+            if (rest.length) html += `<h2 class="sec-title">Digər</h2><div class="tiles">${rest.map(tileHTML).join('')}</div>`;
+            $('tiles').innerHTML = html;
             $('sheetList').innerHTML = '<a class="sheet-link" href="#/kab"><i>🛋️</i>Kabinetlər<small>rezerv</small></a>' + categories.map(c => {
                 const n = (db[c.id] || []).reduce((t, g) => t + g.mehsullar.length, 0);
                 return `<a class="sheet-link" href="#/k/${c.id}"><i>${c.emoji}</i>${esc(c.ad)}<small>${isLockedCat(c) ? '🔒' : n}</small></a>`;
@@ -1842,8 +1870,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderPromo();
-            renderSets();
             renderKab();
             renderTiles();
             setupCopy();
